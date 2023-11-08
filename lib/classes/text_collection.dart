@@ -104,6 +104,13 @@ class TextCollection {
     fontWeight: FontWeight.w400,
   );
 
+  TextStyle smallLabelBlack = const TextStyle(
+      color: Colors.black,
+      fontFamily: 'Montserrat',
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      decoration: TextDecoration.underline);
+
   TextStyle normalLabel = const TextStyle(
     color: Color(0xff3377FF),
     fontFamily: 'Montserrat',
@@ -116,6 +123,13 @@ class TextCollection {
     fontFamily: 'Montserrat',
     fontSize: 16,
     fontWeight: FontWeight.w600,
+  );
+
+  TextStyle largeLabelBlack = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
   );
 
   TextStyle extraLargeLabel = const TextStyle(
