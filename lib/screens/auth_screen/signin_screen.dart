@@ -70,6 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       // mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Text(
                           'Welcome Back',
                           style: textApp.bodyMedium,
