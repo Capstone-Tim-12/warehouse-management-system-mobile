@@ -12,7 +12,9 @@ class AuthBg extends StatelessWidget {
       color: Colors.white,
       child: SvgPicture.asset(
         'assets/svg/register.svg',
-        fit: BoxFit.cover,
+        // width: MediaQuery.of(context).size.width,
+        // height: MediaQuery.of(context).size.height,
+        fit: BoxFit.fill,
       ),
     );
   }
