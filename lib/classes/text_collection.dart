@@ -21,7 +21,7 @@ class TextCollection {
   );
 
   TextStyle heading2 = const TextStyle(
-    color: Colors.black,
+    color: Colors.white,
     fontFamily: 'Montserrat',
     fontSize: 36,
     fontWeight: FontWeight.w700,
@@ -36,6 +36,12 @@ class TextCollection {
 
   TextStyle heading4 = const TextStyle(
     color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+  );
+  TextStyle heading4White = const TextStyle(
+    color: Colors.white,
     fontFamily: 'Montserrat',
     fontSize: 24,
     fontWeight: FontWeight.w700,
@@ -82,6 +88,12 @@ class TextCollection {
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
+  TextStyle bodyNormalLight = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+  );
 
   TextStyle bodySmall = const TextStyle(
     color: Colors.black,
@@ -104,6 +116,7 @@ class TextCollection {
     fontWeight: FontWeight.w400,
   );
 
+
   TextStyle normalLabel = const TextStyle(
     color: Color(0xff3377FF),
     fontFamily: 'Montserrat',
@@ -123,5 +136,34 @@ class TextCollection {
     fontFamily: 'Montserrat',
     fontSize: 18,
     fontWeight: FontWeight.w600,
+  );
+
+  TextStyle extraSmallInvLabel = const TextStyle(
+    color: Color(0xFF8F90A6),
+    fontSize: 14,
+    fontFamily: 'Montserrat',
+    fontWeight: FontWeight.w600,
+    height: 0.11,
+  );
+  
+  TextStyle smallLabelBlack = const TextStyle(
+      color: Colors.black,
+      fontFamily: 'Montserrat',
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      decoration: TextDecoration.underline);
+
+  TextStyle smallLabelBlackclear = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+  );
+  
+    TextStyle largeLabelBlack = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
   );
 }
