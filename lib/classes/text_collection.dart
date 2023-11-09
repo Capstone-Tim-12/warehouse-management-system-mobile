@@ -157,4 +157,12 @@ class TextCollection {
     fontSize: 18,
     fontWeight: FontWeight.w600,
   );
+
+  TextStyle extraSmallInvLabel = const TextStyle(
+    color: Color(0xFF8F90A6),
+    fontSize: 14,
+    fontFamily: 'Montserrat',
+    fontWeight: FontWeight.w600,
+    height: 0.11,
+  );
 }

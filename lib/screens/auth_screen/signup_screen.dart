@@ -4,23 +4,24 @@ import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/size_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/auth_bg.dart';
-import 'package:capstone_wms/screens/auth_screen/forgotpw_screen.dart';
-import 'package:capstone_wms/screens/auth_screen/signup_screen.dart';
-import 'package:capstone_wms/screens/main/stack_screen.dart';
+import 'package:capstone_wms/screens/auth_screen/signupver_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController usernameCont = TextEditingController();
   TextEditingController emailCont = TextEditingController();
   TextEditingController passwordcCont = TextEditingController();
+  TextEditingController repeatPasswordcCont = TextEditingController();
   bool isPasswordVisible = false;
+  bool isRePasswordVisible = false;
 
   ColorApp colorApp = ColorApp();
   PaddingCollection paddingApp = PaddingCollection();
@@ -32,11 +33,18 @@ class _LoginScreenState extends State<LoginScreen> {
     // TODO: implement initState
     super.initState();
     isPasswordVisible = true;
+    isRePasswordVisible = true;
   }
 
   void showPw() {
     setState(() {
       isPasswordVisible = !isPasswordVisible;
+    });
+  }
+
+  void showRePw() {
+    setState(() {
+      isRePasswordVisible = !isRePasswordVisible;
     });
   }
 
@@ -48,6 +56,20 @@ class _LoginScreenState extends State<LoginScreen> {
     double screenHeight = sizeCollection.screenHeight;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            'Sign Up',
+            style: textApp.heading4White,
+          ),
+        ),
+        automaticallyImplyLeading: false,
+        leading: const BackButton(),
+      ),
       body: SingleChildScrollView(
         child: SizedBox(
           width: screenWidth,
@@ -70,9 +92,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       // mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Welcome Back',
-                          style: textApp.bodyMedium,
+                        Padding(
+                          padding: paddingApp.textFieldPadding,
+                          child: TextField(
+                            controller: usernameCont,
+                            decoration: fieldStyle.userNameField,
+                          ),
                         ),
                         Padding(
                           padding: paddingApp.textFieldPadding,
@@ -97,24 +122,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                 )),
                           ),
                         ),
-                        // const SizedBox(
-                        //   height: 28,
-                        // ),
                         Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const ForgotPw()));
-                              },
-                              child: Text(
-                                'Forgot Password?',
-                                style: textApp.smallLabelBlack,
-                              ),
-                            ),
+                          padding: paddingApp.textFieldPadding,
+                          child: TextField(
+                            controller: repeatPasswordcCont,
+                            obscureText: isRePasswordVisible,
+                            decoration: InputDecoration(
+                                labelText: 'Confirm Password',
+                                hintText: 'Repeat Your Password',
+                                suffixIcon: IconButton(
+                                  onPressed: showRePw,
+                                  icon: Icon(isRePasswordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                )),
                           ),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -123,17 +148,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                     borderRadius: BorderRadius.circular(8))),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const MainScreen()));
+                                  builder: (context) => SignUpVerificcation(
+                                      email: 'static@mail.com')));
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 24),
                               child: Text(
-                                'Sign In',
+                                'Sign Up',
                                 style: TextStyle(color: colorApp.light1),
                               ),
                             )),
-
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -149,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             Text(
-                              ' or sign in with ',
+                              ' or sign up with ',
                               style: textApp.largeLabelBlack,
                             ),
                             Container(
@@ -211,17 +236,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'don\'t have an account?',
+                              'already have an account?',
                               style: textApp.smallLabelBlackclear,
                             ),
                             TextButton(
                               onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const SignUpScreen()));
+                                Navigator.of(context).pop;
                               },
                               child: Text(
-                                'Sign Up',
+                                'Sign In',
                                 style: textApp.normalLabel,
                               ),
                             ),

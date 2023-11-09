@@ -4,19 +4,19 @@ import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/size_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/auth_bg.dart';
-import 'package:capstone_wms/screens/auth_screen/setnewpw_screen.dart';
+import 'package:capstone_wms/screens/auth_screen/signupconf_screen.dart';
 import 'package:flutter/material.dart';
 
-class ResetPassword extends StatefulWidget {
-  ResetPassword({super.key, required this.email});
+class SignUpVerificcation extends StatefulWidget {
+  SignUpVerificcation({super.key, required this.email});
 
   String email = '';
 
   @override
-  State<ResetPassword> createState() => _ResetPasswordState();
+  State<SignUpVerificcation> createState() => _SignUpVerificcationState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _SignUpVerificcationState extends State<SignUpVerificcation> {
   TextEditingController otpCont1 = TextEditingController();
   TextEditingController otpCont2 = TextEditingController();
   TextEditingController otpCont3 = TextEditingController();
@@ -42,7 +42,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         title: Align(
           alignment: Alignment.centerRight,
           child: Text(
-            'Reset Password',
+            'Verification',
             style: textApp.heading4White,
           ),
         ),
@@ -161,7 +161,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                   borderRadius: BorderRadius.circular(8))),
                           onPressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const SetNewPassword()));
+                                builder: (context) => SignupConfirmation()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(

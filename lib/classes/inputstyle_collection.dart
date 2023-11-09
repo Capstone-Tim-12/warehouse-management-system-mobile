@@ -9,6 +9,11 @@ class DecorationCollection {
       labelText: 'Email',
       suffixIcon: Icon(Icons.email));
 
+  InputDecoration userNameField = const InputDecoration(
+      hintText: 'JaneDoe@mail.com',
+      labelText: 'Username',
+      suffixIcon: Icon(Icons.person));
+
   // InputDecoration passwordField = const InputDecoration(
   //   labelText: 'Password',
   //   hintText: 'Enter Your Password',
