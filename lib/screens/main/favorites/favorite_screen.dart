@@ -15,25 +15,26 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   final List<Map<String, dynamic>> items = [
     {
-      'imageURL': 'https://smartlegal.id/wp-content/uploads/2023/09/Tanda-Daftar-Gudang-jpg.webp',
+      'imageURL':
+          'https://smartlegal.id/wp-content/uploads/2023/09/Tanda-Daftar-Gudang-jpg.webp',
       'title': 'Gudang',
       'price': 'Rp. 2 Miliar',
       'location': 'Grendeng, Purwokerto',
       'landArea': 'Luas Tanah',
       'buildingArea': 'Luas Bangunan',
     },
-
     {
-      'imageURL': 'https://smartlegal.id/wp-content/uploads/2023/09/Tanda-Daftar-Gudang-jpg.webp',
+      'imageURL':
+          'https://smartlegal.id/wp-content/uploads/2023/09/Tanda-Daftar-Gudang-jpg.webp',
       'title': 'Gudang',
       'price': 'Rp. 4 Miliar',
       'location': 'Sudirman, Bandung',
       'landArea': 'Luas Tanah',
       'buildingArea': 'Luas Bangunan',
     },
-
     {
-      'imageURL': 'https://smartlegal.id/wp-content/uploads/2023/09/Tanda-Daftar-Gudang-jpg.webp',
+      'imageURL':
+          'https://smartlegal.id/wp-content/uploads/2023/09/Tanda-Daftar-Gudang-jpg.webp',
       'title': 'Gudang',
       'price': 'Rp. 3 Miliar',
       'location': 'Sumampir, Purwokerto',
@@ -93,10 +94,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: colorApp.secondaryColor,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
                             ),
                             onPressed: () {},
-                            child: Text(item['title'], style: TextStyle(color: colorApp.dark1)),
+                            child: Text(item['title'],
+                                style: TextStyle(color: colorApp.dark1)),
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -105,11 +108,11 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(item['price'], style: TextCollection.normalLabel),
+                                Text(item['price'],
+                                    style: textCollection.normalLabel),
                                 const SizedBox(height: 8),
-                                Text(
-                                  item['location'],
-                                  style: TextCollection.bodySmall),
+                                Text(item['location'],
+                                    style: textCollection.bodySmall),
                               ],
                             ),
                           ],
@@ -120,11 +123,17 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           children: [
                             const Icon(Icons.warehouse),
                             const SizedBox(width: 8),
-                            Text(item['landArea'], style: TextStyle(color: colorApp.dark1, fontWeight: FontWeight.w500)),
+                            Text(item['landArea'],
+                                style: TextStyle(
+                                    color: colorApp.dark1,
+                                    fontWeight: FontWeight.w500)),
                             const SizedBox(width: 8),
                             const Icon(Icons.apartment),
                             const SizedBox(width: 8),
-                            Text(item['buildingArea'], style: TextStyle(color: colorApp.dark1, fontWeight: FontWeight.w500)),
+                            Text(item['buildingArea'],
+                                style: TextStyle(
+                                    color: colorApp.dark1,
+                                    fontWeight: FontWeight.w500)),
                           ],
                         ),
                         const SizedBox(height: 21),
