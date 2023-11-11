@@ -75,6 +75,163 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 70,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person,
+                        color: colorApp.secondaryColor,
+                      ),
+                      title: const Text("Photo Profile"),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: colorApp.secondaryColor,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person,
+                        color: colorApp.secondaryColor,
+                      ),
+                      title: const Text("Identity Verification"),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: colorApp.secondaryColor,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person,
+                        color: colorApp.secondaryColor,
+                      ),
+                      title: const Text("Account Verification"),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: colorApp.secondaryColor,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person,
+                        color: colorApp.secondaryColor,
+                      ),
+                      title: const Text("Username"),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: colorApp.secondaryColor,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person,
+                        color: colorApp.secondaryColor,
+                      ),
+                      title: const Text("Email"),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: colorApp.secondaryColor,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person,
+                        color: colorApp.secondaryColor,
+                      ),
+                      title: const Text("Profile"),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: colorApp.secondaryColor,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.pin_drop,
+                        color: colorApp.secondaryColor,
+                      ),
+                      title: const Text("Location"),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: colorApp.secondaryColor,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person,
+                        color: colorApp.secondaryColor,
+                      ),
+                      title: const Text("History"),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: colorApp.secondaryColor,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person,
+                        color: colorApp.secondaryColor,
+                      ),
+                      title: const Text("Notification"),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: colorApp.secondaryColor,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 70,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.person,
+                        color: colorApp.secondaryColor,
+                      ),
+                      title: const Text("Log Out"),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: colorApp.secondaryColor,
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
