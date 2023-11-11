@@ -44,6 +44,13 @@ class _DashboardState extends State<Dashboard> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // Container(
+            //   height: 200,
+            //   width: MediaQuery.of(context).size.width,
+            //   decoration: BoxDecoration(
+            //     color: ColorApp().mainColor,
+            //   ),
+            // ),
             Container(
               height: 117,
               width: MediaQuery.of(context).size.width,
@@ -51,7 +58,7 @@ class _DashboardState extends State<Dashboard> {
                 color: ColorApp().mainColor,
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Column(
                   children: [
                     Row(
@@ -85,10 +92,15 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ),
                         const Spacer(),
-                        Icon(
-                          Icons.filter_list,
-                          color: ColorApp().light4,
-                          size: 30,
+                        IconButton(
+                          onPressed: () {
+                            FilterBottomSheet(context);
+                          },
+                          icon: Icon(
+                            Icons.filter_list_rounded,
+                            color: ColorApp().light4,
+                            size: 30,
+                          ),
                         ),
                       ],
                     ),
@@ -108,22 +120,382 @@ class _DashboardState extends State<Dashboard> {
                         )
                       ],
                     ),
-                    const Spacer(),
+                    // const Spacer(),
+                    // const SizedBox(height: 50),
                   ],
                 ),
               ),
             ),
-            const SizedBox(
-              height: 155,
-              child: BannerWidget(),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: SizedBox(
+                height: 155,
+                width: double.infinity,
+                child: BannerWidget(),
+              ),
             ),
-            // const SizedBox(height: 100),
-            Row(
-              children: [const Text("Recommended For You")],
-            )
+            // const SizedBox(height: 70),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Text(
+                    "Recommended For You",
+                    style: TextCollection.bodySmall,
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.more_horiz),
+                  ),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: SizedBox(
+                height: 185,
+                width: double.infinity,
+                child: RecommendedCardWidget(),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Text(
+                    "Near You",
+                    style: TextCollection.bodySmall,
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.more_horiz),
+                  ),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: SizedBox(
+                height: 185,
+                width: double.infinity,
+                child: RecommendedCardWidget(),
+              ),
+            ),
+            const SizedBox(height: 30),
           ],
         ),
       ),
+    );
+  }
+
+  Future<dynamic> FilterBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: ColorApp().light4,
+      builder: (builder) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.85,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(20),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: SizedBox(
+                  height: 50,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.filter_list_rounded,
+                        color: ColorApp().dark1,
+                      ),
+                      const SizedBox(width: 20),
+                      Text("Filter", style: TextCollection.bodySmall)
+                    ],
+                  ),
+                ),
+              ),
+              const Divider(),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text("Urutkan", style: TextCollection.bodySmall),
+              ),
+              // const SizedBox(height: 10),
+              SizedBox(
+                height: 30,
+                child: Row(
+                  children: [
+                    Checkbox(value: false, onChanged: (value) {}),
+                    const SizedBox(width: 5),
+                    Text(
+                      "Paling Rekomendasi",
+                      style: TextCollection.smallLabel.copyWith(
+                        color: ColorApp().dark1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 30,
+                child: Row(
+                  children: [
+                    Checkbox(value: false, onChanged: (value) {}),
+                    const SizedBox(width: 5),
+                    Text(
+                      "Harga Terendah",
+                      style: TextCollection.smallLabel.copyWith(
+                        color: ColorApp().dark1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 30,
+                child: Row(
+                  children: [
+                    Checkbox(value: false, onChanged: (value) {}),
+                    const SizedBox(width: 5),
+                    Text(
+                      "Harga Tertinggi",
+                      style: TextCollection.smallLabel.copyWith(
+                        color: ColorApp().dark1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text("Price Range", style: TextCollection.bodySmall),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class RecommendedCardWidget extends StatelessWidget {
+  const RecommendedCardWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      children: <Widget>[
+        SizedBox(
+          height: 169,
+          width: 155,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 105,
+                  child: Image.network(
+                    "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 3),
+                  child: Text(
+                    "Warehouse Abadi",
+                    style: TextCollection.smallLabel
+                        .copyWith(color: ColorApp().dark1),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 3),
+                  child: Text(
+                    "Jakarta Barat",
+                    style: TextCollection.extraSmallLabel.copyWith(
+                      color: ColorApp().dark1,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 3),
+                  child: Text(
+                    "RP.10.000.000/bln",
+                    style: TextCollection.bodySmall.copyWith(
+                      color: ColorApp().secondaryColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 5),
+        SizedBox(
+          height: 169,
+          width: 155,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 105,
+                  child: Image.network(
+                    "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 3),
+                  child: Text(
+                    "Warehouse Abadi",
+                    style: TextCollection.smallLabel
+                        .copyWith(color: ColorApp().dark1),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 3),
+                  child: Text(
+                    "Jakarta Barat",
+                    style: TextCollection.extraSmallLabel.copyWith(
+                      color: ColorApp().dark1,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 3),
+                  child: Text(
+                    "RP.10.000.000/bln",
+                    style: TextCollection.bodySmall.copyWith(
+                      color: ColorApp().secondaryColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 5),
+        SizedBox(
+          height: 169,
+          width: 155,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 105,
+                  child: Image.network(
+                    "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 3),
+                  child: Text(
+                    "Warehouse Abadi",
+                    style: TextCollection.smallLabel
+                        .copyWith(color: ColorApp().dark1),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 3),
+                  child: Text(
+                    "Jakarta Barat",
+                    style: TextCollection.extraSmallLabel.copyWith(
+                      color: ColorApp().dark1,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 3),
+                  child: Text(
+                    "RP.10.000.000/bln",
+                    style: TextCollection.bodySmall.copyWith(
+                      color: ColorApp().secondaryColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 5),
+        SizedBox(
+          height: 169,
+          width: 155,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 105,
+                  child: Image.network(
+                    "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 3),
+                  child: Text(
+                    "Warehouse Abadi",
+                    style: TextCollection.smallLabel
+                        .copyWith(color: ColorApp().dark1),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 3),
+                  child: Text(
+                    "Jakarta Barat",
+                    style: TextCollection.extraSmallLabel.copyWith(
+                      color: ColorApp().dark1,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 3),
+                  child: Text(
+                    "RP.10.000.000/bln",
+                    style: TextCollection.bodySmall.copyWith(
+                      color: ColorApp().secondaryColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 5),
+      ],
     );
   }
 }
