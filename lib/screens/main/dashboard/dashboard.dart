@@ -16,7 +16,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ColorApp().mainColor,
+        backgroundColor: ColorApp().mainColorDarker,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -46,91 +46,91 @@ class _DashboardState extends State<Dashboard> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 117,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: ColorApp().mainColor,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Column(
-                  children: [
-                    Row(
+            Stack(
+              children: [
+                Container(
+                  height: 200,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: ColorApp().mainColorDarker,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Column(
                       children: [
-                        SizedBox(
-                          height: 40,
-                          width: 320,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: ColorApp().light3.withOpacity(0.5),
-                              hintText: "Search",
-                              contentPadding:
-                                  const EdgeInsets.fromLTRB(0, 2, 0, 0),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: ColorApp().mainColor,
+                        Row(
+                          children: [
+                            SizedBox(
+                              height: 40,
+                              width: 320,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: ColorApp().light3.withOpacity(0.5),
+                                  hintText: "Search",
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(0, 2, 0, 0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(
+                                      color: ColorApp().mainColor,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(
+                                      color: ColorApp().mainColor,
+                                    ),
+                                  ),
+                                  prefixIcon: const Icon(
+                                    Icons.search,
+                                  ),
                                 ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: ColorApp().mainColor,
-                                ),
-                              ),
-                              prefixIcon: const Icon(
-                                Icons.search,
                               ),
                             ),
-                          ),
+                            const Spacer(),
+                            IconButton(
+                              onPressed: () {
+                                FilterBottomSheet(context);
+                              },
+                              icon: Icon(
+                                Icons.filter_list_rounded,
+                                color: ColorApp().light4,
+                                size: 30,
+                              ),
+                            ),
+                          ],
                         ),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            FilterBottomSheet(context);
-                          },
-                          icon: Icon(
-                            Icons.filter_list_rounded,
-                            color: ColorApp().light4,
-                            size: 30,
-                          ),
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: ColorApp().light4,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              "Purwokerto, Banyumas",
+                              style: TextCollection.smallLabel.copyWith(
+                                color: ColorApp().light4,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on_outlined,
-                          color: ColorApp().light4,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          "Purwokerto, Banyumas",
-                          style: TextCollection.smallLabel.copyWith(
-                            color: ColorApp().light4,
-                          ),
-                        )
-                      ],
-                    ),
-                    // const Spacer(),
-                    // const SizedBox(height: 50),
-                  ],
+                  ),
                 ),
-              ),
+                const Padding(
+                  padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 120.0),
+                  child: SizedBox(
+                    height: 155,
+                    child: BannerWidget(),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: SizedBox(
-                height: 155,
-                width: double.infinity,
-                child: BannerWidget(),
-              ),
-            ),
-            // const SizedBox(height: 70),
+            // const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
@@ -594,6 +594,7 @@ class RecommendedCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      // ganti pakai listview builder nanti
       scrollDirection: Axis.horizontal,
       children: <Widget>[
         SizedBox(
