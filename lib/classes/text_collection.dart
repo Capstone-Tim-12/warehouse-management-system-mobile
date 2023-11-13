@@ -1,6 +1,8 @@
+import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:flutter/material.dart';
 
 class TextCollection {
+  ColorApp colorApp = ColorApp();
   TextStyle display1 = const TextStyle(
       color: Colors.black,
       fontFamily: 'Montserrat',
@@ -116,7 +118,6 @@ class TextCollection {
     fontWeight: FontWeight.w400,
   );
 
-
   TextStyle normalLabel = const TextStyle(
     color: Color(0xff3377FF),
     fontFamily: 'Montserrat',
@@ -145,7 +146,7 @@ class TextCollection {
     fontWeight: FontWeight.w600,
     height: 0.11,
   );
-  
+
   TextStyle smallLabelBlack = const TextStyle(
       color: Colors.black,
       fontFamily: 'Montserrat',
@@ -159,11 +160,32 @@ class TextCollection {
     fontSize: 14,
     fontWeight: FontWeight.w400,
   );
-  
-    TextStyle largeLabelBlack = const TextStyle(
+
+  TextStyle largeLabelBlack = const TextStyle(
     color: Colors.black,
     fontFamily: 'Montserrat',
     fontSize: 16,
     fontWeight: FontWeight.w500,
+  );
+
+  TextStyle heading7 = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+  );
+
+  TextStyle heading8 = const TextStyle(
+    color: Color(0xff219105),
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+  );
+
+  TextStyle orangeLabel = const TextStyle(
+    color: Color(0xffFF7733),
+    fontSize: 14,
+    fontFamily: 'Montserrat',
+    fontWeight: FontWeight.w600,
   );
 }

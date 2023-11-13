@@ -87,6 +87,7 @@ class _MyWarehouseState extends State<MyWarehouse> {
                           child: Container(
                             margin: const EdgeInsets.only(bottom: 16),
                             child: Card(
+                              elevation: 4,
                               child: Row(
                                 children: [
                                   Container(
@@ -145,6 +146,7 @@ class _MyWarehouseState extends State<MyWarehouse> {
                         return Container(
                           margin: const EdgeInsets.only(bottom: 16),
                           child: Card(
+                            elevation: 4,
                             child: Row(
                               children: [
                                 Container(
