@@ -40,4 +40,7 @@ class ColorApp {
   // Color bgGrey = const Color(0xFFD9D9D9);
   // Color disableOrange = const Color(0xffFFA476);
   // Color bgGrey2 = const Color(0xff94A2B5);
+
+  Color green = const Color(0xff219105);
+  Color secondaryColor2 = const Color(0xffFFA476);
 }

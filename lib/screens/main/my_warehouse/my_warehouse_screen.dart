@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:capstone_wms/screens/main/my_warehouse/detail_my_warehouse_screen.dart';
 
 class MyWarehouse extends StatefulWidget {
   const MyWarehouse({Key? key}) : super(key: key);
@@ -34,155 +35,179 @@ class _MyWarehouseState extends State<MyWarehouse> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('My Warehouse'),
-          bottom: const TabBar(
-            labelColor: Colors.blue,
-            unselectedLabelColor: Colors.black,
-            indicatorColor: Colors.blue,
-            tabs: <Widget>[
-              Tab(
-                child: Text(
-                  'Disewa',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: [
+              Container(
+                color: Colors.grey, // Warna divider
+                height: 1.0, // Tinggi divider
               ),
-              Tab(
-                child: Text(
-                  'Diajukan',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              const TabBar(
+                labelColor: Colors.blue,
+                unselectedLabelColor: Colors.black,
+                indicatorColor: Colors.blue,
+                tabs: <Widget>[
+                  Tab(
+                    child: Text(
+                      'Disewa',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      'Diajukan',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    // Konten untuk tab "Disewa"
+                    ListView.builder(
+                      itemCount: warehouseData.length,
+                      itemBuilder: (context, index) {
+                        final item = warehouseData[index];
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return DetailMyWarehouseScreen(
+                                  warehouseData: item);
+                            }));
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 16),
+                            child: Card(
+                              elevation: 4,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 100,
+                                    width: 100,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      child: Image.network(item['imageUrl']),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 12,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item['namaGudang'],
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 12,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(item['lokasiGudang']),
+                                          const SizedBox(
+                                            width: 60,
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 12,
+                                      ),
+                                      Text(item['luasGudang']),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    // Konten untuk tab "Diajukan"
+                    ListView.builder(
+                      itemCount: warehouseData.length,
+                      itemBuilder: (context, index) {
+                        final item = warehouseData[index];
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 16),
+                          child: Card(
+                            elevation: 4,
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 100,
+                                  width: 100,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    child: Image.network(item['imageUrl']),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 12,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item['namaGudang'],
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(item['lokasiGudang']),
+                                        const SizedBox(
+                                          width: 40,
+                                        ),
+                                        Text(
+                                          item['proses'],
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.amber,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                    Text(item['luasGudang']),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-        ),
-        body: TabBarView(
-          children: [
-            // Konten untuk tab "Disewa"
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: ListView.builder(
-                itemCount: warehouseData.length,
-                itemBuilder: (context, index) {
-                  final item = warehouseData[index];
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: Card(
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 100,
-                            width: 100,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12.0),
-                              child: Image.network(item['imageUrl']),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item['namaGudang'],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text(item['lokasiGudang']),
-                                  const SizedBox(
-                                    width: 60,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Text(item['luasGudang']),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            // Konten untuk tab "Diajukan"
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: ListView.builder(
-                itemCount: warehouseData.length,
-                itemBuilder: (context, index) {
-                  final item = warehouseData[index];
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: Card(
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 100,
-                            width: 100,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12.0),
-                              child: Image.network(item['imageUrl']),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item['namaGudang'],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text(item['lokasiGudang']),
-                                  const SizedBox(
-                                    width: 40,
-                                  ),
-                                  Text(
-                                    item['proses'],
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.amber,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Text(item['luasGudang']),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
         ),
       ),
     );
