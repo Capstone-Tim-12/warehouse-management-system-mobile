@@ -103,15 +103,109 @@ class _PaymentScreenState extends State<PaymentScreen> {
               child: Row(
                 children: [
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Kartu Kredit/Debit",
                         style: TextCollection().heading6,
                       ),
-                      Container(
+                      SizedBox(
                         width: 100,
                         height: 20,
-                        child: SvgPicture.asset("assets/svg/debit_icon.svg"),
+                        // child: Image.network(""),
+                      )
+                    ],
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 60,
+              width: double.infinity,
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "ATM/BANK transfer",
+                        style: TextCollection().heading6,
+                      ),
+                      SizedBox(
+                        width: 100,
+                        height: 20,
+                        // child: Image.network(""),
+                      )
+                    ],
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 60,
+              width: double.infinity,
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "E-Money",
+                        style: TextCollection().heading6,
+                      ),
+                      SizedBox(
+                        width: 100,
+                        height: 20,
+                        // child: Image.network(""),
+                      )
+                    ],
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 60,
+              width: double.infinity,
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Metode pembayaran lain",
+                        style: TextCollection().heading6,
+                      ),
+                      SizedBox(
+                        width: 100,
+                        height: 20,
+                        // child: Image.network(""),
                       )
                     ],
                   ),
