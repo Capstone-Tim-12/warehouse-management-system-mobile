@@ -21,15 +21,20 @@ class DecorationCollection {
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(width: 1, color: Color(0xFFC7C9D9))));
 
-  // InputDecoration passwordField = const InputDecoration(
-  //   labelText: 'Password',
-  //   hintText: 'Enter Your Password',
-  // );
-
   InputDecoration otpField = InputDecoration(
       filled: true,
       fillColor: colorApp.light1,
       border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(width: 1, color: Color(0xFF5C5C5C))));
+
+  //Dropdown btn styles
+
+  ButtonStyle dropdownGender = ElevatedButton.styleFrom(
+    backgroundColor: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+      side: const BorderSide(width: 1, color: Color(0xFFC7C9D9)),
+    ),
+  );
 }

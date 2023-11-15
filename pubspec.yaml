@@ -50,6 +50,7 @@ dependencies:
   camera: ^0.10.5+5
   flutter_tesseract_ocr: ^0.4.24
   flutter_scalable_ocr: ^2.0.0
+  drop_down_list: ^0.0.5
 
 dev_dependencies:
   flutter_test:

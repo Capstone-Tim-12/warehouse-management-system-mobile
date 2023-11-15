@@ -80,6 +80,8 @@ class _KtpScannerState extends State<KtpScanner> {
       XFile image = await _cameraController!.takePicture();
       print(image.path);
 
+      _cameraController!.dispose();
+
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => const CheckIdentity()));
     } catch (e) {

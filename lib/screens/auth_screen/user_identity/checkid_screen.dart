@@ -2,7 +2,9 @@ import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/screens/auth_screen/user_identity/edit_address.dart';
 import 'package:capstone_wms/screens/auth_screen/user_identity/edit_identity.dart';
+import 'package:capstone_wms/screens/auth_screen/user_identity/panduanselfiektp.dart';
 import 'package:flutter/material.dart';
 
 class CheckIdentity extends StatefulWidget {
@@ -340,7 +342,10 @@ class _CheckIdentityState extends State<CheckIdentity> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const EditAddress()));
+                        },
                         child: Text(
                           'Ubah',
                           style: textApp.bodyNormal
@@ -491,8 +496,8 @@ class _CheckIdentityState extends State<CheckIdentity> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8))),
                           onPressed: () {
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //     builder: (context) => const KtpScanner()));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => PanduanSelfieKTP()));
                           },
                           child: Text('Lanjut Selfie KTP',
                               style: textApp.largeLabel.copyWith(

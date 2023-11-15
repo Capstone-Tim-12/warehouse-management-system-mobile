@@ -1,8 +1,7 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
-import 'package:capstone_wms/classes/constants/citizenship_collection.dart';
 import 'package:capstone_wms/classes/constants/city_collection.dart';
-import 'package:capstone_wms/classes/constants/gender_collection.dart';
-import 'package:capstone_wms/classes/constants/job_collection.dart';
+import 'package:capstone_wms/classes/constants/country_collection.dart';
+import 'package:capstone_wms/classes/constants/province_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
@@ -10,41 +9,29 @@ import 'package:drop_down_list/drop_down_list.dart';
 import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
 
-class EditIdentity extends StatefulWidget {
-  const EditIdentity({super.key});
+class EditAddress extends StatefulWidget {
+  const EditAddress({super.key});
 
   @override
-  State<EditIdentity> createState() => _EditIdentityState();
+  State<EditAddress> createState() => _EditAddressState();
 }
 
-class _EditIdentityState extends State<EditIdentity> {
+class _EditAddressState extends State<EditAddress> {
+  TextEditingController kecamatanCont = TextEditingController();
+  TextEditingController alamatCont = TextEditingController();
+
   ColorApp colorApp = ColorApp();
   PaddingCollection paddingApp = PaddingCollection();
   TextCollection textApp = TextCollection();
   DecorationCollection fieldStyle = DecorationCollection();
-  Gender gender = Gender();
+  // Gender gender = Gender();
 
-  String selectedGender = 'Laki-Laki';
-  String selectedCity = 'Jakarta';
-  String selectedJobs = 'Karyawan Swasta';
-  String selectedCitizenship = 'WNI';
-
-  String selectedDay = '11';
-  String selectedMonth = '9';
-  String selectedYear = '2001';
-  DateTime selectedDate = DateTime.now();
-  DateTime now = DateTime.now();
-
-  //controller
-  TextEditingController nikCont = TextEditingController();
-  TextEditingController nameCont = TextEditingController();
+  String selectedCountry = 'Indonesia';
+  String selectedProvince = ' ';
+  String selectedCity = ' ';
 
   @override
   Widget build(BuildContext context) {
-    String date = selectedDate.day.toString();
-    String month = selectedDate.month.toString();
-    String year = selectedDate.year.toString();
-
     return Scaffold(
       backgroundColor: colorApp.bgAuthScaffold,
       appBar: AppBar(
@@ -141,7 +128,7 @@ class _EditIdentityState extends State<EditIdentity> {
             child: ListView(
               children: [
                 Text(
-                  'Ubah Data Diri',
+                  'Ubah Alamat',
                   style: textApp.heading3.copyWith(fontSize: 27),
                 ),
                 const SizedBox(
@@ -149,12 +136,12 @@ class _EditIdentityState extends State<EditIdentity> {
                 ),
                 Row(
                   children: [
-                    const Icon(Icons.person),
+                    const Icon(Icons.location_on),
                     const SizedBox(
                       width: 12,
                     ),
                     Text(
-                      'Data Diri',
+                      'Alamat',
                       style: textApp.bodyMedium,
                       textAlign: TextAlign.left,
                     ),
@@ -164,40 +151,7 @@ class _EditIdentityState extends State<EditIdentity> {
                   height: 14,
                 ),
                 Text(
-                  'NIK',
-                  style: textApp.bodyMedium,
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                SizedBox(
-                  height: 44,
-                  child: TextField(
-                    controller: nikCont,
-                    decoration: fieldStyle.nikField,
-                    textAlignVertical: TextAlignVertical.top,
-                  ),
-                ),
-                Text(
-                  'Nama Lengkap',
-                  style: textApp.bodyMedium,
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                SizedBox(
-                  height: 44,
-                  child: TextField(
-                    controller: nikCont,
-                    decoration: fieldStyle.nikField,
-                    textAlignVertical: TextAlignVertical.top,
-                  ),
-                ),
-                // const SizedBox(
-                //   height: 4,
-                // ),
-                Text(
-                  'Jenis Kelamin',
+                  'Negara',
                   style: textApp.bodyMedium,
                 ),
                 const SizedBox(
@@ -207,14 +161,15 @@ class _EditIdentityState extends State<EditIdentity> {
                   height: 44,
                   child: ElevatedButton(
                       style: fieldStyle.dropdownGender,
-                      onPressed: () {
-                        dropdownGender(context);
+                      onPressed: () async {
+                        // dropdownCities(context);
+                        dropdownCitizenship(context);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            selectedGender,
+                            selectedCountry,
                             style: textApp.bodyNormal
                                 .copyWith(fontWeight: FontWeight.w400),
                           ),
@@ -226,7 +181,34 @@ class _EditIdentityState extends State<EditIdentity> {
                       )),
                 ),
                 Text(
-                  'Tempat Lahir',
+                  'Provinsi',
+                  style: textApp.bodyMedium,
+                ),
+                SizedBox(
+                  height: 44,
+                  child: ElevatedButton(
+                      style: fieldStyle.dropdownGender,
+                      onPressed: () async {
+                        // dropdownCities(context);
+                        dropdownProvince(context);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            selectedProvince,
+                            style: textApp.bodyNormal
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                          Icon(
+                            Icons.arrow_drop_down,
+                            color: colorApp.dark1,
+                          )
+                        ],
+                      )),
+                ),
+                Text(
+                  'Kota/Kabupaten',
                   style: textApp.bodyMedium,
                 ),
                 const SizedBox(
@@ -236,7 +218,8 @@ class _EditIdentityState extends State<EditIdentity> {
                   height: 44,
                   child: ElevatedButton(
                       style: fieldStyle.dropdownGender,
-                      onPressed: () {
+                      onPressed: () async {
+                        // dropdownCities(context);
                         dropdownCities(context);
                       },
                       child: Row(
@@ -255,7 +238,7 @@ class _EditIdentityState extends State<EditIdentity> {
                       )),
                 ),
                 Text(
-                  'Tanggal Lahir',
+                  'Kecamatan',
                   style: textApp.bodyMedium,
                 ),
                 const SizedBox(
@@ -263,99 +246,27 @@ class _EditIdentityState extends State<EditIdentity> {
                 ),
                 SizedBox(
                   height: 44,
-                  child: ElevatedButton(
-                      style: fieldStyle.dropdownGender,
-                      onPressed: () async {
-                        // dropdownCities(context);
-                        final selectDate = await showDatePicker(
-                            context: context,
-                            initialDate: now,
-                            firstDate: DateTime(1890),
-                            lastDate: DateTime(now.year + 100));
-
-                        setState(() {
-                          if (selectDate != null) {
-                            selectedDate = selectDate;
-                            print(selectedDate.day);
-                            print(selectedDate.month);
-                            print(selectedDate.year);
-                          }
-                        });
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '$date-$month-$year',
-                            style: textApp.bodyNormal
-                                .copyWith(fontWeight: FontWeight.w400),
-                          ),
-                          Icon(
-                            Icons.calendar_month,
-                            color: colorApp.dark1,
-                          )
-                        ],
-                      )),
+                  child: TextField(
+                    controller: kecamatanCont,
+                    decoration: fieldStyle.nikField,
+                    textAlignVertical: TextAlignVertical.top,
+                  ),
                 ),
                 Text(
-                  'Pekerjaan',
+                  'Alamat Lengkap',
                   style: textApp.bodyMedium,
                 ),
                 const SizedBox(
                   height: 4,
                 ),
                 SizedBox(
-                  height: 44,
-                  child: ElevatedButton(
-                      style: fieldStyle.dropdownGender,
-                      onPressed: () async {
-                        // dropdownCities(context);
-                        dropdownJobs(context);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            selectedJobs,
-                            style: textApp.bodyNormal
-                                .copyWith(fontWeight: FontWeight.w400),
-                          ),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color: colorApp.dark1,
-                          )
-                        ],
-                      )),
-                ),
-                Text(
-                  'Kewarganegaraan',
-                  style: textApp.bodyMedium,
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                SizedBox(
-                  height: 44,
-                  child: ElevatedButton(
-                      style: fieldStyle.dropdownGender,
-                      onPressed: () async {
-                        // dropdownCities(context);
-                        dropdownCitizenship(context);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            selectedCitizenship,
-                            style: textApp.bodyNormal
-                                .copyWith(fontWeight: FontWeight.w400),
-                          ),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color: colorApp.dark1,
-                          )
-                        ],
-                      )),
+                  height: 109,
+                  child: TextField(
+                    maxLines: 9,
+                    controller: alamatCont,
+                    decoration: fieldStyle.nikField,
+                    textAlignVertical: TextAlignVertical.top,
+                  ),
                 ),
               ],
             ),
@@ -398,11 +309,11 @@ class _EditIdentityState extends State<EditIdentity> {
     );
   }
 
-  void dropdownGender(BuildContext context) {
+  void dropdownCitizenship(BuildContext context) {
     DropDownState(
       DropDown(
           bottomSheetTitle: Text(
-            selectedGender,
+            selectedCountry,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
@@ -415,14 +326,47 @@ class _EditIdentityState extends State<EditIdentity> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          data: Gender.genderList,
+          data: Country.couintryList,
           selectedItems: (List<dynamic> selectedList) {
             if (selectedList.isNotEmpty &&
                 selectedList.first is SelectedListItem) {
               setState(() {
-                selectedGender = (selectedList.first as SelectedListItem).name;
+                selectedCountry = (selectedList.first as SelectedListItem).name;
               });
-              print(selectedGender);
+              print(selectedCountry);
+            }
+          },
+          enableMultipleSelection: false,
+          // searchBoxStyle: null,
+          isSearchVisible: false),
+    ).showModal(context);
+  }
+
+  void dropdownProvince(BuildContext context) {
+    DropDownState(
+      DropDown(
+          bottomSheetTitle: Text(
+            selectedProvince,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0,
+            ),
+          ),
+          submitButtonChild: const Text(
+            'Done',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          data: Provinsi.provinsiList,
+          selectedItems: (List<dynamic> selectedList) {
+            if (selectedList.isNotEmpty &&
+                selectedList.first is SelectedListItem) {
+              setState(() {
+                selectedCountry = (selectedList.first as SelectedListItem).name;
+              });
+              print(selectedCountry);
             }
           },
           enableMultipleSelection: false,
@@ -456,73 +400,6 @@ class _EditIdentityState extends State<EditIdentity> {
                 selectedCity = (selectedList.first as SelectedListItem).name;
               });
               print(selectedCity);
-            }
-          },
-          enableMultipleSelection: false,
-          // searchBoxStyle: null,
-          isSearchVisible: true),
-    ).showModal(context);
-  }
-
-  void dropdownJobs(BuildContext context) {
-    DropDownState(
-      DropDown(
-          bottomSheetTitle: Text(
-            selectedJobs,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20.0,
-            ),
-          ),
-          submitButtonChild: const Text(
-            'Done',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          data: Jobs.jobList,
-          selectedItems: (List<dynamic> selectedList) {
-            if (selectedList.isNotEmpty &&
-                selectedList.first is SelectedListItem) {
-              setState(() {
-                selectedJobs = (selectedList.first as SelectedListItem).name;
-              });
-              print(selectedJobs);
-            }
-          },
-          enableMultipleSelection: false,
-          // searchBoxStyle: null,
-          isSearchVisible: true),
-    ).showModal(context);
-  }
-
-  void dropdownCitizenship(BuildContext context) {
-    DropDownState(
-      DropDown(
-          bottomSheetTitle: Text(
-            selectedCitizenship,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20.0,
-            ),
-          ),
-          submitButtonChild: const Text(
-            'Done',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          data: Citizenship.citizenshipList,
-          selectedItems: (List<dynamic> selectedList) {
-            if (selectedList.isNotEmpty &&
-                selectedList.first is SelectedListItem) {
-              setState(() {
-                selectedCitizenship =
-                    (selectedList.first as SelectedListItem).name;
-              });
-              print(selectedCitizenship);
             }
           },
           enableMultipleSelection: false,
