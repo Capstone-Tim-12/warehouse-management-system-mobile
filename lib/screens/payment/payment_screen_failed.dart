@@ -17,7 +17,7 @@ class PaymentFailed extends StatelessWidget {
               height: 160,
               child: Icon(
                 Icons.error,
-                color: ColorApp().secondaryColor,
+                color: ColorApp().stateError,
                 size: 165,
               ),
             ),

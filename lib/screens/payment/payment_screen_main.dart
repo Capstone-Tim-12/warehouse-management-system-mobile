@@ -1,8 +1,10 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
+import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/screens/payment/payment_screen_failed.dart';
 import 'package:capstone_wms/screens/payment/payment_screen_success.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -36,7 +38,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               "Detail Pemesanan",
               style: TextCollection().bodySmall,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Container(
               height: 105,
               width: double.infinity,
@@ -87,102 +89,133 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
             Text(
               "Metode Pembayaran",
               style: TextCollection().bodySmall,
             ),
             const SizedBox(height: 10),
-            Container(
-              height: 200,
+            const Divider(),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 60,
               width: double.infinity,
-              decoration: BoxDecoration(
-                color: ColorApp().mainColor,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Qris",
-                          style: TextCollection().bodySmall.copyWith(
-                                color: ColorApp().light4,
-                                fontWeight: FontWeight.normal,
-                              ),
-                        ),
-                        const Spacer(),
-                        Radio(
-                          activeColor: ColorApp().secondaryColor,
-                          fillColor: MaterialStateProperty.resolveWith<Color?>(
-                              (states) => ColorApp().secondaryColor),
-                          value: "Qris",
-                          groupValue: selectedPaymentMethod,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedPaymentMethod = value.toString();
-                            });
-                          },
-                        ),
-                      ],
+              child: Row(
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        "Kartu Kredit/Debit",
+                        style: TextCollection().heading6,
+                      ),
+                      Container(
+                        width: 100,
+                        height: 20,
+                        child: SvgPicture.asset("assets/svg/debit_icon.svg"),
+                      )
+                    ],
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down_rounded,
                     ),
-                    const Divider(),
-                    Row(
-                      children: [
-                        Text(
-                          "Transfer Bank",
-                          style: TextCollection().bodySmall.copyWith(
-                                color: ColorApp().light4,
-                                fontWeight: FontWeight.normal,
-                              ),
-                        ),
-                        const Spacer(),
-                        Radio(
-                          activeColor: ColorApp().secondaryColor,
-                          fillColor: MaterialStateProperty.resolveWith<Color?>(
-                              (states) => ColorApp().secondaryColor),
-                          value: "Transfer Bank",
-                          groupValue: selectedPaymentMethod,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedPaymentMethod = value as String?;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    const Divider(),
-                    Row(
-                      children: [
-                        Text(
-                          "Kartu Kredit/Debit",
-                          style: TextCollection().bodySmall.copyWith(
-                                color: ColorApp().light4,
-                                fontWeight: FontWeight.normal,
-                              ),
-                        ),
-                        const Spacer(),
-                        Radio(
-                          activeColor: ColorApp().secondaryColor,
-                          fillColor: MaterialStateProperty.resolveWith<Color?>(
-                              (states) => ColorApp().secondaryColor),
-                          value: "Kartu Kredit/Debit",
-                          groupValue: selectedPaymentMethod,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedPaymentMethod = value as String?;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            const Spacer(),
+
+            // Container(
+            //   height: 200,
+            //   width: double.infinity,
+            //   decoration: BoxDecoration(
+            //     color: ColorApp().mainColor,
+            //     borderRadius: BorderRadius.circular(8.0),
+            //   ),
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(10.0),
+            //     child: Column(
+            //       children: [
+            //         Row(
+            //           children: [
+            //             Text(
+            //               "Qris",
+            //               style: TextCollection().bodySmall.copyWith(
+            //                     color: ColorApp().light4,
+            //                     fontWeight: FontWeight.normal,
+            //                   ),
+            //             ),
+            //             const Spacer(),
+            //             Radio(
+            //               activeColor: ColorApp().secondaryColor,
+            //               fillColor: MaterialStateProperty.resolveWith<Color?>(
+            //                   (states) => ColorApp().secondaryColor),
+            //               value: "Qris",
+            //               groupValue: selectedPaymentMethod,
+            //               onChanged: (value) {
+            //                 setState(() {
+            //                   selectedPaymentMethod = value.toString();
+            //                 });
+            //               },
+            //             ),
+            //           ],
+            //         ),
+            //         const Divider(),
+            //         Row(
+            //           children: [
+            //             Text(
+            //               "Transfer Bank",
+            //               style: TextCollection().bodySmall.copyWith(
+            //                     color: ColorApp().light4,
+            //                     fontWeight: FontWeight.normal,
+            //                   ),
+            //             ),
+            //             const Spacer(),
+            //             Radio(
+            //               activeColor: ColorApp().secondaryColor,
+            //               fillColor: MaterialStateProperty.resolveWith<Color?>(
+            //                   (states) => ColorApp().secondaryColor),
+            //               value: "Transfer Bank",
+            //               groupValue: selectedPaymentMethod,
+            //               onChanged: (value) {
+            //                 setState(() {
+            //                   selectedPaymentMethod = value as String?;
+            //                 });
+            //               },
+            //             ),
+            //           ],
+            //         ),
+            //         const Divider(),
+            //         Row(
+            //           children: [
+            //             Text(
+            //               "Kartu Kredit/Debit",
+            //               style: TextCollection().bodySmall.copyWith(
+            //                     color: ColorApp().light4,
+            //                     fontWeight: FontWeight.normal,
+            //                   ),
+            //             ),
+            //             const Spacer(),
+            //             Radio(
+            //               activeColor: ColorApp().secondaryColor,
+            //               fillColor: MaterialStateProperty.resolveWith<Color?>(
+            //                   (states) => ColorApp().secondaryColor),
+            //               value: "Kartu Kredit/Debit",
+            //               groupValue: selectedPaymentMethod,
+            //               onChanged: (value) {
+            //                 setState(() {
+            //                   selectedPaymentMethod = value as String?;
+            //                 });
+            //               },
+            //             ),
+            //           ],
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // const Spacer(),
           ],
         ),
       ),

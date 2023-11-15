@@ -18,7 +18,7 @@ class PaymentSuccess extends StatelessWidget {
               height: 160,
               child: Icon(
                 Icons.check,
-                color: ColorApp().secondaryColor,
+                color: ColorApp().stateSuccess,
                 size: 165,
               ),
             ),
