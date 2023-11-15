@@ -1,5 +1,4 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
-import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -56,7 +55,9 @@ class PaymentSuccess extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: ColorApp().secondaryColor),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   child: Text(
                     "Kembali",
                     style: TextCollection()
