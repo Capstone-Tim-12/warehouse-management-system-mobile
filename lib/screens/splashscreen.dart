@@ -1,3 +1,5 @@
+import 'package:capstone_wms/classes/colors_collection.dart';
+import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/screens/auth_screen/signin_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  ColorApp colorApp = ColorApp();
+  TextCollection textApp = TextCollection();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -24,8 +29,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colorApp.mainColor,
       body: Center(
-        child: Text('Spalshscreen'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.warehouse,
+              size: 99,
+              color: Colors.white,
+            ),
+            Text('DigiHouse', style: textApp.heading2),
+          ],
+        ),
       ),
     );
   }
