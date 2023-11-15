@@ -1,8 +1,6 @@
-import 'dart:collection';
-
 import 'package:capstone_wms/classes/colors_collection.dart';
-import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/screens/payment/payment_screen_success.dart';
 import 'package:flutter/material.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -226,7 +224,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                     backgroundColor: ColorApp().secondaryColor,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PaymentSuccess(),
+                      ),
+                    );
+                  },
                   child: Text(
                     "Lanjutkan Pembayaran",
                     style: TextCollection()
