@@ -273,7 +273,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.3"
-
   dash_chat_2:
     dependency: "direct main"
     description:
@@ -283,15 +282,13 @@ packages:
     source: hosted
     version: "0.0.19"
   dio:
-    dependency: transitive
-
+    dependency: "direct main"
     description:
       name: dio
       sha256: "417e2a6f9d83ab396ec38ff4ea5da6c254da71e4db765ad737a42af6930140b7"
       url: "https://pub.dev"
     source: hosted
     version: "5.3.3"
-
   dropdown_button2:
     dependency: "direct main"
     description:
@@ -300,7 +297,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.9"
-
   envied:
     dependency: "direct main"
     description:
@@ -370,7 +366,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
-
   flutter_parsed_text:
     dependency: transitive
     description:
@@ -379,7 +374,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.1"
-
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -404,7 +398,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.24"
-
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -423,7 +416,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
-
   geolocator:
     dependency: "direct main"
     description:
@@ -585,7 +577,7 @@ packages:
     source: hosted
     version: "4.0.2"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
@@ -672,14 +664,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  octo_image:
-    dependency: transitive
-    description:
-      name: octo_image
-      sha256: "45b40f99622f11901238e18d48f5f12ea36426d8eced9f4cbf58479c7aa2430d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   nested:
     dependency: transitive
     description:
@@ -688,6 +672,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  octo_image:
+    dependency: transitive
+    description:
+      name: octo_image
+      sha256: "45b40f99622f11901238e18d48f5f12ea36426d8eced9f4cbf58479c7aa2430d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   package_config:
     dependency: transitive
     description:
@@ -856,14 +848,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.27.7"
   quiver:
     dependency: transitive
     description:
@@ -872,6 +856,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.1"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.27.7"
   sanitize_html:
     dependency: transitive
     description:
@@ -941,7 +933,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.5.0+1"
-
   stack_trace:
     dependency: transitive
     description:

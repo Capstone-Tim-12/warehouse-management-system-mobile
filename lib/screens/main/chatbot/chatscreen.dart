@@ -14,6 +14,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   ColorApp colorApp = ColorApp();
+  TextCollection textApp = TextCollection();
 
   final _openAI = OpenAI.instance.build(
     token: apiKey,
@@ -45,7 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
           leading: IconButton(
               color: colorApp.light4,
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 size: 30,
               )),
@@ -57,20 +58,20 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               Text(
                 "Chat with",
-                style: TextCollection.extraSmallLabel.copyWith(
+                style: textApp.extraSmallLabel.copyWith(
                   color: colorApp.light4,
                   fontSize: 17,
                 ),
               ),
               Text(
                 "DigiHouse Bot",
-                style: TextCollection.bodyLarge.copyWith(
+                style: textApp.bodyLarge.copyWith(
                   color: colorApp.light4,
                 ),
               ),
             ],
           ),
-          actions: [
+          actions: const [
             Padding(
               padding: EdgeInsets.only(right: 20),
               child: CircleAvatar(
@@ -90,14 +91,14 @@ class _ChatScreenState extends State<ChatScreen> {
                 showCurrentUserAvatar: true,
                 currentUserTextColor: Colors.black,
                 currentUserContainerColor: colorApp.secondaryColor,
-                containerColor: Color(0xffD9D9D9),
+                containerColor:const Color(0xffD9D9D9),
                 textColor: Colors.black,
               ),
               inputOptions: InputOptions(
                 textInputAction: TextInputAction.send,
                 textCapitalization: TextCapitalization.characters,
                 autocorrect: true,
-                inputTextStyle: TextStyle(color: Colors.black),
+                inputTextStyle: const TextStyle(color: Colors.black),
                 alwaysShowSend: true,
                 sendButtonBuilder: (send) {
                   return IconButton(
@@ -109,16 +110,16 @@ class _ChatScreenState extends State<ChatScreen> {
                   );
                 },
                 inputDecoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(left: 20),
+                  contentPadding: const EdgeInsets.only(left: 20),
                   hintText: "Ketik pesanmu disini...",
                   hintStyle: TextStyle(color: colorApp.dark3, fontSize: 15),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                         width: 2, color: Colors.white), //<-- SEE HERE
                     borderRadius: BorderRadius.circular(100.0),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                         width: 2, color: Colors.white), //<-- SEE HERE
                     borderRadius: BorderRadius.circular(100.0),
                   ),
@@ -143,12 +144,12 @@ class _ChatScreenState extends State<ChatScreen> {
                   currentUser: _currentUser,
                   typingUsers: _typingUsers,
                   inputOptions: InputOptions(
-                    cursorStyle: CursorStyle(color: Colors.white),
-                    inputToolbarPadding: EdgeInsets.only(bottom: 10),
+                    cursorStyle: const CursorStyle(color: Colors.white),
+                    inputToolbarPadding: const EdgeInsets.only(bottom: 10),
                     textInputAction: TextInputAction.send,
                     textCapitalization: TextCapitalization.characters,
                     autocorrect: true,
-                    inputTextStyle: TextCollection.normalLabel.copyWith(
+                    inputTextStyle: textApp.normalLabel.copyWith(
                       color: colorApp.light1,
                       fontSize: 15,
                     ),
@@ -159,21 +160,21 @@ class _ChatScreenState extends State<ChatScreen> {
                             top: 15, right: 10.0, bottom: 5),
                         child: ElevatedButton(
                             onPressed: send,
+                            style: ElevatedButton.styleFrom(
+                              shape: const CircleBorder(),
+                              padding: const EdgeInsets.all(12),
+                              backgroundColor: Colors.white,
+                            ),
                             child: Icon(
                               Icons.send,
                               color: colorApp.mainColor,
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: CircleBorder(),
-                              padding: EdgeInsets.all(12),
-                              backgroundColor: Colors.white,
                             )),
                       );
                     },
                     inputDecoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 20),
+                      contentPadding: const EdgeInsets.only(left: 20),
                       hintText: "Ketik pesanmu disini...",
-                      hintStyle: TextCollection.smallLabel.copyWith(
+                      hintStyle: textApp.smallLabel.copyWith(
                         color: colorApp.light1,
                         fontSize: 15,
                       ),
