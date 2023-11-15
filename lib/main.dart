@@ -1,4 +1,4 @@
-import 'package:capstone_wms/screens/splashscreen.dart';
+import 'package:capstone_wms/screens/main/chatbot/chatscreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
