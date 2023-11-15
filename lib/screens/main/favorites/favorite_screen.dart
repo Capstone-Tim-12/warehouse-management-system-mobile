@@ -83,14 +83,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       decoration: ShapeDecoration(
                         color: Colors.white,
                         shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         shadows: [
                           BoxShadow(
                             color: colorApp.dark4,
                             offset: const Offset(4, 4),
                             blurRadius: 10,
-                          ),  
+                          ),
                         ],
                       ),
                       child: Row(
@@ -105,7 +105,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          const SizedBox(width: 19),
+                          const SizedBox(width: 9),
                           Expanded(
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -117,7 +117,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                   height: 32,
                                   decoration: ShapeDecoration(
                                     shape: RoundedRectangleBorder(
-                                      side: BorderSide(width: 1, color: colorApp.dark1),
+                                      side: BorderSide(
+                                          width: 1, color: colorApp.dark1),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
@@ -127,7 +128,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                       Text(
                                         item['title'],
                                         textAlign: TextAlign.center,
-                                        style: textCollection.bodySmall.copyWith(color: colorApp.mainColor),
+                                        style: textCollection.bodySmall
+                                            .copyWith(
+                                                color: colorApp.mainColor),
                                       ),
                                     ],
                                   ),
@@ -135,23 +138,29 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                 const SizedBox(height: 16),
                                 Text(
                                   item['name'],
-                                  style: textCollection.bodyNormal.copyWith(color: colorApp.mainColor),
+                                  style: textCollection.bodyNormal
+                                      .copyWith(color: colorApp.mainColor),
                                 ),
-                                const SizedBox(height: 16),
+                                // const SizedBox(height: 16),
                                 Row(
                                   children: [
-                                    Icon(Icons.location_on_outlined, color: colorApp.mainColor),
+                                    Icon(Icons.location_on_outlined,
+                                        color: colorApp.mainColor),
                                     const SizedBox(width: 8),
                                     Text(
                                       item['location'],
-                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: colorApp.mainColor),
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: colorApp.mainColor),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(height: 16),
                                 Row(
                                   children: [
-                                    Icon(Icons.crop_square, color: colorApp.mainColor),
+                                    Icon(Icons.crop_square,
+                                        color: colorApp.mainColor),
                                     const SizedBox(width: 8),
                                     Text(
                                       item['landArea'],
@@ -162,22 +171,26 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                       ),
                                     ),
                                     const SizedBox(width: 8),
-                                    Icon(Icons.apartment, color: colorApp.mainColor),
+                                    Icon(Icons.apartment,
+                                        color: colorApp.mainColor),
                                     const SizedBox(width: 8),
-                                    Text(
-                                      item['buildingArea'],
-                                      style: TextStyle(
-                                        color: colorApp.mainColor,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 10,
+                                    Flexible(
+                                      child: Text(
+                                        item['buildingArea'],
+                                        style: TextStyle(
+                                          color: colorApp.mainColor,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 10,
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 32),
+                                const SizedBox(height: 10),
                                 Text(
                                   item['price'],
-                                  style: textCollection.bodySmall.copyWith(color: colorApp.mainColor),
+                                  style: textCollection.bodySmall
+                                      .copyWith(color: colorApp.mainColor),
                                 ),
                                 const SizedBox(height: 8),
                               ],

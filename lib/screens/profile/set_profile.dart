@@ -13,6 +13,7 @@ class SetProfileScreen extends StatefulWidget {
 
 class _SetProfileScreenState extends State<SetProfileScreen> {
   ColorApp colorApp = ColorApp();
+  TextCollection textApp = TextCollection();
   IconsCollection icons = IconsCollection();
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                     const SizedBox(height: 20),
                     Text(
                       "Yuniar Awaliah",
-                      style: TextCollection.bodyNormal,
+                      style: textApp.bodyNormal,
                     ),
                   ],
                 ),
@@ -47,7 +48,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                 alignment: Alignment.bottomLeft,
                 child: Text(
                   "Akun",
-                  style: TextCollection.bodyNormal,
+                  style: textApp.bodyNormal,
                 ),
               ),
               const SizedBox(height: 20.0),
@@ -60,7 +61,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                   ),
                   title: Text(
                     "Foto Profil",
-                    style: TextCollection.bodySmall,
+                    style: textApp.bodySmall,
                   ),
                   trailing: Icon(
                     Icons.arrow_right_rounded,
@@ -134,7 +135,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                 alignment: Alignment.bottomLeft,
                 child: Text(
                   "Aktivitas",
-                  style: TextCollection.bodyNormal,
+                  style: textApp.bodyNormal,
                 ),
               ),
               const SizedBox(height: 20.0),
