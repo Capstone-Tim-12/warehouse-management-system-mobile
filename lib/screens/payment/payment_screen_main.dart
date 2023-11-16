@@ -56,7 +56,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         left: Radius.circular(12),
                       ),
                       child: Image.network(
-                        "https://images.unsplash.com/photo-1622127922075-fb1d21fbacbf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHdhcmVob3VzZXxlbnwwfHwwfHx8MA%3D%3D",
+                        "https://images.unsplash.com/photo-1590247813693-5541d1c609fd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8d2FyZWhvdXNlfGVufDB8fDB8fHww",
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -110,9 +110,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         style: TextCollection().heading6,
                       ),
                       SizedBox(
-                        width: 100,
+                        width: 120,
                         height: 20,
-                        // child: Image.network(""),
+                        child: SvgPicture.asset("assets/svg/mastercard.svg"),
                       )
                     ],
                   ),
@@ -141,9 +141,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         style: TextCollection().heading6,
                       ),
                       SizedBox(
-                        width: 100,
-                        height: 20,
-                        // child: Image.network(""),
+                        width: 120,
+                        height: 35,
+                        child: SvgPicture.asset("assets/svg/bank_logo.svg"),
                       )
                     ],
                   ),
@@ -163,18 +163,24 @@ class _PaymentScreenState extends State<PaymentScreen> {
               height: 60,
               width: double.infinity,
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         "E-Money",
                         style: TextCollection().heading6,
                       ),
+                      const SizedBox(height: 10),
                       SizedBox(
-                        width: 100,
+                        width: 50,
                         height: 20,
-                        // child: Image.network(""),
+                        child: SvgPicture.asset(
+                          "assets/svg/qris_logo.svg",
+                        ),
                       )
                     ],
                   ),
@@ -219,97 +225,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ],
               ),
             ),
-
-            // Container(
-            //   height: 200,
-            //   width: double.infinity,
-            //   decoration: BoxDecoration(
-            //     color: ColorApp().mainColor,
-            //     borderRadius: BorderRadius.circular(8.0),
-            //   ),
-            //   child: Padding(
-            //     padding: const EdgeInsets.all(10.0),
-            //     child: Column(
-            //       children: [
-            //         Row(
-            //           children: [
-            //             Text(
-            //               "Qris",
-            //               style: TextCollection().bodySmall.copyWith(
-            //                     color: ColorApp().light4,
-            //                     fontWeight: FontWeight.normal,
-            //                   ),
-            //             ),
-            //             const Spacer(),
-            //             Radio(
-            //               activeColor: ColorApp().secondaryColor,
-            //               fillColor: MaterialStateProperty.resolveWith<Color?>(
-            //                   (states) => ColorApp().secondaryColor),
-            //               value: "Qris",
-            //               groupValue: selectedPaymentMethod,
-            //               onChanged: (value) {
-            //                 setState(() {
-            //                   selectedPaymentMethod = value.toString();
-            //                 });
-            //               },
-            //             ),
-            //           ],
-            //         ),
-            //         const Divider(),
-            //         Row(
-            //           children: [
-            //             Text(
-            //               "Transfer Bank",
-            //               style: TextCollection().bodySmall.copyWith(
-            //                     color: ColorApp().light4,
-            //                     fontWeight: FontWeight.normal,
-            //                   ),
-            //             ),
-            //             const Spacer(),
-            //             Radio(
-            //               activeColor: ColorApp().secondaryColor,
-            //               fillColor: MaterialStateProperty.resolveWith<Color?>(
-            //                   (states) => ColorApp().secondaryColor),
-            //               value: "Transfer Bank",
-            //               groupValue: selectedPaymentMethod,
-            //               onChanged: (value) {
-            //                 setState(() {
-            //                   selectedPaymentMethod = value as String?;
-            //                 });
-            //               },
-            //             ),
-            //           ],
-            //         ),
-            //         const Divider(),
-            //         Row(
-            //           children: [
-            //             Text(
-            //               "Kartu Kredit/Debit",
-            //               style: TextCollection().bodySmall.copyWith(
-            //                     color: ColorApp().light4,
-            //                     fontWeight: FontWeight.normal,
-            //                   ),
-            //             ),
-            //             const Spacer(),
-            //             Radio(
-            //               activeColor: ColorApp().secondaryColor,
-            //               fillColor: MaterialStateProperty.resolveWith<Color?>(
-            //                   (states) => ColorApp().secondaryColor),
-            //               value: "Kartu Kredit/Debit",
-            //               groupValue: selectedPaymentMethod,
-            //               onChanged: (value) {
-            //                 setState(() {
-            //                   selectedPaymentMethod = value as String?;
-            //                 });
-            //               },
-            //             ),
-            //           ],
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            // const Spacer(),
           ],
         ),
       ),
@@ -356,7 +271,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PaymentFailed(),
+                        builder: (context) => PaymentSuccess(),
                       ),
                     );
                   },
