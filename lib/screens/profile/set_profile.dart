@@ -1,9 +1,8 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
-import 'package:capstone_wms/classes/icons_collection.dart';
 import 'package:flutter/material.dart';
 
-// import '../../classes/icons_collection.dart';
+import '../../classes/icons_collection.dart';
 
 class SetProfileScreen extends StatefulWidget {
   const SetProfileScreen({super.key});

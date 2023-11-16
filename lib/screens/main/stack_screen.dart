@@ -23,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
     const FavoritesScreen(),
     const MyWarehouse(),
     const ChatScreen(),
-    const ProfileScreen()
+    const SetProfileScreen()
   ];
 
   @override
