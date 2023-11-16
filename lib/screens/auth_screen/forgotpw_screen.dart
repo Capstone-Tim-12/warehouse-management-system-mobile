@@ -89,7 +89,7 @@ class _ForgotPwState extends State<ForgotPw> {
                       ),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: colorApp.mainColor,
+                              backgroundColor: colorApp.secondaryColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8))),
                           onPressed: () {
@@ -103,7 +103,7 @@ class _ForgotPwState extends State<ForgotPw> {
                                 vertical: 10, horizontal: 24),
                             child: Text(
                               'Reset Password',
-                              style: TextStyle(color: colorApp.light1),
+                              style: TextStyle(color: colorApp.dark1),
                             ),
                           )),
                     ],

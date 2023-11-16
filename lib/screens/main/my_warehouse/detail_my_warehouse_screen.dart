@@ -84,18 +84,20 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                 height: 16,
               ),
               WarehouseItem(item: widget.warehouseData),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Beri review tentang gudang ini',
-                      style: textApp.heading7),
-                  Text(
-                    'Tulis review',
-                    style: textApp.heading8,
-                  ),
-                ],
-              ),
-              SizedBox(
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Flexible(
+              //       child: Text('Beri review tentang gudang ini',
+              //           style: textApp.heading7.copyWith()),
+              //     ),
+              //     Text(
+              //       'Tulis review',
+              //       style: textApp.heading8,
+              //     ),
+              //   ],
+              // ),
+              const SizedBox(
                 height: 24,
               ),
               TabBar(

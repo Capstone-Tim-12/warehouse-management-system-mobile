@@ -143,7 +143,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: colorApp.mainColor,
+                                backgroundColor: colorApp.secondaryColor,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8))),
                             onPressed: () {
@@ -156,7 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   vertical: 10, horizontal: 24),
                               child: Text(
                                 'Sign Up',
-                                style: TextStyle(color: colorApp.light1),
+                                style: TextStyle(color: colorApp.dark1),
                               ),
                             )),
                         Row(
