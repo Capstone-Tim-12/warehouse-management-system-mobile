@@ -1,3 +1,4 @@
+import 'package:capstone_wms/screens/payment/payment_screen_main.dart';
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/screens/profile/set_profile.dart';
 import 'package:capstone_wms/screens/main/chatbot/chatscreen.dart';
@@ -21,8 +22,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: colorApp.mainColorDarker),
         useMaterial3: true,
       ),
+       //home: const PaymentScreen(),
       home: const SplashScreen(),
-      //home: const SetProfileScreen(),
     );
   }
 }
