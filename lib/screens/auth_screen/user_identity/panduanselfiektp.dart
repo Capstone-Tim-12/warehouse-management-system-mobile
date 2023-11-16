@@ -2,6 +2,7 @@ import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/screens/auth_screen/user_identity/selfiektp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -218,12 +219,119 @@ class PanduanSelfieKTP extends StatelessWidget {
                       ),
                     )
                   ],
-                )
+                ),
+                const SizedBox(
+                  height: 37,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: const ShapeDecoration(
+                        color: Color(0xFFD9D9D9),
+                        shape: OvalBorder(),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      'Pastikan HP secara tegak saat mengambil foto.',
+                      style: textApp.bodySmall
+                          .copyWith(fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: const ShapeDecoration(
+                        color: Color(0xFFD9D9D9),
+                        shape: OvalBorder(),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      'KTP harus terlihat jelas',
+                      style: textApp.bodySmall
+                          .copyWith(fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(
+                  width: 8,
+                ),
+
+                Row(
+                  children: [
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: const ShapeDecoration(
+                        color: Color(0xFFD9D9D9),
+                        shape: OvalBorder(),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Flexible(
+                      child: Text(
+                        'Pastikan kamu berada ditempat bercahaya dan tidak menggunakan aksesoris dibagian wajah',
+                        style: textApp.bodySmall.copyWith(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
 
           //positioned
+
+          Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                color: colorApp.bgAuthScaffold,
+                // height: 200,
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 22),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: colorApp.mainColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8))),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const SelfieKTP()));
+                          },
+                          child: Text('Verifikasi Sekarang',
+                              style: textApp.largeLabel.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500))),
+                    ),
+                  ),
+                ),
+              ))
         ]));
   }
 }

@@ -82,8 +82,8 @@ class _KtpScannerState extends State<KtpScanner> {
 
       _cameraController!.dispose();
 
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const CheckIdentity()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const CheckIdentity()));
     } catch (e) {
       print(e);
     }
@@ -130,19 +130,6 @@ class _KtpScannerState extends State<KtpScanner> {
     } catch (e) {
       print("Error during OCR: $e");
     }
-
-    // setState(() {
-    //   recognizedText = result.text;
-    //   _isScanning = false;
-    // });
-
-    // Navigate to the next screen after OCR
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => ResultScreen(recognizedText: recognizedText),
-    //   ),
-    // );
   }
 
   Future<void> _initializeCamera() async {

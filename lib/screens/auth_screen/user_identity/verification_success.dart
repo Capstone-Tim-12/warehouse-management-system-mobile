@@ -4,11 +4,12 @@ import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/size_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/auth_bg.dart';
-import 'package:capstone_wms/screens/auth_screen/signin_screen.dart';
+import 'package:capstone_wms/screens/main/dashboard/dashboard.dart';
+import 'package:capstone_wms/screens/main/stack_screen.dart';
 import 'package:flutter/material.dart';
 
-class ResetConfirmation extends StatelessWidget {
-  ResetConfirmation({super.key});
+class VerificationSuccess extends StatelessWidget {
+  VerificationSuccess({super.key});
 
   ColorApp colorApp = ColorApp();
   PaddingCollection paddingApp = PaddingCollection();
@@ -23,20 +24,20 @@ class ResetConfirmation extends StatelessWidget {
     double screenHeight = sizeCollection.screenHeight;
 
     return Scaffold(
-      // extendBodyBehindAppBar: true,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      //   title: Align(
-      //     alignment: Alignment.centerRight,
-      //     child: Text(
-      //       'Reset Password',
-      //       style: textApp.heading4White,
-      //     ),
-      //   ),
-      //   automaticallyImplyLeading: false,
-      //   leading: const BackButton(),
-      // ),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            'Skip',
+            style: textApp.extraSmallInvLabel,
+          ),
+        ),
+        automaticallyImplyLeading: false,
+        // leading: const BackButton(),
+      ),
       body: SizedBox(
         width: screenWidth,
         height: screenHeight,
@@ -61,7 +62,7 @@ class ResetConfirmation extends StatelessWidget {
                       height: 23,
                     ),
                     Text(
-                      'Your password has been successfully',
+                      '2 step verification successful',
                       style: textApp.heading5,
                       textAlign: TextAlign.center,
                     ),
@@ -73,7 +74,7 @@ class ResetConfirmation extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Text(
-                        'Your password has been successfully changed, please click sign in to try your new password',
+                        'Your 2-step verification has been successful, now you can rent a warehouse easily and safely',
                         textAlign: TextAlign.center,
                         style: textApp.bodySmall,
                       ),
@@ -87,18 +88,24 @@ class ResetConfirmation extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8))),
                         onPressed: () {
+                          // Navigator.of(context).pushAndRemoveUntil(
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const LoginScreen(),
+                          //   ),
+                          //   (route) => false,
+                          // );
+
                           Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
-                              builder: (context) => const LoginScreen(),
-                            ),
-                            (route) => false,
+                                builder: (context) => const MainScreen()),
+                            (Route<dynamic> route) => false,
                           );
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 24),
                           child: Text(
-                            'Sign In',
+                            'Home',
                             style: TextStyle(color: colorApp.dark1),
                           ),
                         )),
