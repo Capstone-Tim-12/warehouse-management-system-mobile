@@ -1,4 +1,5 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
+import 'package:capstone_wms/screens/main/sewa_screen.dart';
 import 'package:capstone_wms/screens/profile/set_profile.dart';
 import 'package:capstone_wms/screens/main/chatbot/chatscreen.dart';
 import 'package:capstone_wms/screens/splashscreen.dart';
@@ -21,8 +22,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: colorApp.mainColorDarker),
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
-      //home: const SetProfileScreen(),
+      // home: const SplashScreen(),
+      home: const PengajuanSewa(),
     );
   }
 }
