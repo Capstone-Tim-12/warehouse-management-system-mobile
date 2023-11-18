@@ -1,3 +1,5 @@
+import 'package:capstone_wms/screens/payment/payment_screen_main.dart';
+import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/screens/profile/set_profile.dart';
 import 'package:capstone_wms/screens/main/chatbot/chatscreen.dart';
 import 'package:capstone_wms/screens/splashscreen.dart';
@@ -8,6 +10,8 @@ void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
+ColorApp colorApp = ColorApp();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -16,11 +20,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: colorApp.mainColorDarker),
         useMaterial3: true,
       ),
-      home: const ChatScreen(),
-      //home: const SetProfileScreen(),
+      home: const SplashScreen(),
     );
   }
 }

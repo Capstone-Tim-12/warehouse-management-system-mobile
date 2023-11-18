@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: colorApp.mainColor,
+                                backgroundColor: colorApp.secondaryColor,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8))),
                             onPressed: () {
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   vertical: 10, horizontal: 24),
                               child: Text(
                                 'Sign In',
-                                style: TextStyle(color: colorApp.light1),
+                                style: TextStyle(color: colorApp.dark1),
                               ),
                             )),
 
