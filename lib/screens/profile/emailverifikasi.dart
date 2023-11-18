@@ -8,36 +8,22 @@ class EmailVerifikasi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: colorApp.dark4, //change your color here
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: colorApp.secondaryColor),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          "Pengaturan Email",
+          style: TextCollection().heading5,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              height: 50,
-              color: colorApp.dark4,
-              child: Stack(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: colorApp.secondaryColor,
-                        ),
-                      ),
-                      Text(
-                        "pengaturan Email",
-                        style: TextCollection().heading5,
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: Card(
@@ -93,12 +79,50 @@ class EmailVerifikasi extends StatelessWidget {
                                             Text(
                                               "Email",
                                               style: TextCollection().heading5,
-                                            )
+                                            ),
+                                            const SizedBox(
+                                              width: 120,
+                                            ),
+                                            ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      colorApp.secondaryColor,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                  ),
+                                                ),
+                                                onPressed: () {},
+                                                child: Text(
+                                                  "Kirim Kode",
+                                                  style: TextCollection()
+                                                      .bodySmall,
+                                                  selectionColor:
+                                                      colorApp.light1,
+                                                ))
                                           ],
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: const TextField(
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              labelText: "Email",
+                                              icon: Icon(Icons.person),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),
