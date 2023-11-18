@@ -8,39 +8,22 @@ class VerifikasiIdentitas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Verifikasi Identitas"),
-      // ),
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: colorApp.dark4, //change your color here
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: colorApp.secondaryColor),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          "Verifikasi Identitas",
+          style: TextCollection().heading5,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              height: 50,
-              color: colorApp.dark4,
-              child: Stack(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: colorApp.secondaryColor,
-                        ),
-                      ),
-                      Text(
-                        "Verifikasi Identitas",
-                        style: TextCollection().heading5,
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
