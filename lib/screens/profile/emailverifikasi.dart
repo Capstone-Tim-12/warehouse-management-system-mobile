@@ -53,6 +53,7 @@ class EmailVerifikasi extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           showModalBottomSheet(
+                            backgroundColor: colorApp.mainColor,
                             context: context,
                             builder: (context) {
                               return SizedBox(
@@ -78,29 +79,30 @@ class EmailVerifikasi extends StatelessWidget {
                                             ),
                                             Text(
                                               "Email",
-                                              style: TextCollection().heading5,
+                                              style: TextCollection()
+                                                  .heading6White,
                                             ),
                                             const SizedBox(
                                               width: 120,
                                             ),
                                             ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      colorApp.secondaryColor,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor:
+                                                    colorApp.secondaryColor,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0),
                                                 ),
-                                                onPressed: () {},
-                                                child: Text(
-                                                  "Kirim Kode",
-                                                  style: TextCollection()
-                                                      .bodySmall,
-                                                  selectionColor:
-                                                      colorApp.light1,
-                                                ))
+                                              ),
+                                              onPressed: () {},
+                                              child: Text(
+                                                "Kirim Kode",
+                                                style: TextCollection()
+                                                    .heading6White,
+                                                selectionColor: colorApp.light1,
+                                              ),
+                                            )
                                           ],
                                         ),
                                       ),
@@ -109,17 +111,24 @@ class EmailVerifikasi extends StatelessWidget {
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
-                                            border: Border.all(),
+                                            border: Border.all(
+                                                color: colorApp.light4),
                                             borderRadius:
                                                 BorderRadius.circular(10.0)),
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 10),
-                                          child: const TextField(
+                                          child: TextField(
                                             decoration: InputDecoration(
                                               border: InputBorder.none,
                                               labelText: "Email",
-                                              icon: Icon(Icons.person),
+                                              labelStyle: TextStyle(
+                                                color: colorApp.light4,
+                                              ),
+                                              icon: Icon(
+                                                Icons.person,
+                                                color: colorApp.light4,
+                                              ),
                                             ),
                                           ),
                                         ),
