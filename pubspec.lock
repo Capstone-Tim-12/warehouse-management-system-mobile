@@ -289,6 +289,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.3.3"
+  drop_down_list:
+    dependency: "direct main"
+    description:
+      name: drop_down_list
+      sha256: ffb54a1464d8c051f9ec7be6c5e86a4bd59297fe8a93f2942a91a96197d0abc2
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
   dropdown_button2:
     dependency: "direct main"
     description:
@@ -382,6 +390,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
+  flutter_riverpod:
+    dependency: "direct main"
+    description:
+      name: flutter_riverpod
+      sha256: "49b55e8a467229eedb801bd0864baa7f891c39cc00f790189ba8479e9ad0fa06"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.6"
+  flutter_scalable_ocr:
+    dependency: "direct main"
+    description:
+      name: flutter_scalable_ocr
+      sha256: "9e5c239c993c3c6c0b530b42165547b275d7db18d646cfc840b750aea1a7c988"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -524,18 +548,18 @@ packages:
     dependency: transitive
     description:
       name: google_mlkit_commons
-      sha256: "046586b381cdd139f7f6a05ad6998f7e339d061bd70158249907358394b5f496"
+      sha256: "68429fa2e17686819dbaf2344790e3daa59924ef8625dd24f97f9deaaed42767"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.1"
+    version: "0.3.0"
   google_mlkit_text_recognition:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: google_mlkit_text_recognition
-      sha256: d484de2a10961a6f0ff8b54cc92b71bfbb0e65509be0903edca0e1f9256ca4c2
+      sha256: "0d5ac35fc666c311e0cd34f64c28f0842eb192ee2f23d49845a14d147aede146"
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.0"
+    version: "0.6.0"
   graphs:
     dependency: transitive
     description:
@@ -856,6 +880,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.1"
+  riverpod:
+    dependency: transitive
+    description:
+      name: riverpod
+      sha256: "01fa385aa5d6db42fd602d8c400c28ae1c83d1fd6fbae1cbf0f4c78bac58d4b2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.6"
   rxdart:
     dependency: transitive
     description:
@@ -941,6 +973,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
+  state_notifier:
+    dependency: transitive
+    description:
+      name: state_notifier
+      sha256: b8677376aa54f2d7c58280d5a007f9e8774f1968d1fb1c096adcb4792fba29bb
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   stream_channel:
     dependency: transitive
     description:
@@ -1177,10 +1217,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "350a11abd2d1d97e0cc7a28a81b781c08002aa2864d9e3f192ca0ffa18b06ed3"
+      sha256: "7c99c0e1e2fa190b48d25c81ca5e42036d5cac81430ef249027d97b0935c553f"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.9"
+    version: "5.1.0"
   xdg_directories:
     dependency: transitive
     description:

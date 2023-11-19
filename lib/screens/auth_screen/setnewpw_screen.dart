@@ -128,7 +128,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                       ),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: colorApp.mainColor,
+                              backgroundColor: colorApp.secondaryColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8))),
                           onPressed: () {
@@ -140,7 +140,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                                 vertical: 10, horizontal: 24),
                             child: Text(
                               'Reset Password',
-                              style: TextStyle(color: colorApp.light1),
+                              style: TextStyle(color: colorApp.dark1),
                             ),
                           )),
                     ],

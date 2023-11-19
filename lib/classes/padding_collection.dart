@@ -7,4 +7,6 @@ class PaddingCollection {
       const EdgeInsets.only(top: 20, left: 20, right: 24, bottom: 0);
 
   EdgeInsets iconPadding = const EdgeInsets.all(10);
+
+  EdgeInsets scaffoldPadding = const EdgeInsets.symmetric(horizontal: 24);
 }
