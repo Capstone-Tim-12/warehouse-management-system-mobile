@@ -1,5 +1,7 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/screens/profile/emailverifikasi.dart';
+import 'package:capstone_wms/screens/profile/verifikasi_identitas.dart';
 import 'package:flutter/material.dart';
 
 import '../../classes/icons_collection.dart';
@@ -74,21 +76,6 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                 height: 70,
                 child: ListTile(
                   leading: Icon(
-                    Icons.email_outlined,
-                    color: colorApp.mainColorDarker,
-                  ),
-                  title: const Text("Email"),
-                  trailing: Icon(
-                    Icons.arrow_right_rounded,
-                    color: colorApp.mainColorDarker,
-                  ),
-                  onTap: () {},
-                ),
-              ),
-              SizedBox(
-                height: 70,
-                child: ListTile(
-                  leading: Icon(
                     Icons.edit_note_outlined,
                     color: colorApp.mainColorDarker,
                   ),
@@ -104,6 +91,28 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                 height: 70,
                 child: ListTile(
                   leading: Icon(
+                    Icons.email_outlined,
+                    color: colorApp.mainColorDarker,
+                  ),
+                  title: const Text("Email"),
+                  trailing: Icon(
+                    Icons.arrow_right_rounded,
+                    color: colorApp.mainColorDarker,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EmailVerifikasi(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 70,
+                child: ListTile(
+                  leading: Icon(
                     Icons.person_3_outlined,
                     color: colorApp.mainColorDarker,
                   ),
@@ -112,7 +121,14 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                     Icons.arrow_right_rounded,
                     color: colorApp.mainColorDarker,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const VerifikasiIdentitas(),
+                      ),
+                    );
+                  },
                 ),
               ),
               SizedBox(
