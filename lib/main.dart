@@ -1,7 +1,8 @@
 import 'package:capstone_wms/screens/payment/payment_screen_main.dart';
 import 'package:capstone_wms/classes/colors_collection.dart';
-import 'package:capstone_wms/screens/profile/set_profile.dart';
-import 'package:capstone_wms/screens/main/chatbot/chatscreen.dart';
+import 'package:capstone_wms/screens/main/sewa/konfirmasi_sewa.dart';
+import 'package:capstone_wms/screens/main/sewa/pengajuan_complete.dart';
+import 'package:capstone_wms/screens/main/sewa/sewa_screen.dart';
 import 'package:capstone_wms/screens/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
