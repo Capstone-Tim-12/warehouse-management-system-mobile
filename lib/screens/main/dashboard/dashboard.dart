@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +71,7 @@ class _DashboardState extends State<Dashboard> {
                     color: ColorApp().mainColorDarker,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
                       children: [
                         const SizedBox(height: 10),
