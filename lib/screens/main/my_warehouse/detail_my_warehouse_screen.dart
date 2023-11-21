@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:http/http.dart' as http;
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
@@ -17,464 +18,353 @@ class DetailMyWarehouseScreen extends StatefulWidget {
 }
 
 class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
-  late List<dynamic> kontrakData;
-  late List<dynamic> tagihanData;
-
   TextCollection textApp = TextCollection();
 
   @override
-  void initState() {
-    super.initState();
-    fetchKontrakData();
-    fetchTagihanData();
-  }
-
-  Future<void> fetchKontrakData() async {
-    try {
-      final response =
-          await http.get(Uri.parse('https://api.example.com/kontrak'));
-
-      if (response.statusCode == 200) {
-        setState(() {
-          kontrakData = json.decode(response.body);
-        });
-      } else {
-        print('Gagal mengambil data kontrak: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
-
-  Future<void> fetchTagihanData() async {
-    try {
-      final response =
-          await http.get(Uri.parse('https://api.example.com/tagihan'));
-
-      if (response.statusCode == 200) {
-        setState(() {
-          tagihanData = json.decode(response.body);
-        });
-      } else {
-        print('Gagal mengambil data tagihan: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text('My Warehouse Detail'),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-          ),
-          child: Column(
-            children: [
-              const Divider(
-                thickness: 2,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              WarehouseItem(item: widget.warehouseData),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Beri review tentang gudang ini',
-                      style: textApp.heading7),
-                  Text(
-                    'Tulis review',
-                    style: textApp.heading8,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 24,
-              ),
-              TabBar(
-                tabs: [
-                  Tab(
-                    child: Text('Kontrak', style: textApp.heading6),
-                  ),
-                  Tab(
-                    child: Text('Tagihan', style: textApp.heading6),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    // Halaman pertama (Kontrak)
-                    KontrakScreen(),
-                    // Halaman kedua (Tagihan)
-                    TagihanScreen(),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class KontrakScreen extends StatelessWidget {
-  // const KontrakScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // Implementasi halaman kontrak
-    TextCollection textApp = TextCollection();
-    return SingleChildScrollView(
-      child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 35),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: SingleChildScrollView(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Hitung Sewa Bulanan', style: textApp.heading6),
-                const SizedBox(height: 16),
-                Text('Pembayaran tagihan dilakukan 1 Tahun sekali',
-                    style: textApp.bodySmall),
-                const SizedBox(
-                  height: 34,
-                ),
-                Text('Tanggal Penagihan', style: textApp.heading6),
-                const SizedBox(height: 16),
-                Text('Jatuh tempo tagihan sewa setiap tanggal 20',
-                    style: textApp.bodySmall),
-                const SizedBox(
-                  height: 35,
-                ),
-                const Divider(
-                  thickness: 2,
-                ),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          'Tanggal Masuk',
-                          style: textApp.heading7,
-                        ),
-                        Text(
-                          '1 Des 2019',
-                          style: textApp.bodyNormal,
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 6),
-                    Column(
-                      children: [
-                        Text(
-                          'Durasi Sewa',
-                          style: textApp.heading7,
-                        ),
-                        Text(
-                          '24 Tahun',
-                          style: textApp.bodyNormal,
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 6),
-                    Column(
-                      children: [
-                        Text(
-                          'Tanggal Keluar',
-                          style: textApp.heading7,
-                        ),
-                        Text(
-                          '1 Des 2021',
-                          style: textApp.bodyNormal,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const Divider(
-                  thickness: 2,
-                ),
-                SizedBox(height: 16),
+                WarehouseItem(item: widget.warehouseData),
+
+                // KONTRAK
                 Text(
-                  'Aturan Denda',
-                  style: textApp.heading6,
-                ),
-                const SizedBox(height: 18),
-                Text(
-                  '''Denda diberlakukan jika penyewa membayar
-tagihan gudang melewati 14 hari dari tanggal
-tagihan, nominal denda adalah Rp 40.000.000 ''',
+                  'Kontrak',
                   style: textApp.bodySmall,
                 ),
-                const Divider(thickness: 2),
-                SizedBox(height: 20),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Tanggal Masuk'),
+                        Text('1 Agustus 2023'),
+                      ],
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Hitungan Sewa'),
+                        Text('Mingguan'),
+                      ],
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Durasi Sewa'),
+                        Text('3 Minggu'),
+                      ],
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Tanggal Keluar'),
+                        Text('13 Agustus 2023'),
+                      ],
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24, vertical: 32),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Detail Kontrak',
+                                        style: textApp.bodySmall2,
+                                      ),
+                                      SizedBox(height: 24),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Tanggal Masuk'),
+                                          Text('1 Agustus 2023'),
+                                        ],
+                                      ),
+                                      SizedBox(height: 12),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Hitungan Sewa'),
+                                          Text('Mingguan')
+                                        ],
+                                      ),
+                                      SizedBox(height: 12),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Durasi Sewa'),
+                                          Text('3 Minggu')
+                                        ],
+                                      ),
+                                      SizedBox(height: 12),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Tanggal Keluar'),
+                                          Text('21 Agustus 2023')
+                                        ],
+                                      ),
+                                      SizedBox(height: 24),
+                                      Text(
+                                        'Data Penyewa',
+                                        style: textApp.bodySmall2,
+                                      ),
+                                      SizedBox(height: 24),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Nama Lengkap'),
+                                          Text('Budiawan')
+                                        ],
+                                      ),
+                                      SizedBox(height: 12),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Email'),
+                                          Text('budi@gmail.com'),
+                                        ],
+                                      ),
+                                      SizedBox(height: 12),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('No. Telp'),
+                                          Text('008656'),
+                                        ],
+                                      ),
+                                      SizedBox(height: 24),
+                                      Text(
+                                        'Aturan Denda',
+                                        style: textApp.bodySmall2,
+                                      ),
+                                      SizedBox(height: 24),
+                                      Text(
+                                          'Denda diberlakukan jika penyewa membayar tagihan gudang melewati 14 hari dari tanggal tagihan, nominal denda adalah Rp.40.000.000')
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                    child: Text('Selengkapnya',
+                        style: TextStyle(color: colorApp.stateInfo)),
+                  )
+                ]),
+                SizedBox(height: 16),
+                // AKAN DATANG
+                Text(
+                  'Akan Datang',
+                  style: textApp.bodySmall,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Card(
+                  elevation: 4,
+                  color: Colors.white,
+                  child: Column(children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: colorApp.mainColor,
+                      ),
+                      width: double.infinity,
+                      height: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Tahun Ke-3',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text('Belum Dibayar',
+                                style: TextStyle(color: colorApp.stateError))
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Jumlah Tagihan'),
+                          Text('Rp 50.000.000')
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('1 Agustus 2023'),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Bayar',
+                              style: textApp.bodySmall,
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              primary: colorApp.secondaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 2),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ]),
+                ),
+                SizedBox(height: 16),
+
+                // LUNAS
+                Text(
+                  'Lunas',
+                  style: textApp.bodySmall,
+                ),
+                SizedBox(height: 16),
+                Card(
+                  elevation: 4,
+                  color: Colors.white,
+                  child: Column(children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: colorApp.mainColor,
+                      ),
+                      width: double.infinity,
+                      height: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Tahun Ke-3',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text('Lunas',
+                                style: TextStyle(color: colorApp.stateSuccess))
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Jumlah Tagihan'),
+                          Text('Rp 50.000.000')
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('1 Agustus 2023'),
+                          ElevatedButton(
+                            onPressed: null,
+                            child: Text(
+                              'Bayar',
+                              style: textApp.bodySmall,
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              primary: colorApp.secondaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 2),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ]),
+                ),
+                SizedBox(height: 32),
+                OutlinedButton(
+                  onPressed: () {},
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Center(
+                      child: Text(
+                        'Berhenti Sewa',
+                        style: textApp.heading10,
+                      ),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      side: BorderSide(color: colorApp.secondaryColor),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0))),
+                ),
+                SizedBox(height: 12),
                 ElevatedButton(
                   onPressed: () {},
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          colorApp.secondaryColor2),
-                      minimumSize:
-                          MaterialStateProperty.all(Size(double.infinity, 50)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)))),
-                  child: Text(
-                    'Berhenti Sewa',
-                    style: TextStyle(color: Colors.white),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Center(
+                      child: Text('Lanjut Sewa', style: textApp.heading9),
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          colorApp.secondaryColor),
-                      minimumSize:
-                          MaterialStateProperty.all(Size(double.infinity, 50)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)))),
-                  child: Text(
-                    'Lanjut Sewa',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ])),
-    );
-  }
-}
-
-class TagihanScreen extends StatelessWidget {
-  const TagihanScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // Implementasi halaman tagihan
-    TextCollection textApp = TextCollection();
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Akan Datang',
-              style: textApp.orangeLabel,
+                  style: ElevatedButton.styleFrom(
+                      primary: colorApp.secondaryColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0))),
+                )
+              ],
             ),
-            SizedBox(height: 24),
-            Card(
-              elevation: 4,
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Tahun Kedua',
-                            style: textApp.orangeLabel,
-                          ),
-                          Text(
-                            'Belum Dibayar',
-                            style: textApp.orangeLabel,
-                          ),
-                        ]),
-                    SizedBox(height: 16),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Jumlah tagihan',
-                            style: textApp.bodySmall,
-                          ),
-                          Text(
-                            '3 Maret',
-                            style: textApp.bodySmall,
-                          ),
-                        ]),
-                    SizedBox(height: 16),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Rp 50.000.000',
-                            style: textApp.bodyMedium,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  colorApp.secondaryColor),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                              ),
-                              minimumSize: MaterialStateProperty.all<Size>(
-                                const Size(40, 25),
-                              ),
-                            ),
-                            child: Text(
-                              'Bayar',
-                              style: textApp.bodyNormal,
-                            ),
-                          ),
-                        ]),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 24),
-            Card(
-              elevation: 4,
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Tahun Ketiga',
-                            style: textApp.bodySmall,
-                          ),
-                          Text(
-                            'Belum Dibayar',
-                            style: textApp.bodySmall,
-                          ),
-                        ]),
-                    SizedBox(height: 16),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Jumlah tagihan',
-                            style: textApp.bodySmall,
-                          ),
-                          Text(
-                            'Jatuh tempo 7 Maret',
-                            style: textApp.bodySmall,
-                          ),
-                        ]),
-                    SizedBox(height: 16),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Rp 50.000.000',
-                            style: textApp.bodyMedium,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  colorApp.secondaryColor),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                              ),
-                              minimumSize: MaterialStateProperty.all<Size>(
-                                const Size(40, 25),
-                              ),
-                            ),
-                            child: Text(
-                              'Bayar',
-                              style: textApp.bodyNormal,
-                            ),
-                          ),
-                        ]),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 24),
-            Text(
-              'Lunas',
-              style: textApp.orangeLabel,
-            ),
-            SizedBox(height: 24),
-            Card(
-              elevation: 4,
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Tahun Kedua',
-                            style: textApp.orangeLabel,
-                          ),
-                          Text(
-                            'Belum Dibayar',
-                            style: textApp.orangeLabel,
-                          ),
-                        ]),
-                    SizedBox(height: 16),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Jumlah tagihan',
-                            style: textApp.bodySmall,
-                          ),
-                          Text(
-                            'Jatuh tempo 7 Maret',
-                            style: textApp.bodySmall,
-                          ),
-                        ]),
-                    SizedBox(height: 16),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Rp 50.000.000',
-                            style: textApp.bodyMedium,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  colorApp.secondaryColor),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                              ),
-                              minimumSize: MaterialStateProperty.all<Size>(
-                                const Size(40, 25),
-                              ),
-                            ),
-                            child: Text(
-                              'Bayar',
-                              style: textApp.bodyNormal,
-                            ),
-                          ),
-                        ]),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

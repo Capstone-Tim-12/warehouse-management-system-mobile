@@ -10,6 +10,7 @@ class WarehouseItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       child: Card(
+        color: Colors.white,
         child: Row(
           children: [
             Container(
