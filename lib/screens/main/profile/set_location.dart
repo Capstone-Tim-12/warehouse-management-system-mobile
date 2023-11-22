@@ -4,7 +4,6 @@ import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class SetLocation extends StatelessWidget {
   SetLocation({super.key});
 
@@ -28,16 +27,18 @@ class SetLocation extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
+        // physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Container(
               height: 200,
               decoration: BoxDecoration(
-                  color: colorApp.mainColor,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  )),
+                color: colorApp.mainColor,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Stack(
@@ -81,10 +82,13 @@ class SetLocation extends StatelessWidget {
               ),
             ),
             ListView.builder(
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
               itemCount: allCities.length,
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(allCities[index]),
+                  onTap: () {},
                 );
               },
             )
