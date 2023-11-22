@@ -1,3 +1,5 @@
+import 'package:capstone_wms/screens/main/profile/set_location.dart';
+import 'package:capstone_wms/screens/main/profile/set_profile.dart';
 import 'package:capstone_wms/screens/payment/payment_screen_main.dart';
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/screens/main/sewa/konfirmasi_sewa.dart';
@@ -25,7 +27,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
-      home: const SplashScreen(),
+      home: const SetProfileScreen(),
+      // home: const SplashScreen(),
     );
   }
 }
