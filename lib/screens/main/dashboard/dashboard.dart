@@ -74,7 +74,7 @@ class _DashboardState extends State<Dashboard> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
                       children: [
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
                         SizedBox(
                           height: 40,
                           width: double.infinity,
@@ -132,7 +132,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 120.0),
+                  padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 130.0),
                   child: SizedBox(
                     height: 155,
                     child: BannerWidget(),
@@ -146,7 +146,7 @@ class _DashboardState extends State<Dashboard> {
               child: Row(
                 children: [
                   Text(
-                    "Recommended For You",
+                    "Rekomendasi Untukmu",
                     style: TextCollection.bodySmall,
                   ),
                   const Spacer(),
@@ -160,7 +160,7 @@ class _DashboardState extends State<Dashboard> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: SizedBox(
-                height: 185,
+                height: 244,
                 width: double.infinity,
                 child: RecommendedCardWidget(),
               ),
@@ -170,7 +170,7 @@ class _DashboardState extends State<Dashboard> {
               child: Row(
                 children: [
                   Text(
-                    "Near You",
+                    "Gudang Termurah",
                     style: TextCollection.bodySmall,
                   ),
                   const Spacer(),
@@ -184,7 +184,7 @@ class _DashboardState extends State<Dashboard> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: SizedBox(
-                height: 185,
+                height: 244,
                 width: double.infinity,
                 child: RecommendedCardWidget(),
               ),
@@ -609,8 +609,9 @@ class RecommendedCardWidget extends StatelessWidget {
       children: <Widget>[
         SizedBox(
           height: 169,
-          width: 155,
+          width: 180,
           child: Card(
+            color: ColorApp().light4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -619,36 +620,39 @@ class RecommendedCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 105,
+                  height: 130,
                   child: Image.network(
                     "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
                     fit: BoxFit.fitHeight,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 5, top: 3),
-                  child: Text(
-                    "Warehouse Abadi",
-                    style: TextCollection.smallLabel
-                        .copyWith(color: ColorApp().dark1),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5, top: 3),
-                  child: Text(
-                    "Jakarta Barat",
-                    style: TextCollection.extraSmallLabel.copyWith(
-                      color: ColorApp().dark1,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5, top: 3),
-                  child: Text(
-                    "RP.10.000.000/bln",
-                    style: TextCollection.bodySmall.copyWith(
-                      color: ColorApp().secondaryColor,
-                    ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Warehouse Abadi",
+                        style: TextCollection.bodyNormal
+                            .copyWith(color: ColorApp().dark1, fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Jakarta Barat",
+                        style: TextCollection.bodySmall.copyWith(
+                          color: ColorApp().dark1,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "RP.10 Jt/bln",
+                        style: TextCollection.bodyNormal.copyWith(
+                          color: ColorApp().secondaryColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -658,8 +662,9 @@ class RecommendedCardWidget extends StatelessWidget {
         const SizedBox(width: 5),
         SizedBox(
           height: 169,
-          width: 155,
+          width: 180,
           child: Card(
+            color: ColorApp().light4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -668,36 +673,39 @@ class RecommendedCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 105,
+                  height: 130,
                   child: Image.network(
                     "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
                     fit: BoxFit.fitHeight,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 5, top: 3),
-                  child: Text(
-                    "Warehouse Abadi",
-                    style: TextCollection.smallLabel
-                        .copyWith(color: ColorApp().dark1),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5, top: 3),
-                  child: Text(
-                    "Jakarta Barat",
-                    style: TextCollection.extraSmallLabel.copyWith(
-                      color: ColorApp().dark1,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5, top: 3),
-                  child: Text(
-                    "RP.10.000.000/bln",
-                    style: TextCollection.bodySmall.copyWith(
-                      color: ColorApp().secondaryColor,
-                    ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Warehouse Abadi",
+                        style: TextCollection.bodyNormal
+                            .copyWith(color: ColorApp().dark1, fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Jakarta Barat",
+                        style: TextCollection.bodySmall.copyWith(
+                          color: ColorApp().dark1,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "RP.10 Jt/bln",
+                        style: TextCollection.bodyNormal.copyWith(
+                          color: ColorApp().secondaryColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -707,8 +715,9 @@ class RecommendedCardWidget extends StatelessWidget {
         const SizedBox(width: 5),
         SizedBox(
           height: 169,
-          width: 155,
+          width: 180,
           child: Card(
+            color: ColorApp().light4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -717,36 +726,39 @@ class RecommendedCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 105,
+                  height: 130,
                   child: Image.network(
                     "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
                     fit: BoxFit.fitHeight,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 5, top: 3),
-                  child: Text(
-                    "Warehouse Abadi",
-                    style: TextCollection.smallLabel
-                        .copyWith(color: ColorApp().dark1),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5, top: 3),
-                  child: Text(
-                    "Jakarta Barat",
-                    style: TextCollection.extraSmallLabel.copyWith(
-                      color: ColorApp().dark1,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5, top: 3),
-                  child: Text(
-                    "RP.10.000.000/bln",
-                    style: TextCollection.bodySmall.copyWith(
-                      color: ColorApp().secondaryColor,
-                    ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Warehouse Abadi",
+                        style: TextCollection.bodyNormal
+                            .copyWith(color: ColorApp().dark1, fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Jakarta Barat",
+                        style: TextCollection.bodySmall.copyWith(
+                          color: ColorApp().dark1,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "RP.10 Jt/bln",
+                        style: TextCollection.bodyNormal.copyWith(
+                          color: ColorApp().secondaryColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -756,8 +768,9 @@ class RecommendedCardWidget extends StatelessWidget {
         const SizedBox(width: 5),
         SizedBox(
           height: 169,
-          width: 155,
+          width: 180,
           child: Card(
+            color: ColorApp().light4,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -766,36 +779,145 @@ class RecommendedCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 105,
+                  height: 130,
                   child: Image.network(
                     "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
                     fit: BoxFit.fitHeight,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 5, top: 3),
-                  child: Text(
-                    "Warehouse Abadi",
-                    style: TextCollection.smallLabel
-                        .copyWith(color: ColorApp().dark1),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Warehouse Abadi",
+                        style: TextCollection.bodyNormal
+                            .copyWith(color: ColorApp().dark1, fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Jakarta Barat",
+                        style: TextCollection.bodySmall.copyWith(
+                          color: ColorApp().dark1,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "RP.10 Jt/bln",
+                        style: TextCollection.bodyNormal.copyWith(
+                          color: ColorApp().secondaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 5),
+        SizedBox(
+          height: 169,
+          width: 180,
+          child: Card(
+            color: ColorApp().light4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 130,
+                  child: Image.network(
+                    "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                    fit: BoxFit.fitHeight,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 5, top: 3),
-                  child: Text(
-                    "Jakarta Barat",
-                    style: TextCollection.extraSmallLabel.copyWith(
-                      color: ColorApp().dark1,
-                    ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Warehouse Abadi",
+                        style: TextCollection.bodyNormal
+                            .copyWith(color: ColorApp().dark1, fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Jakarta Barat",
+                        style: TextCollection.bodySmall.copyWith(
+                          color: ColorApp().dark1,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "RP.10 Jt/bln",
+                        style: TextCollection.bodyNormal.copyWith(
+                          color: ColorApp().secondaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 5),
+        SizedBox(
+          height: 169,
+          width: 180,
+          child: Card(
+            color: ColorApp().light4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 130,
+                  child: Image.network(
+                    "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                    fit: BoxFit.fitHeight,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 5, top: 3),
-                  child: Text(
-                    "RP.10.000.000/bln",
-                    style: TextCollection.bodySmall.copyWith(
-                      color: ColorApp().secondaryColor,
-                    ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Warehouse Abadi",
+                        style: TextCollection.bodyNormal
+                            .copyWith(color: ColorApp().dark1, fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Jakarta Barat",
+                        style: TextCollection.bodySmall.copyWith(
+                          color: ColorApp().dark1,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "RP.10 Jt/bln",
+                        style: TextCollection.bodyNormal.copyWith(
+                          color: ColorApp().secondaryColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
