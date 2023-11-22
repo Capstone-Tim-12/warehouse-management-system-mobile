@@ -11,7 +11,7 @@ class AuthBg extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       color: Colors.white,
       child: SvgPicture.asset(
-        'assets/svg/register.svg',
+        'assets/svg/splash_bg.svg',
         // width: MediaQuery.of(context).size.width,
         // height: MediaQuery.of(context).size.height,
         fit: BoxFit.fill,

@@ -25,19 +25,19 @@ class VerificationSuccess extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Align(
-          alignment: Alignment.centerRight,
-          child: Text(
-            'Skip',
-            style: textApp.extraSmallInvLabel,
-          ),
-        ),
-        automaticallyImplyLeading: false,
-        // leading: const BackButton(),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      //   title: Align(
+      //     alignment: Alignment.centerRight,
+      //     child: Text(
+      //       'Skip',
+      //       style: textApp.extraSmallInvLabel,
+      //     ),
+      //   ),
+      //   automaticallyImplyLeading: false,
+      //   // leading: const BackButton(),
+      // ),
       body: SizedBox(
         width: screenWidth,
         height: screenHeight,
@@ -52,7 +52,8 @@ class VerificationSuccess extends StatelessWidget {
                 width: screenWidth * 0.9,
                 height: 382,
                 decoration: BoxDecoration(
-                    color: colorApp.blugrey,
+                    color: Colors.white,
+                    // color: colorApp.blugrey,
                     borderRadius: BorderRadius.circular(20)),
                 child: Column(
                   // mainAxisSize: MainAxisSize.min,
@@ -62,7 +63,7 @@ class VerificationSuccess extends StatelessWidget {
                       height: 23,
                     ),
                     Text(
-                      '2 step verification successful',
+                      'Verifikasi Identitas Berhasil',
                       style: textApp.heading5,
                       textAlign: TextAlign.center,
                     ),
@@ -74,7 +75,7 @@ class VerificationSuccess extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Text(
-                        'Your 2-step verification has been successful, now you can rent a warehouse easily and safely',
+                        'Identitas berhasil diverifikasi, Sekarang anda dapat menggunakan semua fitur aplikasi',
                         textAlign: TextAlign.center,
                         style: textApp.bodySmall,
                       ),
@@ -106,7 +107,7 @@ class VerificationSuccess extends StatelessWidget {
                               vertical: 10, horizontal: 24),
                           child: Text(
                             'Home',
-                            style: TextStyle(color: colorApp.dark1),
+                            style: TextStyle(color: colorApp.light1),
                           ),
                         )),
                     const SizedBox(
