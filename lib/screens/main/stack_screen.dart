@@ -3,7 +3,8 @@ import 'package:capstone_wms/screens/main/chatbot/chatscreen.dart';
 import 'package:capstone_wms/screens/main/dashboard/dashboard.dart';
 import 'package:capstone_wms/screens/main/favorites/favorite_screen.dart';
 import 'package:capstone_wms/screens/main/my_warehouse/my_warehouse_screen.dart';
-import 'package:capstone_wms/screens/main/profile/profile_screen.dart';
+import 'package:capstone_wms/screens/main/profile/set_profile.dart';
+// import 'package:capstone_wms/screens/main/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
     const FavoritesScreen(),
     const MyWarehouse(),
     const ChatScreen(),
-    const ProfileScreen()
+    const SetProfileScreen()
   ];
 
   @override
