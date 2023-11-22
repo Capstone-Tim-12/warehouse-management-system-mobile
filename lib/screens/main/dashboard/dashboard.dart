@@ -33,7 +33,7 @@ class _DashboardState extends State<Dashboard> {
           children: [
             Text(
               "Hi, Digia",
-              style: TextCollection.heading6.copyWith(
+              style: textApp.heading6.copyWith(
                 color: ColorApp().light4,
               ),
             ),
@@ -82,14 +82,14 @@ class _DashboardState extends State<Dashboard> {
                           height: 40,
                           width: double.infinity,
                           child: TextField(
-                            style: TextCollection.bodySmall.copyWith(
+                            style: textApp.bodySmall.copyWith(
                               color: ColorApp().light4,
                             ),
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: ColorApp().light3.withOpacity(0.5),
                               hintText: "Search",
-                              hintStyle: TextCollection.bodySmall.copyWith(
+                              hintStyle: textApp.bodySmall.copyWith(
                                 color: ColorApp().light4,
                                 fontWeight: FontWeight.normal,
                               ),

@@ -1,5 +1,6 @@
 import 'package:capstone_wms/screens/auth_screen/components/bs_forgotpw.dart';
 import 'package:capstone_wms/screens/main/stack_screen.dart';
+import 'package:capstone_wms/services/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
@@ -43,6 +44,7 @@ class _BottomSheetLoginState extends State<BottomSheetLogin> {
       isPasswordVisible = !isPasswordVisible;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
