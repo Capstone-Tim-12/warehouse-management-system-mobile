@@ -194,4 +194,31 @@ class TextCollection {
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.w600,
   );
+
+  TextStyle heading9 = const TextStyle(
+    color: Colors.white,
+    fontFamily: 'Montserrat',
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+  );
+  TextStyle heading10 = const TextStyle(
+    color: Color(0xffFF7733),
+    fontFamily: 'Montserrat',
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+  );
+
+  TextStyle bodySmall2 = const TextStyle(
+    color: Color(0xff17345F),
+    fontFamily: 'Montserrat',
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+  );
+
+  TextStyle bodySmall3 = const TextStyle(
+    color: Color(0xff17345F),
+    fontFamily: 'Montserrat',
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+  );
 }
