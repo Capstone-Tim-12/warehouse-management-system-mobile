@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1029210392469",
+    "project_id": "wms-flutter12",
+    "storage_bucket": "wms-flutter12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029210392469:android:1a09db76d35cc001d1189c",
+        "android_client_info": {
+          "package_name": "com.example.capstone_wms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2r2ZHJq20OLqKQAgcHuz28UgqeW0shHk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

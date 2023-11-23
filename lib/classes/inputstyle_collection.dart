@@ -5,19 +5,35 @@ ColorApp colorApp = ColorApp();
 
 class DecorationCollection {
   InputDecoration emailField = const InputDecoration(
-      hintText: 'JaneDoe@mail.com',
-      labelText: 'Email',
-      suffixIcon: Icon(Icons.email));
+    hintText: 'JaneDoe@mail.com',
+    labelText: 'Email',
+    filled: true,
+    fillColor: Color(0xFFf8f4fc),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+      borderSide: BorderSide.none, // Set borderSide to BorderSide.none
+    ),
+    prefixIcon: Icon(Icons.email),
+  );
 
   InputDecoration userNameField = const InputDecoration(
-      hintText: 'JaneDoe@mail.com',
-      labelText: 'Username',
-      suffixIcon: Icon(Icons.person));
+    hintText: 'Jane Doe',
+    labelText: 'Nama',
+    filled: true,
+    fillColor: Color(0xFFf8f4fc),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+      borderSide: BorderSide.none, // Set borderSide to BorderSide.none
+    ),
+    prefixIcon: Icon(Icons.person),
+  );
 
-  // InputDecoration passwordField = const InputDecoration(
-  //   labelText: 'Password',
-  //   hintText: 'Enter Your Password',
-  // );
+  InputDecoration nikField = InputDecoration(
+      filled: true,
+      fillColor: Colors.white,
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(width: 1, color: Color(0xFFC7C9D9))));
 
   InputDecoration otpField = InputDecoration(
       filled: true,
@@ -25,4 +41,14 @@ class DecorationCollection {
       border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(width: 1, color: Color(0xFF5C5C5C))));
+
+  //Dropdown btn styles
+
+  ButtonStyle dropdownGender = ElevatedButton.styleFrom(
+    backgroundColor: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+      side: const BorderSide(width: 1, color: Color(0xFFC7C9D9)),
+    ),
+  );
 }

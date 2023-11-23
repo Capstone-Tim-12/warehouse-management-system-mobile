@@ -4,6 +4,7 @@ import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/size_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/auth_bg.dart';
+import 'package:capstone_wms/screens/auth_screen/user_identity/idverconf.dart';
 import 'package:capstone_wms/screens/auth_screen/signin_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -61,7 +62,7 @@ class SignupConfirmation extends StatelessWidget {
                       height: 23,
                     ),
                     Text(
-                      'Your password has been successfully',
+                      'account created successfully',
                       style: textApp.heading5,
                       textAlign: TextAlign.center,
                     ),
@@ -83,23 +84,26 @@ class SignupConfirmation extends StatelessWidget {
                     ),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: colorApp.mainColor,
+                            backgroundColor: colorApp.secondaryColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8))),
                         onPressed: () {
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                              builder: (context) => const LoginScreen(),
-                            ),
-                            (route) => false,
-                          );
+                          // Navigator.of(context).pushAndRemoveUntil(
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const LoginScreen(),
+                          //   ),
+                          //   (route) => false,
+                          // );
+
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const StartVerification()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 24),
                           child: Text(
-                            'Sign In',
-                            style: TextStyle(color: colorApp.light1),
+                            'Next',
+                            style: TextStyle(color: colorApp.dark1),
                           ),
                         )),
                     const SizedBox(

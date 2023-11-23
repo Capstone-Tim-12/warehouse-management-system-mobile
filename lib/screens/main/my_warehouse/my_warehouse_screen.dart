@@ -1,3 +1,4 @@
+import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_wms/screens/main/my_warehouse/detail_my_warehouse_screen.dart';
 
@@ -145,57 +146,60 @@ class _MyWarehouseState extends State<MyWarehouse> {
                         final item = warehouseData[index];
                         return Container(
                           margin: const EdgeInsets.only(bottom: 16),
+                          width: MediaQuery.of(context).size.width,
+                          // decoration: BoxDecoration(color: colorApp.light1),
                           child: Card(
                             elevation: 4,
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  height: 100,
-                                  width: 100,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    child: Image.network(item['imageUrl']),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
-                                    Text(
-                                      item['namaGudang'],
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
+                                    SizedBox(
+                                      height: 100,
+                                      width: 100,
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                        child: Image.network(item['imageUrl']),
                                       ),
                                     ),
                                     const SizedBox(
-                                      height: 12,
+                                      width: 12,
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text(item['lokasiGudang']),
-                                        const SizedBox(
-                                          width: 40,
-                                        ),
                                         Text(
-                                          item['proses'],
+                                          item['namaGudang'],
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.amber,
                                             fontSize: 16,
                                           ),
                                         ),
+                                        const SizedBox(
+                                          height: 12,
+                                        ),
+                                        Text(item['lokasiGudang']),
+                                        const SizedBox(
+                                          height: 12,
+                                        ),
+                                        Text(item['luasGudang']),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Text(item['luasGudang']),
                                   ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 16.0),
+                                  child: Text(
+                                    item['proses'],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.amber,
+                                      fontSize: 16,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),

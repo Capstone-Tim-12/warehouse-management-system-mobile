@@ -62,6 +62,12 @@ class TextCollection {
     fontSize: 16,
     fontWeight: FontWeight.w700,
   );
+  TextStyle heading6White = const TextStyle(
+    color: Colors.white,
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+  );
 
   TextStyle leadParagraph = const TextStyle(
     color: Colors.black,

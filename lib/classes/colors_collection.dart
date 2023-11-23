@@ -32,7 +32,7 @@ class ColorApp {
   Color light4 = const Color(0xffFAFAFC);
 
   //other color
-
+  Color bgAuthScaffold = const Color(0xFFE8EBEF);
   Color blugrey = const Color(0xff94A2B5);
 
   // Color widgetBlue = const Color(0xff0063F7);
