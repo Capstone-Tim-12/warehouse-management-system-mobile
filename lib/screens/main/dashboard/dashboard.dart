@@ -1,5 +1,6 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/screens/main/dashboard/recommend_list.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
@@ -11,6 +12,8 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   RangeValues _sliderValue = const RangeValues(1, 100);
+
+  TextCollection textApp = TextCollection();
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +33,13 @@ class _DashboardState extends State<Dashboard> {
           children: [
             Text(
               "Hi, Digia",
-              style: TextCollection.heading6.copyWith(
+              style: textApp.heading6.copyWith(
                 color: ColorApp().light4,
               ),
             ),
             Text(
               "We're happy to see you today",
-              style: TextCollection.smallLabel.copyWith(
+              style: textApp.smallLabel.copyWith(
                 color: ColorApp().light4,
               ),
             )
@@ -79,14 +82,14 @@ class _DashboardState extends State<Dashboard> {
                           height: 40,
                           width: double.infinity,
                           child: TextField(
-                            style: TextCollection.bodySmall.copyWith(
+                            style: textApp.bodySmall.copyWith(
                               color: ColorApp().light4,
                             ),
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: ColorApp().light3.withOpacity(0.5),
                               hintText: "Search",
-                              hintStyle: TextCollection.bodySmall.copyWith(
+                              hintStyle: textApp.bodySmall.copyWith(
                                 color: ColorApp().light4,
                                 fontWeight: FontWeight.normal,
                               ),
@@ -121,7 +124,7 @@ class _DashboardState extends State<Dashboard> {
                             const SizedBox(width: 10),
                             Text(
                               "Purwokerto, Banyumas",
-                              style: TextCollection.smallLabel.copyWith(
+                              style: textApp.smallLabel.copyWith(
                                 color: ColorApp().light4,
                               ),
                             ),
@@ -131,6 +134,7 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
                 ),
+
                 const Padding(
                   padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 130.0),
                   child: SizedBox(
@@ -151,14 +155,17 @@ class _DashboardState extends State<Dashboard> {
                   ),
                   const Spacer(),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const RecommendList()));
+                    },
                     icon: const Icon(Icons.more_horiz),
                   ),
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: SizedBox(
                 height: 240,
                 width: double.infinity,
@@ -181,8 +188,8 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: SizedBox(
                 height: 244,
                 width: double.infinity,
@@ -205,7 +212,7 @@ class _DashboardState extends State<Dashboard> {
         return StatefulBuilder(
           builder: (context, setState) {
             return Container(
-              height: MediaQuery.of(context).size.height * 0.85,
+              height: MediaQuery.of(context).size.height * 0.9,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(20),
@@ -225,7 +232,7 @@ class _DashboardState extends State<Dashboard> {
                             color: ColorApp().dark1,
                           ),
                           const SizedBox(width: 20),
-                          Text("Filter", style: TextCollection.bodySmall)
+                          Text("Filter", style: textApp.bodySmall)
                         ],
                       ),
                     ),
@@ -234,7 +241,7 @@ class _DashboardState extends State<Dashboard> {
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text("Urutkan", style: TextCollection.bodySmall),
+                    child: Text("Urutkan", style: textApp.bodySmall),
                   ),
                   // const SizedBox(height: 10),
                   SizedBox(
@@ -245,7 +252,7 @@ class _DashboardState extends State<Dashboard> {
                         const SizedBox(width: 5),
                         Text(
                           "Paling Rekomendasi",
-                          style: TextCollection.smallLabel.copyWith(
+                          style: textApp.smallLabel.copyWith(
                             color: ColorApp().dark1,
                           ),
                         ),
@@ -260,7 +267,7 @@ class _DashboardState extends State<Dashboard> {
                         const SizedBox(width: 5),
                         Text(
                           "Harga Terendah",
-                          style: TextCollection.smallLabel.copyWith(
+                          style: textApp.smallLabel.copyWith(
                             color: ColorApp().dark1,
                           ),
                         ),
@@ -275,7 +282,7 @@ class _DashboardState extends State<Dashboard> {
                         const SizedBox(width: 5),
                         Text(
                           "Harga Tertinggi",
-                          style: TextCollection.smallLabel.copyWith(
+                          style: textApp.smallLabel.copyWith(
                             color: ColorApp().dark1,
                           ),
                         ),
@@ -286,7 +293,7 @@ class _DashboardState extends State<Dashboard> {
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text("Price Range", style: TextCollection.bodySmall),
+                    child: Text("Price Range", style: textApp.bodySmall),
                   ),
                   RangeSlider(
                     min: 0,
@@ -313,7 +320,7 @@ class _DashboardState extends State<Dashboard> {
                           children: [
                             Text(
                               "Min. price",
-                              style: TextCollection.extraSmallLabel.copyWith(
+                              style: textApp.extraSmallLabel.copyWith(
                                 color: ColorApp().dark1,
                               ),
                             ),
@@ -350,7 +357,7 @@ class _DashboardState extends State<Dashboard> {
                           children: [
                             Text(
                               "Max. price",
-                              style: TextCollection.extraSmallLabel.copyWith(
+                              style: textApp.extraSmallLabel.copyWith(
                                 color: ColorApp().dark1,
                               ),
                             ),
@@ -390,7 +397,7 @@ class _DashboardState extends State<Dashboard> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
                       "Payment Time",
-                      style: TextCollection.bodySmall,
+                      style: textApp.bodySmall,
                     ),
                   ),
                   // const SizedBox(height: 10),
@@ -402,7 +409,7 @@ class _DashboardState extends State<Dashboard> {
                         const SizedBox(width: 5),
                         Text(
                           "Mingguan",
-                          style: TextCollection.smallLabel.copyWith(
+                          style: textApp.smallLabel.copyWith(
                             color: ColorApp().dark1,
                           ),
                         ),
@@ -417,7 +424,7 @@ class _DashboardState extends State<Dashboard> {
                         const SizedBox(width: 5),
                         Text(
                           "Bulanan",
-                          style: TextCollection.smallLabel.copyWith(
+                          style: textApp.smallLabel.copyWith(
                             color: ColorApp().dark1,
                           ),
                         ),
@@ -432,7 +439,7 @@ class _DashboardState extends State<Dashboard> {
                         const SizedBox(width: 5),
                         Text(
                           "Tahunan",
-                          style: TextCollection.smallLabel.copyWith(
+                          style: textApp.smallLabel.copyWith(
                             color: ColorApp().dark1,
                           ),
                         ),
@@ -443,7 +450,7 @@ class _DashboardState extends State<Dashboard> {
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text("Ukuran", style: TextCollection.bodySmall),
+                    child: Text("Ukuran", style: textApp.bodySmall),
                   ),
                   RangeSlider(
                     min: 0,
@@ -470,7 +477,7 @@ class _DashboardState extends State<Dashboard> {
                           children: [
                             Text(
                               "Min. size",
-                              style: TextCollection.extraSmallLabel.copyWith(
+                              style: textApp.extraSmallLabel.copyWith(
                                 color: ColorApp().dark1,
                               ),
                             ),
@@ -507,7 +514,7 @@ class _DashboardState extends State<Dashboard> {
                           children: [
                             Text(
                               "Max. size",
-                              style: TextCollection.extraSmallLabel.copyWith(
+                              style: textApp.extraSmallLabel.copyWith(
                                 color: ColorApp().dark1,
                               ),
                             ),
@@ -557,7 +564,7 @@ class _DashboardState extends State<Dashboard> {
                           onPressed: () {},
                           child: Text(
                             "Delete",
-                            style: TextCollection.bodySmall.copyWith(
+                            style: textApp.bodySmall.copyWith(
                               color: ColorApp().light4,
                             ),
                           ),
@@ -577,7 +584,7 @@ class _DashboardState extends State<Dashboard> {
                             onPressed: () {},
                             child: Text(
                               "Search",
-                              style: TextCollection.bodySmall.copyWith(
+                              style: textApp.bodySmall.copyWith(
                                 color: ColorApp().light4,
                               ),
                             ),
@@ -597,9 +604,11 @@ class _DashboardState extends State<Dashboard> {
 }
 
 class RecommendedCardWidget extends StatelessWidget {
-  const RecommendedCardWidget({
+  RecommendedCardWidget({
     super.key,
   });
+
+  TextCollection textApp = TextCollection();
 
   @override
   Widget build(BuildContext context) {
@@ -980,9 +989,11 @@ class RecommendedCardWidget extends StatelessWidget {
 
 class BannerWidget extends StatelessWidget {
   //ini nanti bisa dipindah ke folder widget/component biar ga panjang" main file nya
-  const BannerWidget({
+  BannerWidget({
     super.key,
   });
+
+  TextCollection textApp = TextCollection();
 
   @override
   Widget build(BuildContext context) {
@@ -1033,19 +1044,19 @@ class BannerWidget extends StatelessWidget {
                         children: [
                           Text(
                             "DigiHouse 11.11",
-                            style: TextCollection.smallLabel.copyWith(
+                            style: textApp.smallLabel.copyWith(
                               color: ColorApp().light4,
                             ),
                           ),
                           Text(
                             "DISKON",
-                            style: TextCollection.heading5.copyWith(
+                            style: textApp.heading5.copyWith(
                               color: ColorApp().light4,
                             ),
                           ),
                           Text(
                             "RP.2.000.000",
-                            style: TextCollection.heading6
+                            style: textApp.heading6
                                 .copyWith(color: ColorApp().light4),
                           ),
                           const SizedBox(height: 3),
@@ -1059,7 +1070,7 @@ class BannerWidget extends StatelessWidget {
                             ),
                             child: Text(
                               "Gudang, Purwokerto",
-                              style: TextCollection.extraSmallLabel.copyWith(
+                              style: textApp.extraSmallLabel.copyWith(
                                 color: ColorApp().secondaryColor,
                               ),
                               textAlign: TextAlign.center,
@@ -1068,7 +1079,7 @@ class BannerWidget extends StatelessWidget {
                           const SizedBox(height: 3),
                           Text(
                             "11-15 November",
-                            style: TextCollection.extraSmallLabel.copyWith(
+                            style: textApp.extraSmallLabel.copyWith(
                               color: ColorApp().light4,
                             ),
                           ),
@@ -1126,19 +1137,19 @@ class BannerWidget extends StatelessWidget {
                         children: [
                           Text(
                             "DigiHouse 11.11",
-                            style: TextCollection.smallLabel.copyWith(
+                            style: textApp.smallLabel.copyWith(
                               color: ColorApp().light4,
                             ),
                           ),
                           Text(
                             "DISKON",
-                            style: TextCollection.heading5.copyWith(
+                            style: textApp.heading5.copyWith(
                               color: ColorApp().light4,
                             ),
                           ),
                           Text(
                             "RP.2.000.000",
-                            style: TextCollection.heading6
+                            style: textApp.heading6
                                 .copyWith(color: ColorApp().light4),
                           ),
                           const SizedBox(height: 3),
@@ -1152,7 +1163,7 @@ class BannerWidget extends StatelessWidget {
                             ),
                             child: Text(
                               "Gudang, Purwokerto",
-                              style: TextCollection.extraSmallLabel.copyWith(
+                              style: textApp.extraSmallLabel.copyWith(
                                 color: ColorApp().secondaryColor,
                               ),
                               textAlign: TextAlign.center,
@@ -1161,7 +1172,7 @@ class BannerWidget extends StatelessWidget {
                           const SizedBox(height: 3),
                           Text(
                             "11-15 November",
-                            style: TextCollection.extraSmallLabel.copyWith(
+                            style: textApp.extraSmallLabel.copyWith(
                               color: ColorApp().light4,
                             ),
                           ),
@@ -1219,19 +1230,19 @@ class BannerWidget extends StatelessWidget {
                         children: [
                           Text(
                             "DigiHouse 11.11",
-                            style: TextCollection.smallLabel.copyWith(
+                            style: textApp.smallLabel.copyWith(
                               color: ColorApp().light4,
                             ),
                           ),
                           Text(
                             "DISKON",
-                            style: TextCollection.heading5.copyWith(
+                            style: textApp.heading5.copyWith(
                               color: ColorApp().light4,
                             ),
                           ),
                           Text(
                             "RP.2.000.000",
-                            style: TextCollection.heading6
+                            style: textApp.heading6
                                 .copyWith(color: ColorApp().light4),
                           ),
                           const SizedBox(height: 3),
@@ -1245,7 +1256,7 @@ class BannerWidget extends StatelessWidget {
                             ),
                             child: Text(
                               "Gudang, Purwokerto",
-                              style: TextCollection.extraSmallLabel.copyWith(
+                              style: textApp.extraSmallLabel.copyWith(
                                 color: ColorApp().secondaryColor,
                               ),
                               textAlign: TextAlign.center,
@@ -1254,7 +1265,7 @@ class BannerWidget extends StatelessWidget {
                           const SizedBox(height: 3),
                           Text(
                             "11-15 November",
-                            style: TextCollection.extraSmallLabel.copyWith(
+                            style: textApp.extraSmallLabel.copyWith(
                               color: ColorApp().light4,
                             ),
                           ),
