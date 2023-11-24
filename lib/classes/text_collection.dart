@@ -56,6 +56,13 @@ class TextCollection {
     fontWeight: FontWeight.w700,
   );
 
+  TextStyle heading5white = const TextStyle(
+    color: Colors.white,
+    fontFamily: 'Montserrat',
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+  );
+
   TextStyle heading6 = const TextStyle(
     color: Colors.black,
     fontFamily: 'Montserrat',
@@ -96,6 +103,14 @@ class TextCollection {
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
+
+  TextStyle bodyNormalwhite = const TextStyle(
+    color: Colors.white,
+    fontFamily: 'Montserrat',
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
+
   TextStyle bodyNormalLight = const TextStyle(
     color: Colors.black,
     fontFamily: 'Montserrat',
@@ -148,6 +163,14 @@ class TextCollection {
   TextStyle extraSmallInvLabel = const TextStyle(
     color: Color(0xFF8F90A6),
     fontSize: 14,
+    fontFamily: 'Montserrat',
+    fontWeight: FontWeight.w600,
+    height: 0.11,
+  );
+
+  TextStyle SmallInvLabel = const TextStyle(
+    color: Color(0xFF8F90A6),
+    fontSize: 18,
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.w600,
     height: 0.11,
