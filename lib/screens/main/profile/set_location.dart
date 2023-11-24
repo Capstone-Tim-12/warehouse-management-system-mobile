@@ -87,7 +87,8 @@ class SetLocation extends StatelessWidget {
               itemCount: allCities.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(allCities[index]),
+                  title:
+                      Text(allCities[index], style: TextCollection().bodySmall),
                   onTap: () {},
                 );
               },
