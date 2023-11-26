@@ -12,6 +12,11 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreen> {
   final ColorApp colorApp = ColorApp();
   final TextCollection textCollection = TextCollection();
+
+  bool switchValue1 = true;
+  bool switchValue2 = true;
+  bool switchValue3 = true;
+  bool switchValue4 = true;
   
 @override
   Widget build(BuildContext context) {
@@ -27,6 +32,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
           onPressed: () {},
         ),
       )
-      );
+    );
   }
 }
