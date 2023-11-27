@@ -3,6 +3,7 @@ import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:flutter/material.dart';
 
 Future<dynamic> FilterBottomSheet(BuildContext context) {
+  String? filter;
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -40,60 +41,71 @@ Future<dynamic> FilterBottomSheet(BuildContext context) {
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Text("Urutkan", style: TextCollection.bodySmall),
+                  child: Text("Urutkan", style: TextCollection.bodyNormal),
                 ),
-                // const SizedBox(height: 10),
                 SizedBox(
-                  height: 30,
-                  child: Row(
+                  height: 200,
+                  child: Column(
                     children: [
-                      Checkbox(value: false, onChanged: (value) {}),
-                      const SizedBox(width: 5),
-                      Text(
-                        "Paling Rekomendasi",
-                        style: TextCollection.smallLabel.copyWith(
-                          color: ColorApp().dark1,
+                      RadioListTile(
+                        activeColor: ColorApp().secondaryColor,
+                        title: Text(
+                          "Paling Rekomendasi",
+                          style: TextCollection.bodySmall.copyWith(
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
+                        value: "Paling Rekomendasi",
+                        groupValue: filter,
+                        onChanged: (value) {
+                          setState(() {
+                            filter = value.toString();
+                          });
+                        },
+                      ),
+                      RadioListTile(
+                        activeColor: ColorApp().secondaryColor,
+                        title: Text(
+                          "Harga Terendah",
+                          style: TextCollection.bodySmall.copyWith(
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        value: "Harga Terendah",
+                        groupValue: filter,
+                        onChanged: (value) {
+                          setState(() {
+                            filter = value.toString();
+                          });
+                        },
+                      ),
+                      RadioListTile(
+                        activeColor: ColorApp().secondaryColor,
+                        title: Text(
+                          "Harga Tertinggi",
+                          style: TextCollection.bodySmall.copyWith(
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                        value: "Harga Tertinggi",
+                        groupValue: filter,
+                        onChanged: (value) {
+                          setState(() {
+                            filter = value.toString();
+                          });
+                        },
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Checkbox(value: false, onChanged: (value) {}),
-                      const SizedBox(width: 5),
-                      Text(
-                        "Harga Terendah",
-                        style: TextCollection.smallLabel.copyWith(
-                          color: ColorApp().dark1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Checkbox(value: false, onChanged: (value) {}),
-                      const SizedBox(width: 5),
-                      Text(
-                        "Harga Tertinggi",
-                        style: TextCollection.smallLabel.copyWith(
-                          color: ColorApp().dark1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Divider(),
-                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Text("Price Range", style: TextCollection.bodySmall),
+                  child: Text(
+                    "Ukuran Warehouse",
+                    style: TextCollection.bodyNormal,
+                  ),
                 ),
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
@@ -101,27 +113,27 @@ Future<dynamic> FilterBottomSheet(BuildContext context) {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Min. price",
-                            style: TextCollection.extraSmallLabel.copyWith(
-                              color: ColorApp().dark1,
-                            ),
-                          ),
                           SizedBox(
-                            height: 30,
-                            width: 80,
+                            height: 50,
+                            width: 150,
                             child: TextField(
+                              textAlign: TextAlign.start,
                               cursorColor: ColorApp().mainColor,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(
-                                      color: ColorApp().mainColor,
-                                    )),
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(
+                                    color: ColorApp().mainColor,
+                                  ),
+                                ),
+                                hintText: "Minimal",
+                                hintStyle: TextCollection.smallLabel.copyWith(
+                                  color: ColorApp().dark1,
+                                ),
                                 contentPadding: const EdgeInsets.only(
                                   bottom: 5.0,
-                                  left: 5.0,
+                                  left: 10.0,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
@@ -130,6 +142,12 @@ Future<dynamic> FilterBottomSheet(BuildContext context) {
                                   ),
                                 ),
                               ),
+                            ),
+                          ),
+                          Text(
+                            "Min.",
+                            style: TextCollection.extraSmallLabel.copyWith(
+                              color: ColorApp().dark1,
                             ),
                           ),
                         ],
@@ -138,35 +156,41 @@ Future<dynamic> FilterBottomSheet(BuildContext context) {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            "Max. price",
-                            style: TextCollection.extraSmallLabel.copyWith(
-                              color: ColorApp().dark1,
-                            ),
-                          ),
                           SizedBox(
-                            height: 30,
-                            width: 80,
+                            height: 50,
+                            width: 150,
                             child: TextField(
+                              textAlign: TextAlign.end,
                               cursorColor: ColorApp().mainColor,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(
-                                      color: ColorApp().mainColor,
-                                    )),
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: ColorApp().mainColor,
+                                  ),
+                                ),
+                                hintText: "Maksimal",
+                                hintStyle: TextCollection.smallLabel.copyWith(
+                                  color: ColorApp().dark1,
+                                ),
                                 contentPadding: const EdgeInsets.only(
                                   bottom: 5.0,
-                                  left: 5.0,
+                                  right: 10.0,
                                 ),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
+                                  borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
                                     color: ColorApp().mainColor,
                                   ),
                                 ),
                               ),
+                            ),
+                          ),
+                          Text(
+                            "Max.",
+                            style: TextCollection.extraSmallLabel.copyWith(
+                              color: ColorApp().dark1,
                             ),
                           ),
                         ],
@@ -175,67 +199,12 @@ Future<dynamic> FilterBottomSheet(BuildContext context) {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Divider(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Text(
-                    "Payment Time",
-                    style: TextCollection.bodySmall,
-                  ),
-                ),
-                // const SizedBox(height: 10),
-                SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Checkbox(value: false, onChanged: (value) {}),
-                      const SizedBox(width: 5),
-                      Text(
-                        "Mingguan",
-                        style: TextCollection.smallLabel.copyWith(
-                          color: ColorApp().dark1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Checkbox(value: false, onChanged: (value) {}),
-                      const SizedBox(width: 5),
-                      Text(
-                        "Bulanan",
-                        style: TextCollection.smallLabel.copyWith(
-                          color: ColorApp().dark1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Checkbox(value: false, onChanged: (value) {}),
-                      const SizedBox(width: 5),
-                      Text(
-                        "Tahunan",
-                        style: TextCollection.smallLabel.copyWith(
-                          color: ColorApp().dark1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Divider(),
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Text("Ukuran", style: TextCollection.bodySmall),
+                  child: Text("Harga", style: TextCollection.bodyNormal),
                 ),
-
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
@@ -243,35 +212,41 @@ Future<dynamic> FilterBottomSheet(BuildContext context) {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Min. size",
-                            style: TextCollection.extraSmallLabel.copyWith(
-                              color: ColorApp().dark1,
-                            ),
-                          ),
                           SizedBox(
-                            height: 30,
-                            width: 80,
+                            height: 50,
+                            width: 150,
                             child: TextField(
+                              textAlign: TextAlign.start,
                               cursorColor: ColorApp().mainColor,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(
-                                      color: ColorApp().mainColor,
-                                    )),
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: ColorApp().mainColor,
+                                  ),
+                                ),
+                                hintText: "Minimal",
+                                hintStyle: TextCollection.smallLabel.copyWith(
+                                  color: ColorApp().dark1,
+                                ),
                                 contentPadding: const EdgeInsets.only(
                                   bottom: 5.0,
-                                  left: 5.0,
+                                  left: 10.0,
                                 ),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
+                                  borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
                                     color: ColorApp().mainColor,
                                   ),
                                 ),
                               ),
+                            ),
+                          ),
+                          Text(
+                            "Min.",
+                            style: TextCollection.extraSmallLabel.copyWith(
+                              color: ColorApp().dark1,
                             ),
                           ),
                         ],
@@ -280,27 +255,27 @@ Future<dynamic> FilterBottomSheet(BuildContext context) {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            "Max. size",
-                            style: TextCollection.extraSmallLabel.copyWith(
-                              color: ColorApp().dark1,
-                            ),
-                          ),
                           SizedBox(
-                            height: 30,
-                            width: 80,
+                            height: 50,
+                            width: 150,
                             child: TextField(
+                              textAlign: TextAlign.end,
                               cursorColor: ColorApp().mainColor,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(
-                                      color: ColorApp().mainColor,
-                                    )),
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(
+                                    color: ColorApp().mainColor,
+                                  ),
+                                ),
+                                hintText: "Maksimal",
+                                hintStyle: TextCollection.smallLabel.copyWith(
+                                  color: ColorApp().dark1,
+                                ),
                                 contentPadding: const EdgeInsets.only(
                                   bottom: 5.0,
-                                  left: 5.0,
+                                  right: 10.0,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
@@ -309,6 +284,12 @@ Future<dynamic> FilterBottomSheet(BuildContext context) {
                                   ),
                                 ),
                               ),
+                            ),
+                          ),
+                          Text(
+                            "Max.",
+                            style: TextCollection.extraSmallLabel.copyWith(
+                              color: ColorApp().dark1,
                             ),
                           ),
                         ],

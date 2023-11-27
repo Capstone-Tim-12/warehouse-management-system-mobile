@@ -1,6 +1,7 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/dashboard_bannerCard.dart';
+import 'package:capstone_wms/components/dashboard_bottomsheetFilter.dart';
 import 'package:capstone_wms/components/dashboard_cardItem.dart';
 import 'package:flutter/material.dart';
 
@@ -51,7 +52,9 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              FilterBottomSheet(context);
+            },
             icon: Icon(
               Icons.chat_rounded,
               color: ColorApp().light4,
