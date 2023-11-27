@@ -1,0 +1,371 @@
+import 'package:capstone_wms/classes/colors_collection.dart';
+import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:flutter/material.dart';
+
+Future<dynamic> FilterBottomSheet(BuildContext context) {
+  return showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: ColorApp().light4,
+    builder: (builder) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.85,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: SizedBox(
+                    height: 50,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.filter_list_rounded,
+                          color: ColorApp().dark1,
+                        ),
+                        const SizedBox(width: 20),
+                        Text("Filter", style: TextCollection.bodySmall)
+                      ],
+                    ),
+                  ),
+                ),
+                const Divider(),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text("Urutkan", style: TextCollection.bodySmall),
+                ),
+                // const SizedBox(height: 10),
+                SizedBox(
+                  height: 30,
+                  child: Row(
+                    children: [
+                      Checkbox(value: false, onChanged: (value) {}),
+                      const SizedBox(width: 5),
+                      Text(
+                        "Paling Rekomendasi",
+                        style: TextCollection.smallLabel.copyWith(
+                          color: ColorApp().dark1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                  child: Row(
+                    children: [
+                      Checkbox(value: false, onChanged: (value) {}),
+                      const SizedBox(width: 5),
+                      Text(
+                        "Harga Terendah",
+                        style: TextCollection.smallLabel.copyWith(
+                          color: ColorApp().dark1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                  child: Row(
+                    children: [
+                      Checkbox(value: false, onChanged: (value) {}),
+                      const SizedBox(width: 5),
+                      Text(
+                        "Harga Tertinggi",
+                        style: TextCollection.smallLabel.copyWith(
+                          color: ColorApp().dark1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text("Price Range", style: TextCollection.bodySmall),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Min. price",
+                            style: TextCollection.extraSmallLabel.copyWith(
+                              color: ColorApp().dark1,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            width: 80,
+                            child: TextField(
+                              cursorColor: ColorApp().mainColor,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide(
+                                      color: ColorApp().mainColor,
+                                    )),
+                                contentPadding: const EdgeInsets.only(
+                                  bottom: 5.0,
+                                  left: 5.0,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(
+                                    color: ColorApp().mainColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Max. price",
+                            style: TextCollection.extraSmallLabel.copyWith(
+                              color: ColorApp().dark1,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            width: 80,
+                            child: TextField(
+                              cursorColor: ColorApp().mainColor,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide(
+                                      color: ColorApp().mainColor,
+                                    )),
+                                contentPadding: const EdgeInsets.only(
+                                  bottom: 5.0,
+                                  left: 5.0,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(
+                                    color: ColorApp().mainColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Divider(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    "Payment Time",
+                    style: TextCollection.bodySmall,
+                  ),
+                ),
+                // const SizedBox(height: 10),
+                SizedBox(
+                  height: 30,
+                  child: Row(
+                    children: [
+                      Checkbox(value: false, onChanged: (value) {}),
+                      const SizedBox(width: 5),
+                      Text(
+                        "Mingguan",
+                        style: TextCollection.smallLabel.copyWith(
+                          color: ColorApp().dark1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                  child: Row(
+                    children: [
+                      Checkbox(value: false, onChanged: (value) {}),
+                      const SizedBox(width: 5),
+                      Text(
+                        "Bulanan",
+                        style: TextCollection.smallLabel.copyWith(
+                          color: ColorApp().dark1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                  child: Row(
+                    children: [
+                      Checkbox(value: false, onChanged: (value) {}),
+                      const SizedBox(width: 5),
+                      Text(
+                        "Tahunan",
+                        style: TextCollection.smallLabel.copyWith(
+                          color: ColorApp().dark1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text("Ukuran", style: TextCollection.bodySmall),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Min. size",
+                            style: TextCollection.extraSmallLabel.copyWith(
+                              color: ColorApp().dark1,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            width: 80,
+                            child: TextField(
+                              cursorColor: ColorApp().mainColor,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide(
+                                      color: ColorApp().mainColor,
+                                    )),
+                                contentPadding: const EdgeInsets.only(
+                                  bottom: 5.0,
+                                  left: 5.0,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(
+                                    color: ColorApp().mainColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Max. size",
+                            style: TextCollection.extraSmallLabel.copyWith(
+                              color: ColorApp().dark1,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            width: 80,
+                            child: TextField(
+                              cursorColor: ColorApp().mainColor,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide(
+                                      color: ColorApp().mainColor,
+                                    )),
+                                contentPadding: const EdgeInsets.only(
+                                  bottom: 5.0,
+                                  left: 5.0,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  borderSide: BorderSide(
+                                    color: ColorApp().mainColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorApp().stateError,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Text(
+                          "Delete",
+                          style: TextCollection.bodySmall.copyWith(
+                            color: ColorApp().light4,
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      SizedBox(
+                        height: 40,
+                        width: 250,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: ColorApp().mainColor,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            "Search",
+                            style: TextCollection.bodySmall.copyWith(
+                              color: ColorApp().light4,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
+}
