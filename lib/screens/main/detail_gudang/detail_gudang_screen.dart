@@ -81,7 +81,8 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                         ),
                         Container(
                           width: double.infinity,
-                          color: Colors.black.withOpacity(0.2),
+                          height: 90,
+                          color: Colors.black.withOpacity(0.5),
                         ),
                         Text(
                           "Lihat Lainnya",
