@@ -54,7 +54,14 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const RecommendList(),
+                ),
+              );
+            },
             icon: Icon(
               Icons.chat_rounded,
               color: ColorApp().light4,
