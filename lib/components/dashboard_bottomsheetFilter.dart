@@ -122,7 +122,7 @@ Future<dynamic> FilterBottomSheet(BuildContext context) {
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
+                                  borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
                                     color: ColorApp().mainColor,
                                   ),
@@ -136,7 +136,7 @@ Future<dynamic> FilterBottomSheet(BuildContext context) {
                                   left: 10.0,
                                 ),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
+                                  borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
                                     color: ColorApp().mainColor,
                                   ),
@@ -264,7 +264,7 @@ Future<dynamic> FilterBottomSheet(BuildContext context) {
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
+                                  borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
                                     color: ColorApp().mainColor,
                                   ),
@@ -278,7 +278,7 @@ Future<dynamic> FilterBottomSheet(BuildContext context) {
                                   right: 10.0,
                                 ),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
+                                  borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
                                     color: ColorApp().mainColor,
                                   ),
