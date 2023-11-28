@@ -35,8 +35,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
-      home: const SetProfileScreen(),
-      // home: const SplashScreen(),
+      // home: const SetProfileScreen(),
+      home: const SplashScreen(),
     );
   }
 }
