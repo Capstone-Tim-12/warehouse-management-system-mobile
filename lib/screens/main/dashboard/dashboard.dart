@@ -2,6 +2,7 @@ import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/screens/main/dashboard/recommend_list.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -12,8 +13,23 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   RangeValues _sliderValue = const RangeValues(1, 100);
+  String nameValue = '';
+
+  Future<void> getLoggedInName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      nameValue = prefs.getString('name') ?? 'No value found';
+    });
+  }
 
   TextCollection textApp = TextCollection();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getLoggedInName();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +48,7 @@ class _DashboardState extends State<Dashboard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Hi, Digia",
+              "Hi, $nameValue",
               style: textApp.heading6.copyWith(
                 color: ColorApp().light4,
               ),
@@ -142,7 +158,6 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 130.0),
                   child: SizedBox(
                     height: 155,
                     child: BannerWidget(),
@@ -184,6 +199,7 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   Text(
                     "Gudang Termurah",
+
                     style: textApp.bodySmall,
                   ),
                   const Spacer(),
@@ -379,12 +395,14 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
+
                         style: textApp.bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
+
                         style: textApp.bodySmall.copyWith(
                           color: ColorApp().dark1,
                           fontWeight: FontWeight.normal,
@@ -573,13 +591,13 @@ class RecommendedCardWidget extends StatelessWidget {
                           fontWeight: FontWeight.normal,
                           fontSize: 12,
                         ),
+
                       ),
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
                         style: textApp.bodyNormal.copyWith(
                           color: ColorApp().secondaryColor,
-                        ),
                       ),
                     ],
                   ),
