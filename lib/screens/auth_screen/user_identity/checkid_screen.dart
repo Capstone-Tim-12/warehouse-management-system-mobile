@@ -2,10 +2,13 @@ import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/address_controller.dart';
+import 'package:capstone_wms/controllers/identity_controller.dart';
 import 'package:capstone_wms/screens/auth_screen/user_identity/edit_address.dart';
 import 'package:capstone_wms/screens/auth_screen/user_identity/edit_identity.dart';
 import 'package:capstone_wms/screens/auth_screen/user_identity/panduanselfiektp.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CheckIdentity extends StatefulWidget {
   const CheckIdentity({super.key});
@@ -19,6 +22,9 @@ class _CheckIdentityState extends State<CheckIdentity> {
   PaddingCollection paddingApp = PaddingCollection();
   TextCollection textApp = TextCollection();
   DecorationCollection fieldStyle = DecorationCollection();
+  IdentityController showUserIdentity = Get.put(IdentityController());
+  AddressController showUserAdress = Get.put(AddressController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,11 +121,11 @@ class _CheckIdentityState extends State<CheckIdentity> {
             padding: paddingApp.scaffoldPadding,
             child: ListView(children: [
               Text(
-                'Cek Data Diri dan Alamat',
+                'Data Diri dan Alamat',
                 style: textApp.heading3.copyWith(fontSize: 27),
               ),
               Text(
-                'Pastikan datamu sesuai dengan data KTP. Silahkan ubah jika ada yang keliru.',
+                'Silahkan isi datamu sesuai dengan data KTP. Silahkan ubah jika ada yang keliru.',
                 style: textApp.bodyNormal.copyWith(fontWeight: FontWeight.w400),
               ),
               const SizedBox(
@@ -178,11 +184,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                             ),
                           ],
                         ),
-                        Text(
-                          '32023891327891',
-                          style: textApp.bodyNormal
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        Obx(
+                          () => Text(
+                            showUserIdentity.userIdentity.value.nik,
+                            style: textApp.bodyNormal
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -200,11 +208,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                             ),
                           ],
                         ),
-                        Text(
-                          'Abdulrahman',
-                          style: textApp.bodyNormal
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        Obx(
+                          () => Text(
+                            showUserIdentity.userIdentity.value.fullName,
+                            style: textApp.bodyNormal
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -222,11 +232,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                             ),
                           ],
                         ),
-                        Text(
-                          'Laki-Laki',
-                          style: textApp.bodyNormal
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        Obx(
+                          () => Text(
+                            showUserIdentity.userIdentity.value.gender,
+                            style: textApp.bodyNormal
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -244,11 +256,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                             ),
                           ],
                         ),
-                        Text(
-                          'Depok',
-                          style: textApp.bodyNormal
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        Obx(
+                          () => Text(
+                            showUserIdentity.userIdentity.value.birthPlace,
+                            style: textApp.bodyNormal
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -266,11 +280,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                             ),
                           ],
                         ),
-                        Text(
-                          '11-09-2001',
-                          style: textApp.bodyNormal
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        Obx(
+                          () => Text(
+                            showUserIdentity.birthDateString.toString(),
+                            style: textApp.bodyNormal
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -288,11 +304,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                             ),
                           ],
                         ),
-                        Text(
-                          'Pelajar/Mahasiswa',
-                          style: textApp.bodyNormal
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        Obx(
+                          () => Text(
+                            showUserIdentity.userIdentity.value.job,
+                            style: textApp.bodyNormal
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -310,11 +328,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                             ),
                           ],
                         ),
-                        Text(
-                          'WNI',
-                          style: textApp.bodyNormal
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        Obx(
+                          () => Text(
+                            showUserIdentity.userIdentity.value.citizenship,
+                            style: textApp.bodyNormal
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        )
                       ],
                     ),
                   ]),
@@ -376,11 +396,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                             ),
                           ],
                         ),
-                        Text(
-                          'Indonesia',
-                          style: textApp.bodyNormal
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        Obx(
+                          () => Text(
+                            showUserAdress.userAddress.value.country,
+                            style: textApp.bodyNormal
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -398,11 +420,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                             ),
                           ],
                         ),
-                        Text(
-                          'Jawa Barat',
-                          style: textApp.bodyNormal
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        Obx(
+                          () => Text(
+                            showUserAdress.userAddress.value.province,
+                            style: textApp.bodyNormal
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -420,11 +444,16 @@ class _CheckIdentityState extends State<CheckIdentity> {
                             ),
                           ],
                         ),
-                        Text(
-                          'Depok',
-                          style: textApp.bodyNormal
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        Obx(
+                          () => Flexible(
+                            child: Text(
+                              showUserAdress.userAddress.value.regency,
+                              style: textApp.bodyNormal
+                                  .copyWith(fontWeight: FontWeight.w400),
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -442,11 +471,16 @@ class _CheckIdentityState extends State<CheckIdentity> {
                             ),
                           ],
                         ),
-                        Text(
-                          'Cimangis',
-                          style: textApp.bodyNormal
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        Obx(
+                          () => Flexible(
+                            child: Text(
+                              showUserAdress.userAddress.value.district,
+                              style: textApp.bodyNormal
+                                  .copyWith(fontWeight: FontWeight.w400),
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     Row(
@@ -464,11 +498,16 @@ class _CheckIdentityState extends State<CheckIdentity> {
                             ),
                           ],
                         ),
-                        Text(
-                          'Mekarsari no.51',
-                          style: textApp.bodyNormal
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
+                        Obx(
+                          () => Flexible(
+                            child: Text(
+                              showUserAdress.userAddress.value.fullAdress,
+                              style: textApp.bodyNormal
+                                  .copyWith(fontWeight: FontWeight.w400),
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ]),
@@ -496,8 +535,36 @@ class _CheckIdentityState extends State<CheckIdentity> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8))),
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => PanduanSelfieKTP()));
+                            if (showUserIdentity.userIdentity.value.nik.isEmpty ||
+                                showUserIdentity
+                                    .userIdentity.value.birthPlace.isEmpty ||
+                                showUserIdentity
+                                    .userIdentity.value.citizenship.isEmpty ||
+                                showUserIdentity
+                                    .userIdentity.value.fullName.isEmpty ||
+                                showUserIdentity
+                                    .userIdentity.value.gender.isEmpty ||
+                                showUserIdentity
+                                    .userIdentity.value.job.isEmpty ||
+                                showUserIdentity.userIdentity.value.birthDate ==
+                                    DateTime.now()) {
+                              Get.snackbar(
+                                  "Peringatan", "Harap Lengkapi Identitas Anda",
+                                  backgroundColor: colorApp.light1);
+                            } else if (showUserAdress
+                                    .userAddress.value.district.isEmpty ||
+                                showUserAdress
+                                    .userAddress.value.province.isEmpty ||
+                                showUserAdress
+                                    .userAddress.value.regency.isEmpty ||
+                                showUserAdress
+                                    .userAddress.value.fullAdress.isEmpty) {
+                              Get.snackbar(
+                                  "Peringatan", "Harap Lengkapi Alamat Anda",
+                                  backgroundColor: colorApp.light1);
+                            } else {
+                              Get.to(() => PanduanSelfieKTP());
+                            }
                           },
                           child: Text('Lanjut Selfie KTP',
                               style: textApp.largeLabel.copyWith(
