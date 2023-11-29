@@ -158,6 +158,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
                 Padding(
+                  padding: const EdgeInsets.all(5),
                   child: SizedBox(
                     height: 155,
                     child: BannerWidget(),
@@ -199,7 +200,6 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   Text(
                     "Gudang Termurah",
-
                     style: textApp.bodySmall,
                   ),
                   const Spacer(),
@@ -395,69 +395,6 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-
-                        style: textApp.bodyNormal
-                            .copyWith(color: ColorApp().dark1, fontSize: 16),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "Jakarta Barat",
-
-                        style: textApp.bodySmall.copyWith(
-                          color: ColorApp().dark1,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 12,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Text(
-                        "RP.10 Jt/bln",
-                        style: textApp.bodyNormal.copyWith(
-                          color: ColorApp().secondaryColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(width: 5),
-        SizedBox(
-          width: 180,
-          child: Container(
-            margin: const EdgeInsets.all(3.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: ColorApp().dark4,
-                  offset: const Offset(1, 1),
-                  spreadRadius: 1,
-                  blurRadius: 1.0,
-                )
-              ],
-            ),
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 130,
-                  child: Image.network(
-                    "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
-                    fit: BoxFit.fitHeight,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Warehouse Abadi",
                         style: textApp.bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
@@ -591,14 +528,75 @@ class RecommendedCardWidget extends StatelessWidget {
                           fontWeight: FontWeight.normal,
                           fontSize: 12,
                         ),
-
                       ),
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
                         style: textApp.bodyNormal.copyWith(
                           color: ColorApp().secondaryColor,
+                        ),
                       ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 5),
+        SizedBox(
+          width: 180,
+          child: Container(
+            margin: const EdgeInsets.all(3.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: ColorApp().dark4,
+                  offset: const Offset(1, 1),
+                  spreadRadius: 1,
+                  blurRadius: 1.0,
+                )
+              ],
+            ),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 130,
+                  child: Image.network(
+                    "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Warehouse Abadi",
+                        style: textApp.bodyNormal
+                            .copyWith(color: ColorApp().dark1, fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Jakarta Barat",
+                        style: textApp.bodySmall.copyWith(
+                          color: ColorApp().dark1,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        "RP.10 Jt/bln",
+                        style: textApp.bodyNormal.copyWith(
+                          color: ColorApp().secondaryColor,
+                        ),
+                      )
                     ],
                   ),
                 ),
