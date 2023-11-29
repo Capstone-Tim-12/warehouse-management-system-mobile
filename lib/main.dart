@@ -48,9 +48,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
-      // home: const SetProfileScreen(),
-      home: const DetailGudangScreen(),
-      // home: const SplashScreen(),
+      home: const SplashScreen(),
+
     );
   }
 }
