@@ -1,9 +1,11 @@
 import 'dart:math';
 
 import 'package:camera/camera.dart';
+import 'package:capstone_wms/controllers/ktp_controller.dart';
 import 'package:capstone_wms/screens/auth_screen/user_identity/checkid_screen.dart';
 import 'package:flutter_scalable_ocr/flutter_scalable_ocr.dart';
 import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
+import 'package:get/get.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
@@ -24,6 +26,7 @@ class _KtpScannerState extends State<KtpScanner> {
   PaddingCollection paddingApp = PaddingCollection();
   TextCollection textApp = TextCollection();
   DecorationCollection fieldStyle = DecorationCollection();
+  KTPController getFilePathKTP = Get.put(KTPController());
 
   late CameraController? _cameraController;
   String recognizedText = '';
@@ -80,10 +83,13 @@ class _KtpScannerState extends State<KtpScanner> {
       XFile image = await _cameraController!.takePicture();
       print(image.path);
 
+      // getFilePathKTP.setKtpFilePath(image.path);
+
+      getFilePathKTP.setKtpFile(image);
+
       _cameraController!.dispose();
 
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const CheckIdentity()));
+      Get.off(() => const CheckIdentity());
     } catch (e) {
       print(e);
     }

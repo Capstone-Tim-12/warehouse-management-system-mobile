@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/constants/city_collection.dart';
 import 'package:capstone_wms/classes/constants/country_collection.dart';
@@ -5,9 +7,17 @@ import 'package:capstone_wms/classes/constants/province_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/address_controller.dart';
+import 'package:capstone_wms/controllers/district_controller.dart';
+import 'package:capstone_wms/controllers/province_controller.dart';
+import 'package:capstone_wms/controllers/regency_controller.dart';
+import 'package:capstone_wms/models/address_model.dart';
+import 'package:capstone_wms/models/locationapi_model.dart';
+import 'package:capstone_wms/services/location_service.dart';
 import 'package:drop_down_list/drop_down_list.dart';
 import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EditAddress extends StatefulWidget {
   const EditAddress({super.key});
@@ -19,16 +29,108 @@ class EditAddress extends StatefulWidget {
 class _EditAddressState extends State<EditAddress> {
   TextEditingController kecamatanCont = TextEditingController();
   TextEditingController alamatCont = TextEditingController();
+  RegencyController getRegencyList = Get.put(RegencyController());
+  ProvinceController getProvinceList = Get.put(ProvinceController());
+  DistrictController getDistrictList = Get.put(DistrictController());
 
   ColorApp colorApp = ColorApp();
   PaddingCollection paddingApp = PaddingCollection();
   TextCollection textApp = TextCollection();
   DecorationCollection fieldStyle = DecorationCollection();
-  // Gender gender = Gender();
+  bool isLoading = false;
+  bool isProvinceSelected = false;
+  bool isRegencySelected = false;
+  LocationService getLocationFunc = Get.put(LocationService());
+  AddressController verUserAddress = Get.put(AddressController());
+
+  Future<void> getRegency() async {
+    setState(() {
+      isProvinceSelected = true;
+    });
+    final reponseRegency =
+        await getLocationFunc.getRegencyList(selectedProvinceId.toString());
+
+    // print(reponseRegency.body);
+    print(reponseRegency.statusCode);
+
+    final regencyData = await json.decode(reponseRegency.body);
+    // print(regencyData);
+    // setState(() {
+    //   isLoading = false;
+    // });
+    if (reponseRegency.statusCode == 200) {
+      List<LocationCollectionModel> parseRegencies =
+          getRegencyList.parseCityList(regencyData);
+
+      setState(() {
+        getRegencyList.setRegencyList(parseRegencies);
+        regencyList = convertToSelectedList(getRegencyList.regencyList);
+      });
+
+      // print(getRegencyFunc.regencyList.toList());
+    } else {
+      Get.snackbar("Error", regencyData["message"]);
+    }
+  }
+
+  Future<void> getDistrict() async {
+    // setState(() {
+
+    // });
+    final reponseDistrict =
+        await getLocationFunc.getDistrictList(selectedCityId.toString());
+
+    print('get district : ${reponseDistrict.statusCode}');
+
+    final districtData = await json.decode(reponseDistrict.body);
+
+    if (reponseDistrict.statusCode == 200) {
+      List<LocationCollectionModel> parseDistrict =
+          getDistrictList.parseDistrictList(districtData);
+
+      setState(() {
+        getDistrictList.setDistrictList(parseDistrict);
+        districtList = convertToSelectedList(getDistrictList.districtList);
+      });
+    } else {
+      Get.snackbar("Error", districtData["message"]);
+    }
+  }
 
   String selectedCountry = 'Indonesia';
-  String selectedProvince = ' ';
-  String selectedCity = ' ';
+  String selectedProvince = '';
+  int selectedProvinceId = 0;
+  String selectedCity = '';
+  int selectedCityId = 0;
+  String selectedDistrict = '';
+  int selectedDistrictId = 0;
+  List<SelectedListItem> regencyList = [];
+  List<SelectedListItem> provinceList = [];
+  List<SelectedListItem> districtList = [];
+
+  List<SelectedListItem> convertToSelectedList(
+      List<LocationCollectionModel> cities) {
+    return cities.map((city) {
+      return SelectedListItem(name: city.name, value: city.id);
+    }).toList();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    regencyList = convertToSelectedList(getRegencyList.regencyList);
+    provinceList = convertToSelectedList(getProvinceList.provinceList);
+    districtList = convertToSelectedList(getDistrictList.districtList);
+
+    selectedProvince = verUserAddress.userAddress.value.province;
+    selectedProvinceId = verUserAddress.userAddress.value.provinceId;
+    selectedCity = verUserAddress.userAddress.value.regency;
+    selectedCityId = verUserAddress.userAddress.value.regencyId;
+    selectedDistrict = verUserAddress.userAddress.value.district;
+    selectedDistrictId = verUserAddress.userAddress.value.districtId;
+    alamatCont.text = verUserAddress.userAddress.value.fullAdress;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -161,10 +263,12 @@ class _EditAddressState extends State<EditAddress> {
                   height: 44,
                   child: ElevatedButton(
                       style: fieldStyle.dropdownGender,
-                      onPressed: () async {
-                        // dropdownCities(context);
-                        dropdownCitizenship(context);
-                      },
+                      // onPressed: () async {
+                      //   // dropdownCities(context);
+                      //   // dropdownCitizenship(context);
+
+                      // },
+                      onPressed: null,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -246,11 +350,26 @@ class _EditAddressState extends State<EditAddress> {
                 ),
                 SizedBox(
                   height: 44,
-                  child: TextField(
-                    controller: kecamatanCont,
-                    decoration: fieldStyle.nikField,
-                    textAlignVertical: TextAlignVertical.top,
-                  ),
+                  child: ElevatedButton(
+                      style: fieldStyle.dropdownGender,
+                      onPressed: () async {
+                        // dropdownCities(context);
+                        dropdownDistrict(context);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            selectedDistrict,
+                            style: textApp.bodyNormal
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                          Icon(
+                            Icons.arrow_drop_down,
+                            color: colorApp.dark1,
+                          )
+                        ],
+                      )),
                 ),
                 Text(
                   'Alamat Lengkap',
@@ -291,9 +410,19 @@ class _EditAddressState extends State<EditAddress> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8))),
                           onPressed: () {
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //     builder: (context) => const KtpScanner()));
-                            Navigator.of(context).pop();
+                            AddressModel newVerUser = AddressModel(
+                                country: selectedCountry,
+                                province: selectedProvince,
+                                provinceId: selectedProvinceId,
+                                regency: selectedCity,
+                                regencyId: selectedCityId,
+                                district: selectedDistrict,
+                                districtId: selectedDistrictId,
+                                fullAdress: alamatCont.text);
+
+                            verUserAddress.updateUserAddress(newVerUser);
+
+                            Get.back();
                           },
                           child: Text('Ubah',
                               style: textApp.largeLabel.copyWith(
@@ -359,19 +488,28 @@ class _EditAddressState extends State<EditAddress> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          data: Provinsi.provinsiList,
-          selectedItems: (List<dynamic> selectedList) {
+          data: provinceList,
+          selectedItems: (List<dynamic> selectedList) async {
             if (selectedList.isNotEmpty &&
                 selectedList.first is SelectedListItem) {
               setState(() {
-                selectedCountry = (selectedList.first as SelectedListItem).name;
+                selectedProvince =
+                    (selectedList.first as SelectedListItem).name;
+                selectedProvinceId =
+                    int.parse((selectedList.first as SelectedListItem).value!);
+
+                selectedCity = '';
+                selectedCityId = 0;
+                selectedDistrict = '';
+                selectedDistrictId = 0;
               });
-              print(selectedCountry);
+              await getRegency();
+              print(selectedProvince);
             }
           },
           enableMultipleSelection: false,
           // searchBoxStyle: null,
-          isSearchVisible: false),
+          isSearchVisible: true),
     ).showModal(context);
   }
 
@@ -392,19 +530,58 @@ class _EditAddressState extends State<EditAddress> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          data: Cities.cityList,
-          selectedItems: (List<dynamic> selectedList) {
+          data: regencyList,
+          selectedItems: (List<dynamic> selectedList) async {
             if (selectedList.isNotEmpty &&
                 selectedList.first is SelectedListItem) {
               setState(() {
                 selectedCity = (selectedList.first as SelectedListItem).name;
+                selectedCityId =
+                    int.parse((selectedList.first as SelectedListItem).value!);
               });
-              print(selectedCity);
+              await getDistrict();
+              print(selectedCityId);
             }
           },
           enableMultipleSelection: false,
           // searchBoxStyle: null,
-          isSearchVisible: false),
+          isSearchVisible: true),
+    ).showModal(context);
+  }
+
+  void dropdownDistrict(BuildContext context) {
+    DropDownState(
+      DropDown(
+          bottomSheetTitle: Text(
+            selectedDistrict,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0,
+            ),
+          ),
+          submitButtonChild: const Text(
+            'Done',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          data: districtList,
+          selectedItems: (List<dynamic> selectedList) {
+            if (selectedList.isNotEmpty &&
+                selectedList.first is SelectedListItem) {
+              setState(() {
+                selectedDistrict =
+                    (selectedList.first as SelectedListItem).name;
+                selectedDistrictId =
+                    int.parse((selectedList.first as SelectedListItem).value!);
+              });
+              print(selectedDistrictId);
+            }
+          },
+          enableMultipleSelection: false,
+          // searchBoxStyle: null,
+          isSearchVisible: true),
     ).showModal(context);
   }
 }
