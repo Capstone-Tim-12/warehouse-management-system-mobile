@@ -150,9 +150,9 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
                 ),
-
-                const Padding(
-                  padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 130.0),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(right: 8.0, left: 8.0, top: 130.0),
                   child: SizedBox(
                     height: 155,
                     child: BannerWidget(),
@@ -167,7 +167,7 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   Text(
                     "Rekomendasi Untukmu",
-                    style: TextCollection.bodySmall,
+                    style: TextCollection().bodySmall,
                   ),
                   const Spacer(),
                   IconButton(
@@ -194,7 +194,7 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   Text(
                     "Gudang Termurah",
-                    style: TextCollection.bodySmall,
+                    style: TextCollection().bodySmall,
                   ),
                   const Spacer(),
                   IconButton(
@@ -666,24 +666,25 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-                        style: TextCollection.bodyNormal
+                        style: TextCollection()
+                            .bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection.bodySmall.copyWith(
-                          color: ColorApp().dark1,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 12,
-                        ),
+                        style: TextCollection().bodySmall.copyWith(
+                              color: ColorApp().dark1,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 12,
+                            ),
                       ),
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
-                        style: TextCollection.bodyNormal.copyWith(
-                          color: ColorApp().secondaryColor,
-                        ),
+                        style: TextCollection().bodyNormal.copyWith(
+                              color: ColorApp().secondaryColor,
+                            ),
                       ),
                     ],
                   ),
@@ -727,24 +728,25 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-                        style: TextCollection.bodyNormal
+                        style: TextCollection()
+                            .bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection.bodySmall.copyWith(
-                          color: ColorApp().dark1,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 12,
-                        ),
+                        style: TextCollection().bodySmall.copyWith(
+                              color: ColorApp().dark1,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 12,
+                            ),
                       ),
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
-                        style: TextCollection.bodyNormal.copyWith(
-                          color: ColorApp().secondaryColor,
-                        ),
+                        style: TextCollection().bodyNormal.copyWith(
+                              color: ColorApp().secondaryColor,
+                            ),
                       ),
                     ],
                   ),
@@ -788,24 +790,25 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-                        style: TextCollection.bodyNormal
+                        style: TextCollection()
+                            .bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection.bodySmall.copyWith(
-                          color: ColorApp().dark1,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 12,
-                        ),
+                        style: TextCollection().bodySmall.copyWith(
+                              color: ColorApp().dark1,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 12,
+                            ),
                       ),
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
-                        style: TextCollection.bodyNormal.copyWith(
-                          color: ColorApp().secondaryColor,
-                        ),
+                        style: TextCollection().bodyNormal.copyWith(
+                              color: ColorApp().secondaryColor,
+                            ),
                       ),
                     ],
                   ),
@@ -849,24 +852,25 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-                        style: TextCollection.bodyNormal
+                        style: TextCollection()
+                            .bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection.bodySmall.copyWith(
-                          color: ColorApp().dark1,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 12,
-                        ),
+                        style: TextCollection().bodySmall.copyWith(
+                              color: ColorApp().dark1,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 12,
+                            ),
                       ),
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
-                        style: TextCollection.bodyNormal.copyWith(
-                          color: ColorApp().secondaryColor,
-                        ),
+                        style: TextCollection().bodyNormal.copyWith(
+                              color: ColorApp().secondaryColor,
+                            ),
                       ),
                     ],
                   ),
@@ -910,24 +914,25 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-                        style: TextCollection.bodyNormal
+                        style: TextCollection()
+                            .bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection.bodySmall.copyWith(
-                          color: ColorApp().dark1,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 12,
-                        ),
+                        style: TextCollection().bodySmall.copyWith(
+                              color: ColorApp().dark1,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 12,
+                            ),
                       ),
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
-                        style: TextCollection.bodyNormal.copyWith(
-                          color: ColorApp().secondaryColor,
-                        ),
+                        style: TextCollection().bodyNormal.copyWith(
+                              color: ColorApp().secondaryColor,
+                            ),
                       ),
                     ],
                   ),
@@ -971,24 +976,25 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-                        style: TextCollection.bodyNormal
+                        style: TextCollection()
+                            .bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection.bodySmall.copyWith(
-                          color: ColorApp().dark1,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 12,
-                        ),
+                        style: TextCollection().bodySmall.copyWith(
+                              color: ColorApp().dark1,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 12,
+                            ),
                       ),
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
-                        style: TextCollection.bodyNormal.copyWith(
-                          color: ColorApp().secondaryColor,
-                        ),
+                        style: TextCollection().bodyNormal.copyWith(
+                              color: ColorApp().secondaryColor,
+                            ),
                       ),
                     ],
                   ),

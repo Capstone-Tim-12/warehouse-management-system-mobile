@@ -1,3 +1,5 @@
+import 'package:capstone_wms/screens/main/detail_gudang/detail_gudang_screen.dart';
+import 'package:capstone_wms/screens/main/my_warehouse/detail_my_warehouse_screen.dart';
 import 'package:capstone_wms/screens/main/profile/set_location.dart';
 import 'package:capstone_wms/screens/main/profile/set_profile.dart';
 import 'package:capstone_wms/screens/payment/payment_screen_main.dart';
@@ -46,7 +48,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
-      home: const SetProfileScreen(),
+      // home: const SetProfileScreen(),
+      home: const DetailGudangScreen(),
       // home: const SplashScreen(),
     );
   }
