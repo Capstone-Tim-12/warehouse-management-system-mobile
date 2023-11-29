@@ -2,6 +2,7 @@ import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/screens/main/dashboard/recommend_list.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -12,8 +13,23 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   RangeValues _sliderValue = const RangeValues(1, 100);
+  String nameValue = '';
+
+  Future<void> getLoggedInName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      nameValue = prefs.getString('name') ?? 'No value found';
+    });
+  }
 
   TextCollection textApp = TextCollection();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getLoggedInName();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +48,7 @@ class _DashboardState extends State<Dashboard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Hi, Digia",
+              "Hi, $nameValue",
               style: textApp.heading6.copyWith(
                 color: ColorApp().light4,
               ),

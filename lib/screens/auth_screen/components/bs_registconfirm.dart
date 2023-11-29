@@ -5,6 +5,7 @@ import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:get/get.dart';
 
 class KonfirmasiRegister extends StatefulWidget {
   const KonfirmasiRegister({super.key});
@@ -43,7 +44,7 @@ class _KonfirmasiRegisterState extends State<KonfirmasiRegister> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Reset Kata Sandi Berhasil',
+                'Pendaftaran Berhasil',
                 style: textApp.heading4,
               ),
               SizedBox(
@@ -55,7 +56,7 @@ class _KonfirmasiRegisterState extends State<KonfirmasiRegister> {
                 size: 200,
               ),
               Text(
-                'Password anda telah sukses diubah, silahkan tekan masuk untuk mencoba kata sandi baru anda',
+                'Apakah anda ingin melanjutkan verifikasi identitas anda sekarang? Hal ini akan mempermudah anda ketika akan melakukan penyewaan gudang yang tersedia di dalam aplikasi',
                 style: textApp.bodySmall
                     .copyWith(fontWeight: FontWeight.w500, fontSize: 12),
                 textAlign: TextAlign.center,
@@ -73,10 +74,11 @@ class _KonfirmasiRegisterState extends State<KonfirmasiRegister> {
                     onPressed: () {
                       // Navigator.of(context).push(MaterialPageRoute(
                       //     builder: (context) => const MainScreen()));
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => const StartVerification()),
-                          (route) => false);
+                      // Navigator.of(context).pushAndRemoveUntil(
+                      //     MaterialPageRoute(
+                      //         builder: (context) => const StartVerification()),
+                      //     (route) => false);
+                      Get.to(() => const StartVerification());
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -100,10 +102,11 @@ class _KonfirmasiRegisterState extends State<KonfirmasiRegister> {
                     onPressed: () {
                       // Navigator.of(context).push(MaterialPageRoute(
                       //     builder: (context) => const MainScreen()));
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => const MainScreen()),
-                          (route) => false);
+                      // Navigator.of(context).pushAndRemoveUntil(
+                      //     MaterialPageRoute(
+                      //         builder: (context) => const MainScreen()),
+                      //     (route) => false);
+                      Get.offAll(() => const MainScreen());
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
