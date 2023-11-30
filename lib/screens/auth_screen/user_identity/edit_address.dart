@@ -329,10 +329,13 @@ class _EditAddressState extends State<EditAddress> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            selectedCity,
-                            style: textApp.bodyNormal
-                                .copyWith(fontWeight: FontWeight.w400),
+                          Expanded(
+                            child: Text(
+                              selectedCity,
+                              style: textApp.bodyNormal
+                                  .copyWith(fontWeight: FontWeight.w400),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           Icon(
                             Icons.arrow_drop_down,
@@ -447,6 +450,7 @@ class _EditAddressState extends State<EditAddress> {
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
             ),
+            overflow: TextOverflow.ellipsis,
           ),
           submitButtonChild: const Text(
             'Done',

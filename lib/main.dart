@@ -1,16 +1,9 @@
-import 'package:capstone_wms/screens/main/detail_gudang/detail_gudang_screen.dart';
-import 'package:capstone_wms/screens/main/my_warehouse/detail_my_warehouse_screen.dart';
-import 'package:capstone_wms/screens/main/profile/set_location.dart';
-import 'package:capstone_wms/screens/main/profile/set_profile.dart';
-import 'package:capstone_wms/screens/payment/payment_screen_main.dart';
 import 'package:capstone_wms/classes/colors_collection.dart';
-import 'package:capstone_wms/screens/main/sewa/konfirmasi_sewa.dart';
-import 'package:capstone_wms/screens/main/sewa/pengajuan_complete.dart';
-import 'package:capstone_wms/screens/main/sewa/sewa_screen.dart';
+import 'package:capstone_wms/screens/main/dashboard/search_screen.dart';
+import 'package:capstone_wms/screens/main/stack_screen.dart';
 import 'package:capstone_wms/screens/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,8 +41,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
+      // home: const SearchScreen(),
+      // home: const MainScreen(),
       home: const SplashScreen(),
-
     );
   }
 }
