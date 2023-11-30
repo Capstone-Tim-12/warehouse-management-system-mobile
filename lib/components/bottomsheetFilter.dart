@@ -2,7 +2,7 @@ import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:flutter/material.dart';
 
-Future<dynamic> FilterBottomSheet(BuildContext context) {
+Future<dynamic> filterBottomSheet(BuildContext context) {
   TextCollection textapp = TextCollection();
   String? filter;
   return showModalBottomSheet(

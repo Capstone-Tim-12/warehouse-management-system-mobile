@@ -190,7 +190,7 @@ class _SelfieKTPState extends State<SelfieKTP> {
 
       final reponseData = json.decode(response.body);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         Get.off(() => VerificationSuccess());
         print(reponseData["message"]);
         print(reponseData);

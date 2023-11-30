@@ -64,7 +64,7 @@ class AuthService {
       }),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       print("Pas Daftar");
       print(response.statusCode);
       print(response.body);

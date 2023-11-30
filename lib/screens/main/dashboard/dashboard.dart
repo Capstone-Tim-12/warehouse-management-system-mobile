@@ -1,7 +1,9 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/search_controller.dart';
 import 'package:capstone_wms/screens/main/dashboard/recommend_list.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
@@ -12,7 +14,6 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  RangeValues _sliderValue = const RangeValues(1, 100);
   String nameValue = '';
 
   Future<void> getLoggedInName() async {
@@ -23,6 +24,8 @@ class _DashboardState extends State<Dashboard> {
   }
 
   TextCollection textApp = TextCollection();
+  FindController searchController = Get.put(FindController());
+  TextEditingController searchCont = TextEditingController();
 
   @override
   void initState() {
@@ -105,6 +108,14 @@ class _DashboardState extends State<Dashboard> {
                           height: 40,
                           width: double.infinity,
                           child: TextField(
+                            controller: searchCont,
+                            // onChanged: (value) {
+                            //   searchController.searchString.value = value;
+                            // },
+                            onSubmitted: (value) {
+                              searchController
+                                  .onSearchSubmitted(searchCont.text);
+                            },
                             style: textApp.bodySmall.copyWith(
                               color: ColorApp().light4,
                             ),
@@ -157,15 +168,29 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: SizedBox(
-                    height: 155,
-                    child: BannerWidget(),
-                  ),
+                Column(
+                  children: [
+                    const SizedBox(
+                      height: 120,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: SizedBox(
+                        height: 155,
+                        child: BannerWidget(),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
+            // Padding(
+            //   padding: const EdgeInsets.all(5),
+            //   child: SizedBox(
+            //     height: 155,
+            //     child: BannerWidget(),
+            //   ),
+            // ),
             // const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),

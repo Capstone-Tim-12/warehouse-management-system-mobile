@@ -94,6 +94,7 @@ class _SplashScreenState extends State<SplashScreen> {
         showModalBottomSheet(
           isDismissible: false,
           enableDrag: false,
+          barrierColor: Colors.transparent,
           context: context,
           isScrollControlled: true,
           builder: (context) => BottomSheetLogin(
@@ -106,6 +107,7 @@ class _SplashScreenState extends State<SplashScreen> {
               showModalBottomSheet(
                 isDismissible: false,
                 enableDrag: false,
+                barrierColor: Colors.transparent,
                 isScrollControlled: true,
                 context: kontextScreen,
                 builder: (context) => BottomSheetSignUp(
@@ -142,6 +144,7 @@ class _SplashScreenState extends State<SplashScreen> {
               showModalBottomSheet(
                 isDismissible: false,
                 enableDrag: false,
+                barrierColor: Colors.transparent,
                 context: context,
                 isScrollControlled: true,
                 builder: (context) => BottomSheetForgotPw(
@@ -150,6 +153,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     showModalBottomSheet(
                       isDismissible: false,
                       enableDrag: false,
+                      barrierColor: Colors.transparent,
                       isScrollControlled: true,
                       context: kontextScreen,
                       builder: (context) => BottomSheetOTP(
@@ -158,6 +162,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           showModalBottomSheet(
                             isDismissible: false,
                             enableDrag: false,
+                            barrierColor: Colors.transparent,
                             isScrollControlled: true,
                             context: kontextScreen,
                             builder: (context) => BottomSheetNewPW(
@@ -166,6 +171,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                 showModalBottomSheet(
                                     isDismissible: false,
                                     enableDrag: false,
+                                    barrierColor: Colors.transparent,
                                     isScrollControlled: true,
                                     context: kontextScreen,
                                     builder: (context) =>
