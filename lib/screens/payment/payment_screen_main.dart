@@ -73,17 +73,17 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       const SizedBox(height: 5),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection()
-                            .bodySmall
-                            .copyWith(fontWeight: FontWeight.normal),
+                        style: TextCollection().bodySmall.copyWith(
+                              fontWeight: FontWeight.normal,
+                            ),
                       ),
                       const SizedBox(height: 5),
                       Text(
                         "20.000.000/bulan",
-                        style: TextCollection()
-                            .bodySmall
-                            .copyWith(fontWeight: FontWeight.normal),
-                      )
+                        style: TextCollection().bodySmall.copyWith(
+                              fontWeight: FontWeight.normal,
+                            ),
+                      ),
                     ],
                   )
                 ],
@@ -208,11 +208,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         "Metode pembayaran lain",
                         style: TextCollection().heading6,
                       ),
-                      SizedBox(
-                        width: 100,
-                        height: 20,
-                        // child: Image.network(""),
-                      )
                     ],
                   ),
                   const Spacer(),
@@ -271,7 +266,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PaymentSuccess(),
+                        builder: (context) => PaymentFailed(),
                       ),
                     );
                   },
