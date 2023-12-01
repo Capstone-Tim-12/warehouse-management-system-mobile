@@ -2,6 +2,7 @@ import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/screens/payment/payment_screen_failed.dart';
 import 'package:capstone_wms/screens/payment/payment_screen_success.dart';
+import 'package:capstone_wms/screens/payment/payment_virtual_account.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -197,17 +198,59 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           "Kartu Kredit/Debit",
                           style: TextCollection().heading6,
                         ),
+                        Stack(
+                          children: [
+                            Visibility(
+                              visible: !showCardTextField,
+                              child: SizedBox(
+                                width: 120,
+                                height: 20,
+                                child: SvgPicture.asset(
+                                    "assets/svg/mastercard.svg"),
+                              ),
+                            ),
+                            Visibility(
+                              visible: showCardTextField,
+                              child: Container(
+                                width: 120,
+                                height: 20,
+                                child: TextField(
+                                  controller: cardController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Masukkan nomor kartu',
+                                    labelText: 'Nomor Kartu',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
                         const SizedBox(height: 10),
-                        SizedBox(
-                          width: 120,
-                          height: 20,
-                          child: SvgPicture.asset("assets/svg/mastercard.svg"),
-                        )
+                        // Visibility(
+                        //   visible: !showCardTextField,
+                        //   child: SizedBox(
+                        //     width: 120,
+                        //     height: 20,
+                        //     child: SvgPicture.asset(
+                        //       "assets/svg/mastercard.svg",
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   width: 120,
+                        //   height: 20,
+                        //   child: SvgPicture.asset("assets/svg/mastercard.svg"),
+                        // )
                       ],
                     ),
                     const Spacer(),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          showCardTextField = !showCardTextField;
+                        });
+                      },
                       icon: const Icon(
                         Icons.keyboard_arrow_down_rounded,
                       ),
@@ -335,7 +378,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PaymentSuccess(),
+                        builder: (context) => VirtualAccountScreen(),
                       ),
                     );
                   },
