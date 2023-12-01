@@ -84,9 +84,10 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
         signUpCont.updateSignUpUser(newUser);
         widget.onRegisterPressed();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(responseData["message"]),
-        ));
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //   content: Text(responseData["message"]),
+        // ));
+        Get.snackbar("Peringatan", responseData["message"]);
       }
     } catch (e) {
       print(e);
