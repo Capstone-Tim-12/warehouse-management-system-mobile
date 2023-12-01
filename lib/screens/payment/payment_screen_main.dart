@@ -163,20 +163,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
             ),
             const Divider(),
-            const SizedBox(height: 10),
             SizedBox(
               height: 60,
               width: double.infinity,
               child: Row(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Metode pembayaran lain",
-                        style: TextCollection().heading6,
-                      ),
-                    ],
+                  Text(
+                    "Metode pembayaran lain",
+                    style: TextCollection().heading6,
                   ),
                   const Spacer(),
                   IconButton(
@@ -252,12 +246,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PaymentFailed(),
+                        builder: (context) => PaymentSuccess(),
                       ),
                     );
                   },
                   child: Text(
-                    "Lanjutkan Pembayaran",
+                    "Ajukan Sewa",
                     style: TextCollection()
                         .bodySmall
                         .copyWith(color: ColorApp().light4),
