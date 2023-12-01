@@ -128,6 +128,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
             ),
             const Divider(),
+            const SizedBox(height: 10),
             SizedBox(
               height: 70,
               width: double.infinity,
@@ -142,10 +143,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         style: TextCollection().heading6,
                       ),
                       SizedBox(
-                        width: 120,
+                        width: 200,
                         height: 35,
                         child: SvgPicture.asset(
                           "assets/svg/bank_logo.svg",
+                          fit: BoxFit.fill,
                         ),
                       )
                     ],
