@@ -98,7 +98,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             const Divider(),
             const SizedBox(height: 10),
             SizedBox(
-              height: 60,
+              height: 70,
               width: double.infinity,
               child: Row(
                 children: [
@@ -109,6 +109,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         "Kartu Kredit/Debit",
                         style: TextCollection().heading6,
                       ),
+                      const SizedBox(height: 10),
                       SizedBox(
                         width: 120,
                         height: 20,
@@ -127,12 +128,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
             ),
             const Divider(),
-            const SizedBox(height: 10),
             SizedBox(
-              height: 60,
+              height: 70,
               width: double.infinity,
               child: Row(
                 children: [
+                  const SizedBox(height: 5),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -143,43 +144,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       SizedBox(
                         width: 120,
                         height: 35,
-                        child: SvgPicture.asset("assets/svg/bank_logo.svg"),
-                      )
-                    ],
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Divider(),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 60,
-              width: double.infinity,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "E-Money",
-                        style: TextCollection().heading6,
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        width: 50,
-                        height: 20,
                         child: SvgPicture.asset(
-                          "assets/svg/qris_logo.svg",
+                          "assets/svg/bank_logo.svg",
                         ),
                       )
                     ],
@@ -224,13 +190,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 116,
+        height: MediaQuery.of(context).size.height / 6.3,
         width: double.infinity,
         decoration: BoxDecoration(
           color: ColorApp().mainColor,
         ),
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -240,14 +206,32 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   Text(
                     "Total",
                     style: TextCollection().heading6.copyWith(
-                          color: ColorApp().secondaryColor,
+                          color: ColorApp().light4,
                         ),
                   ),
                   const Spacer(),
                   Text(
-                    "Rp20.000.000",
+                    "Rp300.000,00",
                     style: TextCollection().heading6.copyWith(
-                          color: ColorApp().secondaryColor,
+                          color: ColorApp().light4,
+                        ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  Text(
+                    "Durasi Sewa",
+                    style: TextCollection().smallLabel.copyWith(
+                          color: ColorApp().light4,
+                        ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    "3 Minggu",
+                    style: TextCollection().smallLabel.copyWith(
+                          color: ColorApp().light4,
                         ),
                   ),
                 ],
