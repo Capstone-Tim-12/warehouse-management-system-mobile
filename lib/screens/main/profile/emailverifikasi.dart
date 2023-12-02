@@ -1,5 +1,6 @@
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/components/showdialogotp.dart';
 import 'package:flutter/material.dart';
 
 class EmailVerifikasi extends StatelessWidget {
@@ -95,7 +96,9 @@ class EmailVerifikasi extends StatelessWidget {
                                                           5.0),
                                                 ),
                                               ),
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                showDialogOtp(context);
+                                              },
                                               child: Text(
                                                 "Kirim Kode",
                                                 style: TextCollection()
