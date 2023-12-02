@@ -32,17 +32,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: Text(
                 "Detail Pemesanan",
                 style: TextCollection().bodySmall,
               ),
-              const SizedBox(height: 10),
-              Container(
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: Container(
                 height: 105,
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -92,229 +95,178 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 30),
-              Text(
+            ),
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: Text(
                 "Metode Pembayaran",
                 style: TextCollection().bodySmall,
               ),
-              const SizedBox(height: 10),
-              const Divider(),
-              const SizedBox(height: 10),
-
-              // SizedBox(
-              //   height: 70,
-              //   width: double.infinity,
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text(
-              //         "Kartu Kredit/Debit",
-              //         style: TextCollection().heading6,
-              //       ),
-              //       const SizedBox(height: 10),
-              //       Row(
-              //         children: [
-              //           Text(
-              //             showCardTextField
-              //                 ? "Visa"
-              //                 : selectedPaymentMethod ?? "Pilih Kartu",
-              //             style: TextCollection().bodySmall,
-              //           ),
-              //           const Spacer(),
-              //           IconButton(
-              //             onPressed: () {
-              //               setState(() {
-              //                 showCardTextField = !showCardTextField;
-              //               });
-              //             },
-              //             icon: const Icon(
-              //               Icons.keyboard_arrow_down_rounded,
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //       if (showCardTextField)
-              //         Container(
-              //           width:
-              //               200, // Set a specific width or use constraints as needed
-              //           child: TextField(
-              //             controller: cardController,
-              //             decoration: InputDecoration(
-              //               hintText: 'Masukkan nomor kartu',
-              //               labelText: 'Nomor Kartu',
-              //             ),
-              //           ),
-              //         ),
-              //     ],
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 70,
-              //   width: double.infinity,
-              //   child: Visibility(
-              //     visible:
-              //         !showCardTextField, // Hide when the card text field is visible
-              //     child: Row(
-              //       children: [
-              //         const SizedBox(height: 5),
-              //         Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //           children: [
-              //             Text(
-              //               "ATM/BANK transfer",
-              //               style: TextCollection().heading6,
-              //             ),
-              //             SizedBox(
-              //               width: 200,
-              //               height: 35,
-              //               child: SvgPicture.asset(
-              //                 "assets/svg/bank_logo.svg",
-              //                 fit: BoxFit.fill,
-              //               ),
-              //             )
-              //           ],
-              //         ),
-              //         const Spacer(),
-              //         IconButton(
-              //           onPressed: () {},
-              //           icon: const Icon(
-              //             Icons.keyboard_arrow_down_rounded,
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-
-              SizedBox(
-                height: 70,
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            const SizedBox(height: 10),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18.0),
+              child: Divider(),
+            ),
+            const SizedBox(height: 10),
+            Theme(
+              data: Theme.of(context).copyWith(
+                dividerColor: Colors.transparent,
+              ),
+              child: ExpansionTile(
+                title: Text(
+                  "Kartu Kredit/Debit",
+                  style: TextCollection().heading6,
+                ),
+                subtitle: Align(
+                  alignment: Alignment.centerLeft,
+                  child: SizedBox(
+                    width: 120,
+                    height: 20,
+                    child: SvgPicture.asset(
+                      "assets/svg/mastercard.svg",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Column(
                       children: [
-                        Text(
-                          "Kartu Kredit/Debit",
-                          style: TextCollection().heading6,
-                        ),
-                        Stack(
+                        Row(
                           children: [
-                            Visibility(
-                              visible: !showCardTextField,
-                              child: SizedBox(
-                                width: 120,
-                                height: 20,
-                                child: SvgPicture.asset(
-                                    "assets/svg/mastercard.svg"),
+                            SizedBox(
+                              height: 20,
+                              width: 40,
+                              child: SvgPicture.asset(
+                                "assets/svg/visa_logo.svg",
+                                fit: BoxFit.cover,
                               ),
                             ),
-                            Visibility(
-                              visible: showCardTextField,
-                              child: Container(
-                                width: 120,
-                                height: 20,
-                                child: TextField(
-                                  controller: cardController,
-                                  decoration: InputDecoration(
-                                    hintText: 'Masukkan nomor kartu',
-                                    labelText: 'Nomor Kartu',
+                            const SizedBox(width: 15),
+                            Expanded(
+                              child: TextField(
+                                cursorColor: ColorApp().mainColor,
+                                decoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: ColorApp().mainColor, width: 1),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: ColorApp().mainColor,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ],
                         ),
-
-                        const SizedBox(height: 10),
-                        // Visibility(
-                        //   visible: !showCardTextField,
-                        //   child: SizedBox(
-                        //     width: 120,
-                        //     height: 20,
-                        //     child: SvgPicture.asset(
-                        //       "assets/svg/mastercard.svg",
-                        //     ),
-                        //   ),
-                        // ),
-                        // SizedBox(
-                        //   width: 120,
-                        //   height: 20,
-                        //   child: SvgPicture.asset("assets/svg/mastercard.svg"),
-                        // )
-                      ],
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          showCardTextField = !showCardTextField;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Divider(),
-              const SizedBox(height: 10),
-              SizedBox(
-                height: 70,
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    const SizedBox(height: 5),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "ATM/BANK transfer",
-                          style: TextCollection().heading6,
+                        const SizedBox(height: 5),
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 40,
+                              height: 20,
+                              child: Icon(Icons.add_rounded),
+                            ),
+                            const SizedBox(width: 15),
+                            Expanded(
+                              child: TextField(
+                                cursorColor: ColorApp().mainColor,
+                                decoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: ColorApp().mainColor,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: ColorApp().mainColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: 200,
-                          height: 35,
-                          child: SvgPicture.asset(
-                            "assets/svg/bank_logo.svg",
-                            fit: BoxFit.fill,
-                          ),
-                        )
+                        const SizedBox(height: 5),
                       ],
                     ),
-                    const Spacer(),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const Divider(),
-              SizedBox(
-                height: 60,
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    Text(
-                      "Metode pembayaran lain",
-                      style: TextCollection().heading6,
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                      ),
-                    ),
-                  ],
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18.0),
+              child: Divider(),
+            ),
+            Theme(
+              data:
+                  Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                title: Text(
+                  "ATM/BANK transfer",
+                  style: TextCollection().heading6,
                 ),
+                subtitle: Align(
+                  alignment: Alignment.centerLeft,
+                  child: SizedBox(
+                    width: 190,
+                    height: 20,
+                    child: SvgPicture.asset(
+                      "assets/svg/bank_logo.svg",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Row(
+                      children: [
+                        Text("Lorem"),
+                        Text("Ipsum"),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18.0),
+              child: Divider(),
+            ),
+            Theme(
+              data: Theme.of(context).copyWith(
+                dividerColor: Colors.transparent,
+              ),
+              child: ExpansionTile(
+                title: Text(
+                  "Metode Pembayaran Lain",
+                  style: TextCollection().heading6,
+                ),
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Row(
+                      children: [
+                        Text("Lorem"),
+                        Text("Ipsum"),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 18.0),
+              child: Divider(),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: Container(
