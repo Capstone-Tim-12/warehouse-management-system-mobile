@@ -7,6 +7,7 @@ import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/bottomsheetFilter.dart';
 import 'package:capstone_wms/controllers/search_controller.dart';
 import 'package:capstone_wms/models/searchwarehouse_model.dart';
+import 'package:capstone_wms/screens/main/detail_gudang/detail_gudang_screen.dart';
 import 'package:capstone_wms/services/warehouse_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -128,8 +129,10 @@ class _SearchScreenState extends State<SearchScreen> {
                           hintStyle: textCollection.bodySmall,
                           contentPadding: const EdgeInsets.only(bottom: 1),
                           border: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -173,6 +176,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         return GestureDetector(
                           onTap: () {
                             //disini buat ke detail screen nanti
+                            Get.to(DetailGudangScreen(
+                              warehouseId: warehouse['id'],
+                            ));
                           },
                           child: Column(
                             children: [
@@ -249,7 +255,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                             ),
                                             const SizedBox(height: 16),
                                             Text(
-                                              warehouse['name'],
+                                              warehouse['name'].toString(),
                                               style: textCollection.bodyNormal
                                                   .copyWith(
                                                       color:
@@ -262,7 +268,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                     color: colorApp.mainColor),
                                                 const SizedBox(width: 8),
                                                 Text(
-                                                  warehouse['RegencyName'],
+                                                  warehouse['regencyName']
+                                                      .toString(),
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
