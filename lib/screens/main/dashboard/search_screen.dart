@@ -128,8 +128,10 @@ class _SearchScreenState extends State<SearchScreen> {
                           hintStyle: textCollection.bodySmall,
                           contentPadding: const EdgeInsets.only(bottom: 1),
                           border: const OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -249,7 +251,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                             ),
                                             const SizedBox(height: 16),
                                             Text(
-                                              warehouse['name'],
+                                              warehouse['name'].toString(),
                                               style: textCollection.bodyNormal
                                                   .copyWith(
                                                       color:
@@ -262,7 +264,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                     color: colorApp.mainColor),
                                                 const SizedBox(width: 8),
                                                 Text(
-                                                  warehouse['RegencyName'],
+                                                  warehouse['RegencyName']
+                                                      .toString(),
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
