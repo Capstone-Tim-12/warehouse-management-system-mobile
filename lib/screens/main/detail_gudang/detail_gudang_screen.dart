@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/screens/main/detail_gudang/interactive_map_screen.dart';
 import 'package:capstone_wms/services/warehouse_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -216,7 +217,9 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                                 fontWeight: FontWeight.normal),
                           ),
                           ListTile(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(InteractiveMap());
+                            },
                             leading: Icon(
                               Icons.location_on_outlined,
                               color: colorApp.mainColor,
