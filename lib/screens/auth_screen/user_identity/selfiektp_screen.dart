@@ -61,11 +61,10 @@ class _SelfieKTPState extends State<SelfieKTP> {
   }
 
   void verifiyingUser() async {
-    setState(() {
-      _isLoading = true;
-    });
-
     try {
+      setState(() {
+        _isLoading = true;
+      });
       await takePic();
 
       if (picTaken) {
@@ -89,9 +88,9 @@ class _SelfieKTPState extends State<SelfieKTP> {
 
   Future<void> takePic() async {
     try {
-      setState(() {
-        _isLoading = true;
-      });
+      // setState(() {
+      //   _isLoading = true;
+      // });
       await _cameraController!.setFlashMode(FlashMode.off);
 
       XFile image = await _cameraController!.takePicture();
@@ -248,11 +247,6 @@ class _SelfieKTPState extends State<SelfieKTP> {
     SizeCollection sizeCollection = SizeCollection(context);
     double width = sizeCollection.screenWidth;
 
-    // if (!_cameraController.value.isInitialized) {
-    //   return const Center(
-    //     child: CircularProgressIndicator(),
-    //   );
-    // }
     if (!_isCameraInitialized) {
       return const Center(child: CircularProgressIndicator());
     }
