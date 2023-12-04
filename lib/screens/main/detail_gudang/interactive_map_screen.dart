@@ -2,18 +2,33 @@ import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 
 class InteractiveMap extends StatefulWidget {
-  const InteractiveMap({super.key});
+  InteractiveMap({super.key, required this.lat, required this.long});
+
+  double lat;
+  double long;
 
   @override
   State<InteractiveMap> createState() => _InteractiveMapState();
 }
 
 class _InteractiveMapState extends State<InteractiveMap> {
-  LatLng defaultPosition = const LatLng(37.42796133580664, -122.085749655962);
+  LatLng? warehousePosition;
   GoogleMapController? mapController;
+  final Set<Marker> markers = {};
+
+  @override
+  void initstate() {
+    super.initState();
+    warehousePosition = LatLng(widget.lat, widget.long);
+  }
+
+  @override
+  void dispose() {
+    mapController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +43,18 @@ class _InteractiveMapState extends State<InteractiveMap> {
       body: GoogleMap(
         mapType: MapType.normal,
         initialCameraPosition: CameraPosition(
-          target: defaultPosition,
+          target: warehousePosition!,
           zoom: 14,
         ),
         onMapCreated: (controller) {
           mapController = controller;
         },
-        // markers: ,
+        markers: markers,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print('Latitude: ${widget.lat}, Longitude: ${widget.long}');
+        },
       ),
     );
   }

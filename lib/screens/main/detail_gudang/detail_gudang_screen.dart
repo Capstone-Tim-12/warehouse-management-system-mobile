@@ -218,7 +218,12 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                           ),
                           ListTile(
                             onTap: () {
-                              Get.to(InteractiveMap());
+                              Get.to(
+                                InteractiveMap(
+                                  lat: warehouseData!['latitude'],
+                                  long: warehouseData!['longitude'],
+                                ),
+                              );
                             },
                             leading: Icon(
                               Icons.location_on_outlined,
