@@ -126,24 +126,40 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Durasi Sewa'),
-                              Text(data['duration']),
+                              Text(
+                                'Durasi Sewa',
+                              ),
+                              Text(
+                                data['duration'],
+                              ),
                             ],
                           ),
                           SizedBox(height: 12),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Tanggal Masuk'),
-                              Text(data['entryDate']),
+                              Text(
+                                'Tanggal Masuk',
+                                style: textApp.bodySmall4,
+                              ),
+                              Text(
+                                data['entryDate'],
+                                style: textApp.bodySmall4,
+                              ),
                             ],
                           ),
                           SizedBox(height: 12),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Tanggal Keluar'),
-                              Text(data['exitDate']),
+                              Text(
+                                'Tanggal Keluar',
+                                style: textApp.bodySmall4,
+                              ),
+                              Text(
+                                data['exitDate'],
+                                style: textApp.bodySmall4,
+                              ),
                             ],
                           ),
                         ],

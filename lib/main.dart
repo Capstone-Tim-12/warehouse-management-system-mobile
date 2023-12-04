@@ -35,16 +35,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'DigiHouse Mobile',
-      // navigatorKey: navigatorKey,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: colorApp.mainColorDarker),
-        useMaterial3: true,
-      ),
+        title: 'DigiHouse Mobile',
+        // navigatorKey: navigatorKey,
+        theme: ThemeData(
+          colorScheme:
+              ColorScheme.fromSeed(seedColor: colorApp.mainColorDarker),
+          useMaterial3: true,
+        ),
 
-      // home: const SearchScreen(),
-      // home: const MainScreen(),
-      home: const SplashScreen(),
-    );
+        // home: const SearchScreen(),
+        // home: const MainScreen(),
+        home: const SplashScreen());
+    // home: HistoryScreen());
   }
 }
