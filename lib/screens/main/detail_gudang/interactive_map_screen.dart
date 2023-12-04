@@ -1,61 +1,75 @@
-import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class InteractiveMap extends StatefulWidget {
-  InteractiveMap({super.key, required this.lat, required this.long});
+class WarehouseMapScreen extends StatefulWidget {
+  final double lat;
+  final double long;
+  final String name;
 
-  double lat;
-  double long;
+  WarehouseMapScreen({
+    required this.lat,
+    required this.long,
+    required this.name,
+  });
 
   @override
-  State<InteractiveMap> createState() => _InteractiveMapState();
+  _WarehouseMapScreenState createState() => _WarehouseMapScreenState();
 }
 
-class _InteractiveMapState extends State<InteractiveMap> {
-  LatLng? warehousePosition;
-  GoogleMapController? mapController;
-  final Set<Marker> markers = {};
+class _WarehouseMapScreenState extends State<WarehouseMapScreen> {
+  late GoogleMapController mapController;
+  late LatLng warehouseLatLng;
 
   @override
-  void initstate() {
+  void initState() {
     super.initState();
-    warehousePosition = LatLng(widget.lat, widget.long);
+    warehouseLatLng = LatLng(widget.lat, widget.long);
   }
 
   @override
   void dispose() {
-    mapController?.dispose();
     super.dispose();
+    mapController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(color: ColorApp().secondaryColor),
         title: Text(
-          "Lokasi Gudang",
-          style: TextCollection().heading5,
+          'Lokasi Gudang',
+          style: TextCollection().heading6,
         ),
       ),
       body: GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: CameraPosition(
-          target: warehousePosition!,
-          zoom: 14,
-        ),
+        buildingsEnabled: true,
         onMapCreated: (controller) {
-          mapController = controller;
+          setState(() {
+            mapController = controller;
+          });
         },
-        markers: markers,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print('Latitude: ${widget.lat}, Longitude: ${widget.long}');
+        initialCameraPosition: CameraPosition(
+          target: warehouseLatLng,
+          zoom: 15.0,
+        ),
+        markers: <Marker>{
+          Marker(
+            markerId: const MarkerId('warehouse_marker'),
+            position: warehouseLatLng,
+            infoWindow: InfoWindow(
+              title: widget.name,
+              // snippet: widget.description,
+            ),
+          ),
         },
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        print(warehouseLatLng);
+        mapController.animateCamera(CameraUpdate.newCameraPosition(
+            CameraPosition(target: warehouseLatLng, zoom: 12.0)));
+      }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 }
