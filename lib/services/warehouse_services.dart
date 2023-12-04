@@ -53,4 +53,13 @@ class WarehouseServidces {
 
     return response;
   }
+
+  Future<http.Response> getWarehousebyId(String param, String token) async {
+    final response =
+        await http.get(Uri.parse('$baseUrl/warehouse/detail/$param'), headers: {
+      'Authorization': 'Bearer ${token}',
+    });
+
+    return response;
+  }
 }
