@@ -1,5 +1,6 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/screens/main/dashboard/search_screen.dart';
+import 'package:capstone_wms/screens/main/history/history_screen.dart';
 import 'package:capstone_wms/screens/main/stack_screen.dart';
 import 'package:capstone_wms/screens/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
