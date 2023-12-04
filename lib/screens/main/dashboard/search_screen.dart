@@ -5,6 +5,7 @@ import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/bottomsheetFilter.dart';
+import 'package:capstone_wms/components/bs_filter.dart';
 import 'package:capstone_wms/controllers/search_controller.dart';
 import 'package:capstone_wms/models/searchwarehouse_model.dart';
 import 'package:capstone_wms/services/warehouse_services.dart';
@@ -74,11 +75,22 @@ class _SearchScreenState extends State<SearchScreen> {
   //   }
   // }
 
+  void showFilter(BuildContext param) {
+    showModalBottomSheet(
+        context: param,
+        isScrollControlled: true,
+        builder: (context) => BottomSheetFilter(
+              onFilterPressed: () {
+                // Get.back();
+                searchController.getWarehouseData();
+              },
+            ));
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // searchCont = TextEditingController(text: widget.searchQuery);
     searchCont.text = searchController.searchString.value;
     // warehouseData = null;
     // getWarehouseData();
@@ -87,9 +99,11 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // BuildContext kontext = context;
     // final searchQuery = Get.arguments as String;
     // searchCont.text = searchQuery;
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           actions: [
@@ -137,7 +151,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        filterBottomSheet(context);
+                        showFilter(context);
+                        // filterBottomSheet(context);
                       },
                       icon: const Icon(Icons.filter_list_rounded),
                     )
@@ -184,6 +199,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           return GestureDetector(
                             onTap: () {
                               //disini buat ke detail screen nanti
+                              // Get.to(()=> DetailGudang())
                             },
                             child: Column(
                               children: [
@@ -250,7 +266,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                     Text(
                                                       // "Gudang",
                                                       '${warehouse['warehouseTypeName']}'
-                                                          .toUpperCase(),
+                                                          .toUpperCase()
+                                                          .toString(),
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: textCollection
@@ -264,7 +281,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               ),
                                               const SizedBox(height: 16),
                                               Text(
-                                                warehouse['name'],
+                                                warehouse['name'].toString(),
                                                 style: textCollection.bodyNormal
                                                     .copyWith(
                                                         color:
@@ -280,7 +297,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                           colorApp.mainColor),
                                                   const SizedBox(width: 8),
                                                   Text(
-                                                    warehouse['RegencyName'],
+                                                    warehouse['regencyName']
+                                                        .toString(),
                                                     style: TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -298,7 +316,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                           colorApp.mainColor),
                                                   const SizedBox(width: 8),
                                                   Text(
-                                                    " ${formatter.format(warehouse['surfaceArea'])} m²",
+                                                    " ${formatter.format(warehouse['surfaceArea'])} m²"
+                                                        .toString(),
                                                     style: TextStyle(
                                                       color: colorApp.mainColor,
                                                       fontWeight:
@@ -329,7 +348,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                               ),
                                               const SizedBox(height: 10),
                                               Text(
-                                                "Rp. ${formatter.format(warehouse['annualPrice'])}/Tahun",
+                                                "Rp. ${formatter.format(warehouse['annualPrice'])}/Tahun"
+                                                    .toString(),
                                                 style: textCollection.bodySmall
                                                     .copyWith(
                                                         color:

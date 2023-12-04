@@ -15,6 +15,10 @@ class FindController extends GetxController {
   RxString maxSize = ''.obs;
   RxString minSize = ''.obs;
   RxBool isLoading = false.obs;
+
+  RxBool recommended = false.obs;
+  RxBool lowerPrice = false.obs;
+  RxBool higherPrice = false.obs;
   // RxList<dynamic>? warehouseData;
   RxList<dynamic> warehouseData = <dynamic>[].obs;
 
@@ -27,10 +31,48 @@ class FindController extends GetxController {
     searchString.value = param;
   }
 
+  void onRecommendedChange(bool param) {
+    lowerPrice.value = false;
+    higherPrice.value = false;
+    recommended.value = param;
+  }
+
+  void onLowerPriceChange(bool param) {
+    recommended.value = false;
+    higherPrice.value = false;
+    lowerPrice.value = param;
+  }
+
+  void onHigherPriceChange(bool param) {
+    recommended.value = false;
+    lowerPrice.value = false;
+    higherPrice.value = param;
+  }
+
+  void onFilterChange(SearchWarehouse param) {
+    minPrice.value = param.minPrice;
+    maxPrice.value = param.maxPrice;
+    maxSize.value = param.maxSize;
+    minSize.value = param.minSize;
+    // Get.back;
+    // getWarehouseData();
+  }
+
+  void resetFilter() {
+    minPrice.value = '';
+    maxPrice.value = '';
+    maxSize.value = '';
+    minSize.value = '';
+
+    recommended.value = false;
+    lowerPrice.value = false;
+    higherPrice.value = false;
+  }
+
   Future<void> getWarehouseData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoading.value = true;
-    warehouseData.clear(); // Clear existing data before fetching new data
+    warehouseData.clear();
     try {
       SearchWarehouse getWarehouseList = SearchWarehouse(
         token: prefs.getString('token')!,
@@ -40,23 +82,93 @@ class FindController extends GetxController {
         minSize: minSize.value,
         maxSize: maxSize.value,
       );
-      final response =
-          await warehoouseServices.getWarehouseList(getWarehouseList);
-      Map<String, dynamic> responseData = json.decode(response.body);
 
-      if (response.statusCode == 200) {
-        if (responseData['data'] == null) {
-          warehouseData.value = [];
+      if (recommended.value) {
+        final response =
+            await warehoouseServices.getRecommendedWarehouse(getWarehouseList);
+        Map<String, dynamic> responseData = json.decode(response.body);
+        print(response.statusCode);
+
+        if (response.statusCode == 200) {
+          if (responseData['data'] == null) {
+            warehouseData.value = [];
+          } else {
+            List<dynamic> warehouseList = responseData['data'];
+            warehouseData.addAll(warehouseList);
+          }
         } else {
-          List<dynamic> warehouseList = responseData['data'];
-          warehouseData.addAll(warehouseList);
+          Get.snackbar(
+            response.statusCode.toString(),
+            '${responseData['message']}',
+          );
         }
-        // Add fetched data to the list
+      } else if (lowerPrice.value) {
+        final response =
+            await warehoouseServices.getLowerPriceWarehouse(getWarehouseList);
+        Map<String, dynamic> responseData = json.decode(response.body);
+        if (response.statusCode == 200) {
+          if (responseData['data'] == null) {
+            warehouseData.value = [];
+          } else {
+            List<dynamic> warehouseList = responseData['data'];
+            warehouseData.addAll(warehouseList);
+          }
+        } else {
+          Get.snackbar(
+            response.statusCode.toString(),
+            '${responseData['message']}',
+          );
+        }
+      } else if (higherPrice.value) {
+        final response =
+            await warehoouseServices.getHigestPriceWarehouse(getWarehouseList);
+        Map<String, dynamic> responseData = json.decode(response.body);
+        if (response.statusCode == 200) {
+          if (responseData['data'] == null) {
+            warehouseData.value = [];
+          } else {
+            List<dynamic> warehouseList = responseData['data'];
+            warehouseData.addAll(warehouseList);
+          }
+        } else {
+          Get.snackbar(
+            response.statusCode.toString(),
+            '${responseData['message']}',
+          );
+        }
       } else {
-        Get.snackbar(
-          response.statusCode.toString(),
-          '${responseData['message']}',
-        );
+        final response =
+            await warehoouseServices.getWarehouseList(getWarehouseList);
+
+        print(response.statusCode);
+        print(response.body);
+
+        // Map<String, dynamic> responseData = json.decode(response.body);
+        if (response.statusCode == 200) {
+          try {
+            Map<String, dynamic> responseData = jsonDecode(response.body);
+            if (responseData.containsKey('data') &&
+                responseData['data'] != null) {
+              List<dynamic> warehouseList = responseData['data'];
+              warehouseData.addAll(warehouseList);
+            } else {
+              warehouseData.value = []; // Set warehouseData to an empty list
+            }
+            // if (responseData['data'] == null) {
+            //   warehouseData.value = [];
+            // } else {
+            //   List<dynamic> warehouseList = responseData['data'];
+            //   warehouseData.addAll(warehouseList);
+            // }
+          } catch (e) {
+            print(e);
+          }
+        } else {
+          // Map<String, dynamic> responseData = json.decode(response.body);
+          Get.snackbar(response.statusCode.toString(), 'something went wrong'
+              // '${responseData['message']}',
+              );
+        }
       }
     } catch (e) {
       print(e);

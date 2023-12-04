@@ -7,10 +7,47 @@ class WarehouseServidces {
       "http://ec2-18-139-162-85.ap-southeast-1.compute.amazonaws.com:8086";
 
   Future<http.Response> getWarehouseList(SearchWarehouse param) async {
+    final response = await http.get(Uri.parse(
+            // '$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}'
+            "$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}"),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${param.token}',
+        });
+
+    return response;
+  }
+
+  Future<http.Response> getRecommendedWarehouse(SearchWarehouse param) async {
     final response = await http.get(
         Uri.parse(
-            '$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}'),
+            '$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}&recomendation=true'),
         headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${param.token}',
+        });
+
+    return response;
+  }
+
+  Future<http.Response> getHigestPriceWarehouse(SearchWarehouse param) async {
+    final response = await http.get(
+        Uri.parse(
+            '$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}&highestPrice=true'),
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': 'Bearer ${param.token}',
+        });
+
+    return response;
+  }
+
+  Future<http.Response> getLowerPriceWarehouse(SearchWarehouse param) async {
+    final response = await http.get(
+        Uri.parse(
+            '$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}&lowerPrice=true'),
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
           'Authorization': 'Bearer ${param.token}',
         });
 

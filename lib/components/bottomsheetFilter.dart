@@ -1,10 +1,13 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/search_controller.dart';
+import 'package:capstone_wms/models/searchwarehouse_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 Future<dynamic> filterBottomSheet(BuildContext context) {
+  FindController cont = Get.put(FindController());
   TextCollection textapp = TextCollection();
-  String? filter;
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -13,7 +16,7 @@ Future<dynamic> filterBottomSheet(BuildContext context) {
       return StatefulBuilder(
         builder: (context, setState) {
           return Container(
-            height: MediaQuery.of(context).size.height * 0.85,
+            height: MediaQuery.of(context).size.height * 0.909,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(20),
@@ -56,12 +59,11 @@ Future<dynamic> filterBottomSheet(BuildContext context) {
                             fontWeight: FontWeight.normal,
                           ),
                         ),
-                        value: "Paling Rekomendasi",
-                        groupValue: filter,
+                        value: true,
+                        groupValue: cont.recommended.value,
                         onChanged: (value) {
-                          setState(() {
-                            filter = value.toString();
-                          });
+                          cont.onRecommendedChange(value!);
+                          print(cont.recommended.value);
                         },
                       ),
                       RadioListTile(
@@ -72,12 +74,11 @@ Future<dynamic> filterBottomSheet(BuildContext context) {
                             fontWeight: FontWeight.normal,
                           ),
                         ),
-                        value: "Harga Terendah",
-                        groupValue: filter,
+                        value: true,
+                        groupValue: cont.lowerPrice.value,
                         onChanged: (value) {
-                          setState(() {
-                            filter = value.toString();
-                          });
+                          cont.onLowerPriceChange(value!);
+                          print(cont.lowerPrice.value);
                         },
                       ),
                       RadioListTile(
@@ -88,12 +89,11 @@ Future<dynamic> filterBottomSheet(BuildContext context) {
                             fontWeight: FontWeight.normal,
                           ),
                         ),
-                        value: "Harga Tertinggi",
-                        groupValue: filter,
+                        value: true,
+                        groupValue: cont.higherPrice.value,
                         onChanged: (value) {
-                          setState(() {
-                            filter = value.toString();
-                          });
+                          cont.onHigherPriceChange(value!);
+                          print(cont.higherPrice.value);
                         },
                       ),
                     ],
@@ -118,6 +118,11 @@ Future<dynamic> filterBottomSheet(BuildContext context) {
                             height: 50,
                             width: 150,
                             child: TextField(
+                              onChanged: (value) {
+                                if (value.isNotEmpty) {
+                                  cont.minSize.value = value;
+                                }
+                              },
                               textAlign: TextAlign.start,
                               cursorColor: ColorApp().mainColor,
                               keyboardType: TextInputType.number,
@@ -161,6 +166,11 @@ Future<dynamic> filterBottomSheet(BuildContext context) {
                             height: 50,
                             width: 150,
                             child: TextField(
+                              onChanged: (value) {
+                                if (value.isNotEmpty) {
+                                  cont.maxSize.value = value;
+                                }
+                              },
                               textAlign: TextAlign.end,
                               cursorColor: ColorApp().mainColor,
                               keyboardType: TextInputType.number,
@@ -217,6 +227,11 @@ Future<dynamic> filterBottomSheet(BuildContext context) {
                             height: 50,
                             width: 150,
                             child: TextField(
+                              onChanged: (value) {
+                                if (value.isNotEmpty) {
+                                  cont.minPrice.value = value;
+                                }
+                              },
                               textAlign: TextAlign.start,
                               cursorColor: ColorApp().mainColor,
                               keyboardType: TextInputType.number,
@@ -260,6 +275,11 @@ Future<dynamic> filterBottomSheet(BuildContext context) {
                             height: 50,
                             width: 150,
                             child: TextField(
+                              onChanged: (value) {
+                                if (value.isNotEmpty) {
+                                  cont.maxPrice.value = value;
+                                }
+                              },
                               textAlign: TextAlign.end,
                               cursorColor: ColorApp().mainColor,
                               keyboardType: TextInputType.number,

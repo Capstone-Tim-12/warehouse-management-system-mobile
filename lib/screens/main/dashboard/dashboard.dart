@@ -1,9 +1,13 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/lowerprice_controller.dart';
+import 'package:capstone_wms/controllers/recommendation_cont.dart';
 import 'package:capstone_wms/controllers/search_controller.dart';
+import 'package:capstone_wms/screens/main/chatbot/chatscreen.dart';
 import 'package:capstone_wms/screens/main/dashboard/recommend_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
@@ -19,12 +23,26 @@ class _DashboardState extends State<Dashboard> {
   Future<void> getLoggedInName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      nameValue = prefs.getString('name') ?? 'No value found';
+      nameValue = prefs.getString('name') ?? 'Jane Doe';
     });
+  }
+
+  String formatPrice(int price) {
+    NumberFormat numberFormat = NumberFormat.simpleCurrency(
+      locale: 'id_ID',
+      decimalDigits: 0,
+    );
+
+    String formattedPrice =
+        numberFormat.format(price / 1000000); // Convert to million
+    print(formattedPrice);
+    return '${formattedPrice} Jt/bln';
   }
 
   TextCollection textApp = TextCollection();
   FindController searchController = Get.put(FindController());
+  RecommendationController recController = Get.put(RecommendationController());
+  LowerPriceController lowPriceCont = Get.put(LowerPriceController());
   TextEditingController searchCont = TextEditingController();
 
   @override
@@ -32,6 +50,8 @@ class _DashboardState extends State<Dashboard> {
     // TODO: implement initState
     super.initState();
     getLoggedInName();
+    recController.getRecommendation();
+    lowPriceCont.getLowPriceWarehouse();
   }
 
   @override
@@ -74,12 +94,14 @@ class _DashboardState extends State<Dashboard> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const RecommendList(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const RecommendList(),
+              //   ),
+              // );
+              Get.to(() => const ChatScreen(),
+                  transition: Transition.rightToLeft);
             },
             icon: Icon(
               Icons.chat_rounded,
@@ -216,7 +238,118 @@ class _DashboardState extends State<Dashboard> {
               child: SizedBox(
                 height: 240,
                 width: double.infinity,
-                child: RecommendedCardWidget(),
+                // child: RecommendedCardWidget(),
+                child: Obx(() => FutureBuilder(
+                    future: recController.recommededData.isNotEmpty
+                        ? Future.value(recController.recommededData)
+                        : null,
+                    builder: (context, snapshot) {
+                      if (recController.isRecommendationLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: ColorApp().mainColor,
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.data == null ||
+                          recController.recommededData.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'Gudang Tidak Ditemukan',
+                            style: TextCollection()
+                                .bodySmall
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        );
+                      } else {
+                        return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: recController.recommededData.length,
+                            itemBuilder: (context, index) {
+                              var warehouse =
+                                  recController.recommededData[index];
+                              return GestureDetector(
+                                onTap: () {},
+                                child: SizedBox(
+                                  width: 180,
+                                  child: Container(
+                                    margin: const EdgeInsets.all(3.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: ColorApp().dark4,
+                                          offset: const Offset(1, 1),
+                                          spreadRadius: 1,
+                                          blurRadius: 1.0,
+                                        )
+                                      ],
+                                    ),
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 130,
+                                          child: Image.network(
+                                            "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                                            fit: BoxFit.fitHeight,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                warehouse['name'].toString(),
+                                                // "Warehouse Abadi",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: textApp.bodyNormal
+                                                    .copyWith(
+                                                        color: ColorApp().dark1,
+                                                        fontSize: 16),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Text(
+                                                warehouse['regencyName']
+                                                    .toString(),
+                                                // "Jakarta Barat",
+                                                style:
+                                                    textApp.bodySmall.copyWith(
+                                                  color: ColorApp().dark1,
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 15),
+                                              Text(
+                                                formatPrice(warehouse[
+                                                        'monthlyPrice'])
+                                                    .toString(),
+                                                style: textApp.bodyNormal
+                                                    .copyWith(
+                                                        color: ColorApp()
+                                                            .secondaryColor,
+                                                        // fontSize: 12,
+                                                        overflow: TextOverflow
+                                                            .ellipsis),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      }
+                    })),
               ),
             ),
             Padding(
@@ -240,7 +373,118 @@ class _DashboardState extends State<Dashboard> {
               child: SizedBox(
                 height: 244,
                 width: double.infinity,
-                child: RecommendedCardWidget(),
+                // child: RecommendedCardWidget(),
+                child: Obx(() => FutureBuilder(
+                    future: lowPriceCont.lowPriceData.isNotEmpty
+                        ? Future.value(lowPriceCont.lowPriceData)
+                        : null,
+                    builder: (context, snapshot) {
+                      if (lowPriceCont.isLowPriceLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: ColorApp().mainColor,
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.data == null ||
+                          lowPriceCont.lowPriceData.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'Gudang Tidak Ditemukan',
+                            style: TextCollection()
+                                .bodySmall
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        );
+                      } else {
+                        return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: lowPriceCont.lowPriceData.length,
+                            itemBuilder: (context, index) {
+                              var warehouse = lowPriceCont.lowPriceData[index];
+
+                              return GestureDetector(
+                                onTap: () {},
+                                child: SizedBox(
+                                  width: 180,
+                                  child: Container(
+                                    margin: const EdgeInsets.all(3.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: ColorApp().dark4,
+                                          offset: const Offset(1, 1),
+                                          spreadRadius: 1,
+                                          blurRadius: 1.0,
+                                        )
+                                      ],
+                                    ),
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 130,
+                                          child: Image.network(
+                                            "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                                            fit: BoxFit.fitHeight,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                warehouse['name'].toString(),
+                                                // "Warehouse Abadi",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: textApp.bodyNormal
+                                                    .copyWith(
+                                                        color: ColorApp().dark1,
+                                                        fontSize: 16),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Text(
+                                                warehouse['regencyName']
+                                                    .toString(),
+                                                // "Jakarta Barat",
+                                                style:
+                                                    textApp.bodySmall.copyWith(
+                                                  color: ColorApp().dark1,
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 15),
+                                              Text(
+                                                formatPrice(warehouse[
+                                                        'monthlyPrice'])
+                                                    .toString(),
+                                                style: textApp.bodyNormal
+                                                    .copyWith(
+                                                        color: ColorApp()
+                                                            .secondaryColor,
+                                                        // fontSize: 12,
+                                                        overflow: TextOverflow
+                                                            .ellipsis),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      }
+                    })),
               ),
             ),
             const SizedBox(height: 30),
