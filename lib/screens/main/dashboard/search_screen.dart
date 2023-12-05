@@ -8,6 +8,8 @@ import 'package:capstone_wms/components/bottomsheetFilter.dart';
 import 'package:capstone_wms/controllers/search_controller.dart';
 import 'package:capstone_wms/models/searchwarehouse_model.dart';
 import 'package:capstone_wms/screens/main/detail_gudang/detail_gudang_screen.dart';
+import 'package:capstone_wms/screens/main/favorites/favorite_screen.dart';
+import 'package:capstone_wms/services/favorite_services.dart';
 import 'package:capstone_wms/services/warehouse_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,9 +32,10 @@ class _SearchScreenState extends State<SearchScreen> {
   // late TextEditingController searchCont;
   FindController searchValue = Get.put(FindController());
   WarehouseServidces warehoouseServices = WarehouseServidces();
+  FavoriteService favoriteService = FavoriteService();
 
   bool isLoading = false;
-
+  bool isFavorite = false;
   // late Future<List<dynamic>> warehouseData;
   List<dynamic>? warehouseData;
 
@@ -194,13 +197,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    shadows: [
-                                      BoxShadow(
-                                        color: colorApp.dark4,
-                                        offset: const Offset(4, 4),
-                                        blurRadius: 10,
-                                      ),
-                                    ],
+                                    // shadows: [
+                                    //   BoxShadow(
+                                    //     color: colorApp.dark4,
+                                    //     offset: const Offset(4, 4),
+                                    //     blurRadius: 10,
+                                    //   ),
+                                    // ],
                                   ),
                                   child: Row(
                                     crossAxisAlignment:
@@ -326,11 +329,22 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Icon(
-                                          Icons.star,
-                                          color: colorApp.mainColor,
-                                          size: 25,
-                                        ),
+                                        child: IconButton(
+                                          onPressed: () async{
+                                          final response = await favoriteService.addToFavorites(warehouse['id']);
+                                          print(response.statusCode);
+                                          print(warehouse['id']);
+                                          if (response.statusCode == 201) {
+                                            Get.snackbar(
+                                              "Berhasil",
+                                              "Berhasil ditambahkan ke favorit",
+                                              backgroundColor: colorApp.light1,
+                                            );
+                                          }
+                                          }, 
+                                          icon: const Icon(
+                                            Icons.star_border_outlined,
+                                          )),
                                       ),
                                     ],
                                   ),
