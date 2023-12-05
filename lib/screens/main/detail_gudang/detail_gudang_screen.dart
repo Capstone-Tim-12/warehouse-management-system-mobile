@@ -7,6 +7,7 @@ import 'package:capstone_wms/screens/main/detail_gudang/interactive_map_screen.d
 import 'package:capstone_wms/services/warehouse_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,6 +24,8 @@ WarehouseServidces warehoouseServices = WarehouseServidces();
 
 bool isLoading = false;
 final formatter = NumberFormat("#,###");
+late GoogleMapController mapController;
+// late LatLng warehouseLatLng;
 
 // late Future<List<dynamic>> warehouseData;
 //List<dynamic>? detailWarehouseId;
@@ -72,6 +75,12 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
     super.initState();
     // searchCont = TextEditingController(text: widget.searchQuery);
     getDetailWarehouse();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    mapController.dispose();
   }
 
   @override
@@ -241,11 +250,33 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                               color: colorApp.mainColor,
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             width: double.infinity,
-                            height: 70,
-                            decoration: const BoxDecoration(
-                              color: Colors.amber,
+                            height: 85,
+                            child: GoogleMap(
+                              mapType: MapType.normal,
+                              zoomControlsEnabled: false,
+                              onMapCreated: (controller) {
+                                setState(() {
+                                  mapController = controller;
+                                });
+                              },
+                              initialCameraPosition: CameraPosition(
+                                target: LatLng(
+                                  warehouseData!["latitude"],
+                                  warehouseData!["longitude"],
+                                ),
+                                zoom: 10.0,
+                              ),
+                              markers: <Marker>{
+                                Marker(
+                                  markerId: const MarkerId("warehouse_marker"),
+                                  position: LatLng(
+                                    warehouseData!["latitude"],
+                                    warehouseData!["longitude"],
+                                  ),
+                                )
+                              },
                             ),
                           ),
                           const SizedBox(height: 10),
