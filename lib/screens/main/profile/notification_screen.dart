@@ -1,6 +1,7 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -29,7 +30,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
         backgroundColor: colorApp.light3,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: colorApp.secondaryColor),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
       ),
       body: Container(
