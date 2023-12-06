@@ -41,7 +41,8 @@ class _SelfieKTPState extends State<SelfieKTP> {
   bool _isCameraInitialized = false;
   bool _isLoading = false;
   bool picTaken = false;
-  bool isUploading = false;
+  bool isKTPUploading = false;
+  bool isSelfUploading = false;
   bool isUpdating = false;
   String KTPpicUrl = '';
   String selfieKtpPicUrl = '';
@@ -68,13 +69,22 @@ class _SelfieKTPState extends State<SelfieKTP> {
       await takePic();
 
       if (picTaken) {
-        await upPicToStorage();
-        if (isUploading) {
-          await updateUser();
-          if (isUpdating) {
-            await verifyUser();
+        await upKTPPicToStorage();
+        if (isKTPUploading) {
+          await upSelfPicToStorage();
+          if (isSelfUploading) {
+            await updateUser();
+            if (isUpdating) {
+              await verifyUser();
+            }
           }
         }
+        // if (isUploading) {
+        //   await updateUser();
+        //   if (isUpdating) {
+        //     await verifyUser();
+        //   }
+        // }
       }
     } catch (e) {
       Get.snackbar("Peringatan", "Terjadi kesalahan",
@@ -88,55 +98,63 @@ class _SelfieKTPState extends State<SelfieKTP> {
 
   Future<void> takePic() async {
     try {
-      // setState(() {
-      //   _isLoading = true;
-      // });
       await _cameraController!.setFlashMode(FlashMode.off);
 
       XFile image = await _cameraController!.takePicture();
       print(image.path);
 
-      // getSelfieKTPPath.setSelfieKtpFilePath(image.path);
       getSelfieKTPPath.setSelfieKtpFile(image);
-
+    } catch (e) {
+      print(e);
+    } finally {
       setState(() {
         picTaken = true;
       });
+    }
+  }
 
-      // String? ktpUrl = await firebase
-      //     .uploadKTPToFirebaseStorage(getSelfieKTPPath.ktpFile.value!);
+  Future<void> upKTPPicToStorage() async {
+    try {
+      String? ktpUrl = await firebase
+          .uploadKTPToFirebaseStorage(getSelfieKTPPath.ktpFile.value!);
 
       // String? selfieKtp = await firebase.uploadSelfieKTPToFirebaseStorage(
       //     getSelfieKTPPath.selfieKTPFile.value!);
 
-      // setState(() {
-      //   KTPpicUrl = ktpUrl!;
-      //   selfieKtpPicUrl = selfieKtp!;
-      // });
-
-      // _cameraController!.dispose();
-
-      // Get.off(() => VerificationSuccess());
+      setState(() {
+        KTPpicUrl = ktpUrl!;
+        // selfieKtpPicUrl = selfieKtp!;
+        // isUploading = true;
+      });
     } catch (e) {
       print(e);
+    } finally {
+      setState(() {
+        isKTPUploading = true;
+      });
     }
+    // await firebase.uploadKTPToFirebaseStorage(getSelfieKTPPath.selfieKTPFile.value!);
   }
 
-  Future<void> upPicToStorage() async {
+  Future<void> upSelfPicToStorage() async {
     try {
-      String? ktpUrl = await firebase
-          .uploadKTPToFirebaseStorage(getSelfieKTPPath.ktpFile.value!);
+      // String? ktpUrl = await firebase
+      //     .uploadKTPToFirebaseStorage(getSelfieKTPPath.ktpFile.value!);
 
       String? selfieKtp = await firebase.uploadSelfieKTPToFirebaseStorage(
           getSelfieKTPPath.selfieKTPFile.value!);
 
       setState(() {
-        KTPpicUrl = ktpUrl!;
+        // KTPpicUrl = ktpUrl!;
         selfieKtpPicUrl = selfieKtp!;
-        isUploading = true;
+        // isUploading = true;
       });
     } catch (e) {
       print(e);
+    } finally {
+      setState(() {
+        isSelfUploading = true;
+      });
     }
     // await firebase.uploadKTPToFirebaseStorage(getSelfieKTPPath.selfieKTPFile.value!);
   }
@@ -148,19 +166,23 @@ class _SelfieKTPState extends State<SelfieKTP> {
     String? name = prefs.getString('name');
     String? email = prefs.getString('email');
 
-    UserModel updateUser = UserModel(
-        id: docId!,
-        email: email,
-        userId: uid!,
-        name: name!,
-        picKTP: KTPpicUrl,
-        selKTP: selfieKtpPicUrl);
+    try {
+      UserModel updateUser = UserModel(
+          id: docId!,
+          email: email,
+          userId: uid!,
+          name: name!,
+          picKTP: KTPpicUrl,
+          selKTP: selfieKtpPicUrl);
 
-    await firebase.verifyUser(updateUser);
-
-    setState(() {
-      isUpdating = true;
-    });
+      await firebase.verifyUser(updateUser);
+    } catch (e) {
+      print(e);
+    } finally {
+      setState(() {
+        isUpdating = true;
+      });
+    }
   }
 
   Future<void> verifyUser() async {

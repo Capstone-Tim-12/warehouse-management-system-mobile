@@ -7,6 +7,7 @@ import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/bottomsheetFilter.dart';
 import 'package:capstone_wms/components/bs_filter.dart';
 import 'package:capstone_wms/controllers/search_controller.dart';
+import 'package:capstone_wms/controllers/warehouse_controller.dart';
 import 'package:capstone_wms/models/searchwarehouse_model.dart';
 import 'package:capstone_wms/screens/main/detail_gudang/detail_gudang_screen.dart';
 import 'package:capstone_wms/services/warehouse_services.dart';
@@ -31,6 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchCont = TextEditingController();
   FindController searchController = Get.put(FindController());
   // WarehouseServidces warehoouseServices = WarehouseServidces();
+  // favoriteservise favorite = favoriteservise();
 
   // bool isLoading = false;
 
@@ -203,6 +205,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             onTap: () {
                               //disini buat ke detail screen nanti
                               // Get.to(()=> DetailGudang())
+                              Get.to(() => DetailGudangScreen(
+                                  warehouseId: warehouse['id']));
                             },
                             child: Column(
                               children: [
@@ -364,6 +368,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
+                                          // child: IconButton(
+                                          //     onPressed: () {
+                                          //       // favorite.addtofavorite(warehouse['id']);
+                                          //     },
+                                          //     icon: Icon(
+                                          //         Icons.star_border_outlined)),
                                           child: Icon(
                                             Icons.star,
                                             color: colorApp.mainColor,

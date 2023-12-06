@@ -3,6 +3,11 @@ import 'dart:convert';
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/warehouse_controller.dart';
+import 'package:capstone_wms/models/warehouse_model.dart';
+import 'package:capstone_wms/screens/main/dashboard/list_picture.dart';
+import 'package:capstone_wms/screens/main/dashboard/search_screen.dart';
+import 'package:capstone_wms/screens/main/sewa/sewa_screen.dart';
 import 'package:capstone_wms/services/warehouse_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +24,7 @@ class DetailGudangScreen extends StatefulWidget {
 }
 
 WarehouseServidces warehoouseServices = WarehouseServidces();
+WarehouseController warehouseCont = Get.put(WarehouseController());
 
 bool isLoading = false;
 final formatter = NumberFormat("#,###");
@@ -29,8 +35,25 @@ List<dynamic>? detailWarehouseId;
 
 class _DetailGudangScreenState extends State<DetailGudangScreen> {
   // List<dynamic>? detailgudang;
+  // Map<String, dynamic> warehouseData = {};
   Map<String, dynamic>? warehouseData;
   List<String>? imageUrls;
+
+  void setSelectedWarehouseState() {
+    WarehouseModel selectedWarehouse = WarehouseModel(
+        warehouseId: widget.warehouseId,
+        name: warehouseData!['name'].toString(),
+        regencyName: warehouseData!['regencyName'].toString(),
+        weeklyPrice: warehouseData!['weeklyPrice'],
+        monthlyPrice: warehouseData!['monthlyPrice'],
+        annuallyPrice: warehouseData!['annualPrice'],
+        image: warehouseData!['image']);
+
+    setState(() {
+      warehouseCont.setSelectedWarehouse(selectedWarehouse);
+    });
+  }
+
   Future<void> getDetailWarehouse() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -48,9 +71,10 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
 
         setState(() {
           warehouseData = responseData['data'];
-
-          // detailgudang = warehouseList;
         });
+
+        // setSelectedWarehouseState();
+
         print(warehouseData);
       } else {
         Get.snackbar(
@@ -71,6 +95,7 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
     super.initState();
     // searchCont = TextEditingController(text: widget.searchQuery);
     getDetailWarehouse();
+    // setSelectedWarehouseState();
   }
 
   @override
@@ -85,7 +110,10 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
             Icons.arrow_back,
             color: colorApp.secondaryColor,
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () async {
+            // await Get.delete<WarehouseController>(force: true);
+            Get.back();
+          },
         ),
         title: Text(
           "Detail Gudang",
@@ -93,7 +121,7 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
         ),
       ),
       body: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
@@ -136,6 +164,7 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                         child: GestureDetector(
                           onTap: () {
                             print('sudah ditekan');
+                            Get.to(() => ListPicture());
                           },
                           child: Stack(
                             alignment: Alignment.center,
@@ -323,11 +352,31 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
-                        onPressed: () {
-                          print("sudah ditekan");
+                        onPressed: () async {
+                          WarehouseModel selectedWarehouse = WarehouseModel(
+                              warehouseId: widget.warehouseId,
+                              name: warehouseData!['name'].toString(),
+                              regencyName:
+                                  warehouseData!['regencyName'].toString(),
+                              weeklyPrice: warehouseData!['weeklyPrice'],
+                              monthlyPrice: warehouseData!['monthlyPrice'],
+                              annuallyPrice: warehouseData!['annualPrice'],
+                              image: warehouseData!['image']);
+                          // await Get.delete<WarehouseController>(force: true);
+                          // if (warehouseCont
+                          //         .selectedWarehouse.value.warehouseId ==
+                          //     0) {
+                          //   setSelectedWarehouseState();
+                          // } else {
+                          // setSelectedWarehouseState();
+                          // }
+
+                          Get.to(() => PengajuanSewa(
+                                selectedWarehouse: selectedWarehouse,
+                              ));
                         },
                         child: Text(
-                          'Sewa Gudang',
+                          'Ajukan Sewa',
                           style: TextCollection().bodySmall.copyWith(
                                 color: colorApp.light4,
                               ),
