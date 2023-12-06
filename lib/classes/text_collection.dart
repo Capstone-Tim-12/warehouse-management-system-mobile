@@ -244,4 +244,17 @@ class TextCollection {
     fontSize: 12,
     fontWeight: FontWeight.w400,
   );
+  TextStyle label1 = const TextStyle(
+    color: Colors.white,
+    fontFamily: 'Montserrat',
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+  );
+
+  TextStyle bodySmall4 = const TextStyle(
+    color: Color(0xff17345F),
+    fontFamily: 'Montserrat',
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+  );
 }
