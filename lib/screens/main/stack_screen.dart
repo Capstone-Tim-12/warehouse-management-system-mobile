@@ -23,47 +23,69 @@ class _MainScreenState extends State<MainScreen> {
     const Dashboard(),
     const FavoritesScreen(),
     const MyWarehouse(),
-    const ChatScreen(),
+    // const ChatScreen(),
     const SetProfileScreen()
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: appColor.mainColor,
-          selectedItemColor: appColor.secondaryColor,
-          unselectedItemColor: Colors.white,
-          currentIndex: _screenIndex,
-          // fixedColor: appColor.mainColor,
-          onTap: (index) {
-            setState(() {
-              _screenIndex = index;
-            });
-          },
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.favorite),
-              label: 'Favorite',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.warehouse),
-              label: 'MyWarehouse',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat),
-              label: 'Chats',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ]),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+        child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            // type: BottomNavigationBarType.shifting,
+            backgroundColor: appColor.mainColor,
+            selectedItemColor: appColor.secondaryColor,
+            unselectedItemColor: Colors.white,
+            currentIndex: _screenIndex,
+            // fixedColor: appColor.mainColor,
+            onTap: (index) {
+              setState(() {
+                _screenIndex = index;
+              });
+            },
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.home_rounded),
+                backgroundColor: appColor.secondaryColor,
+                activeIcon: CircleAvatar(
+                  backgroundColor: appColor.secondaryColor,
+                  child: Icon(Icons.home, color: appColor.light1),
+                ),
+                label: 'Beranda',
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.star),
+                activeIcon: CircleAvatar(
+                  backgroundColor: appColor.secondaryColor,
+                  child: Icon(Icons.star, color: appColor.light1),
+                ),
+                label: 'Favorit',
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.warehouse_rounded),
+                activeIcon: CircleAvatar(
+                  backgroundColor: appColor.secondaryColor,
+                  child: Icon(Icons.warehouse_rounded, color: appColor.light1),
+                ),
+                label: 'Gudfangku',
+              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.chat),
+              //   label: 'Chats',
+              // ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.person),
+                activeIcon: CircleAvatar(
+                  backgroundColor: appColor.secondaryColor,
+                  child: Icon(Icons.person, color: appColor.light1),
+                ),
+                label: 'Profil',
+              ),
+            ]),
+      ),
       body: _screens[_screenIndex],
     );
   }

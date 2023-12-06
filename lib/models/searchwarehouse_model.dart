@@ -5,6 +5,9 @@ class SearchWarehouse {
   String minPrice = '';
   String minSize = '';
   String maxSize = '';
+  bool? recommended = false;
+  bool? lowerPrice = false;
+  bool? higherPrice = false;
 
   SearchWarehouse({
     required this.token,
@@ -13,5 +16,8 @@ class SearchWarehouse {
     required this.minPrice,
     required this.minSize,
     required this.maxSize,
+    this.higherPrice,
+    this.lowerPrice,
+    this.recommended,
   });
 }
