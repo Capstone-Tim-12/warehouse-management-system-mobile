@@ -211,7 +211,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           children: [
                                             const SizedBox(height: 8),
                                             Container(
-                                              width: 80,
+                                              // width: 80,
                                               height: 32,
                                               decoration: ShapeDecoration(
                                                 shape: RoundedRectangleBorder(
@@ -227,7 +227,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    '${warehouse['warehouseTypeName']}'
+                                                    'Gudang ${warehouse['warehouseTypeName']}'
                                                         .toUpperCase()
                                                         .toString(),
                                                     textAlign: TextAlign.center,
@@ -247,6 +247,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   .copyWith(
                                                       color:
                                                           colorApp.mainColor),
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                             Row(
                                               children: [
@@ -262,6 +263,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                           FontWeight.w500,
                                                       color:
                                                           colorApp.mainColor),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ],
                                             ),
@@ -294,6 +297,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                           FontWeight.w500,
                                                       fontSize: 10,
                                                     ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                 ),
                                               ],
@@ -306,16 +311,40 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   .copyWith(
                                                       color:
                                                           colorApp.mainColor),
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                             const SizedBox(height: 8),
                                           ],
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(1.0),
+                                        child: IconButton(
+                                            onPressed: () async {
+                                              final response =
+                                                  await favoriteService
+                                                      .addToFavorites(
+                                                          warehouse['id']);
+                                              print(response.statusCode);
+                                              print(warehouse['id']);
+                                              if (response.statusCode == 201) {
+                                                Get.snackbar(
+                                                  "Berhasil",
+                                                  "Berhasil ditambahkan ke favorit",
+                                                  backgroundColor:
+                                                      colorApp.light1,
+                                                );
+                                              }
+                                            },
+                                            icon: const Icon(
+                                              Icons.star_border_outlined,
+                                            )),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 8),
                             ],
                           ),
                         );
