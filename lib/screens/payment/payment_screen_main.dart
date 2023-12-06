@@ -330,7 +330,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => VirtualAccountScreen(),
+                        builder: (context) => const PaymentFailed(),
                       ),
                     );
                   },
