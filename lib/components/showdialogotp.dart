@@ -1,6 +1,8 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/components/alertdialogberhasil.dart';
+import 'package:capstone_wms/components/alertdialoggagal.dart';
 import 'package:capstone_wms/components/showbottomsheetberhasil.dart';
 import 'package:capstone_wms/components/showbottomsheetgagal.dart';
 import 'package:capstone_wms/screens/main/profile/emailverifikasi.dart';
@@ -139,11 +141,11 @@ void showDialogOtp(BuildContext context) {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const EmailVerifikasi()),
                       );
-                      showBottomSheetGagal(context);
+                      alertDialogGagal(context);
                   },
                   child: Text('Batalkan', 
                   style: TextCollection().normalLabel.copyWith(color: colorApp.light3)),
@@ -157,11 +159,11 @@ void showDialogOtp(BuildContext context) {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const EmailVerifikasi()),
                       );
-                      showBottomSheetBerhasil(context);
+                      alertDialogBerhasil(context);
                   },
                   child: Text('Konfirmasi',
                   style: TextCollection().normalLabel.copyWith(color: colorApp.light3)),
