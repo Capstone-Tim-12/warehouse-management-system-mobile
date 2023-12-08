@@ -9,7 +9,7 @@ class WarehouseServidces {
   Future<http.Response> getWarehouseList(SearchWarehouse param) async {
     final response = await http.get(Uri.parse(
             // '$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}'
-            "$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}"),
+            "$baseUrl/warehouse/user/list?page=1&limit=10&status=tersedia&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}"),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ${param.token}',
