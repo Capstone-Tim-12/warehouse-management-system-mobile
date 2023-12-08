@@ -1,9 +1,11 @@
+import 'package:capstone_wms/screens/main/stack_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class PengajuanSelesai extends StatelessWidget {
   PengajuanSelesai({super.key});
@@ -24,23 +26,34 @@ class PengajuanSelesai extends StatelessWidget {
               SizedBox(
                   height: 165,
                   width: 165,
-                  child: SvgPicture.asset('assets/svg/arrowpengajuan.svg')),
+                  child: Icon(
+                    Icons.check,
+                    color: colorApp.stateSuccess,
+                    size: 150,
+                  )),
+              // SizedBox(
+              //     height: 165,
+              //     width: 165,
+              //     child: SvgPicture.asset('assets/svg/arrowpengajuan.svg')),
               SizedBox(
-                width: 219,
+                // width: 219,
+                // width: 219,
                 child: Text(
-                  'Pengajuan Sewa Telah Terkirim',
-                  style: textApp.heading3,
+                  'Pengajuan Sewa Berhasil Dikirim',
+                  style: textApp.heading5
+                      .copyWith(fontSize: 20, color: colorApp.stateSuccess),
                   textAlign: TextAlign.center,
                 ),
               ),
               const SizedBox(
-                height: 58,
+                height: 24,
               ),
               SizedBox(
                 width: 308,
                 child: Text(
                   'Silakan cek ‘My Warehouse’ secara berkala untuk cek status pengajuan sewa ',
-                  style: textApp.bodyLarge,
+                  style:
+                      textApp.bodySmall.copyWith(fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
                 ),
               )
@@ -53,8 +66,8 @@ class PengajuanSelesai extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
-            child: SizedBox(
-              // color: colorApp.mainColor,
+            child: Container(
+              color: colorApp.mainColor,
               // height: 200,
               width: MediaQuery.of(context).size.width,
               child: Center(
@@ -69,11 +82,9 @@ class PengajuanSelesai extends StatelessWidget {
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: colorApp.secondaryColor,
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50))),
+                                    borderRadius: BorderRadius.circular(10))),
                             onPressed: () {
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //     builder: (context) => const KtpScanner()));
-                              // Navigator.of(context).pop();
+                              Get.offAll(() => const MainScreen());
                             },
                             child: Text('Kembali ke Home',
                                 style: textApp.bodySmall.copyWith(

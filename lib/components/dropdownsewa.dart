@@ -6,9 +6,11 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class Dropdownsss extends StatefulWidget {
-  const Dropdownsss({super.key, required this.hitunganSwea});
+  const Dropdownsss(
+      {super.key, required this.hitunganSwea, required this.keteranganSwea});
 
-  final Function(String?) hitunganSwea;
+  final Function(int?) hitunganSwea;
+  final Function(String?) keteranganSwea;
 
   @override
   State<Dropdownsss> createState() => _DropdownsssState();
@@ -21,9 +23,16 @@ class _DropdownsssState extends State<Dropdownsss> {
   TextCollection textApp = TextCollection();
   DecorationCollection fieldStyle = DecorationCollection();
 
+  static const Map<String, int> sewaValues = {
+    'Mingguan': 1,
+    'Bulanan': 2,
+    'Tahunan': 3,
+  };
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      // width: 120,
       decoration: BoxDecoration(
           border: Border.all(width: 1, color: colorApp.dark4),
           borderRadius: const BorderRadius.all(Radius.circular(10))),
@@ -49,10 +58,6 @@ class _DropdownsssState extends State<Dropdownsss> {
           ),
           value: selectedItem,
           isExpanded: true,
-          // icon: const Icon(
-          //   Icons.arrow_drop_down,
-          // ),
-          // underline: ,
           items: <String>['Mingguan', 'Bulanan', 'Tahunan']
               .map((String item) => DropdownMenuItem<String>(
                     value: item,
@@ -71,11 +76,13 @@ class _DropdownsssState extends State<Dropdownsss> {
             setState(() {
               selectedItem = value;
             });
+
+            int selectedValue = sewaValues[value] ?? 0;
             print(selectedItem);
 
-            widget.hitunganSwea(selectedItem);
+            widget.hitunganSwea(selectedValue);
+            widget.keteranganSwea(selectedItem);
           },
-
           selectedItemBuilder: (BuildContext context) {
             return <String>['Mingguan', 'Bulanan', 'Tahunan']
                 .map<Widget>((String item) {

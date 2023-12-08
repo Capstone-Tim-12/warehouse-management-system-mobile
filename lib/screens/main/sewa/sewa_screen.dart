@@ -4,11 +4,20 @@ import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 // import 'package:capstone_wms/components/dropdown_sewa.dart';
 import 'package:capstone_wms/components/dropdownsewa.dart';
+import 'package:capstone_wms/controllers/warehouse_controller.dart';
+import 'package:capstone_wms/models/rentinfo_model.dart';
+import 'package:capstone_wms/models/warehouse_model.dart';
+import 'package:capstone_wms/screens/main/sewa/konfirmasi_sewa.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class PengajuanSewa extends StatefulWidget {
-  const PengajuanSewa({Key? key}) : super(key: key);
+  PengajuanSewa({Key? key, required this.selectedWarehouse}) : super(key: key);
+
+  WarehouseModel selectedWarehouse;
 
   @override
   State<PengajuanSewa> createState() => _PengajuanSewaState();
@@ -19,13 +28,81 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
   PaddingCollection paddingApp = PaddingCollection();
   TextCollection textApp = TextCollection();
   DecorationCollection fieldStyle = DecorationCollection();
+  int durasi = 0;
+
+  TextEditingController durasiCont = TextEditingController();
+
+  WarehouseController warehouseCont = Get.put(WarehouseController());
+  // WarehouseController warehouseCont =
+  //     Get.find<WarehouseController>() ?? WarehouseController();
 
   String? selectedSewa;
+  int? selectedSewaValue;
 
   //variable date buat masuk
   DateTime selectedDateMasuk = DateTime.now();
   DateTime selectedDateKeluar = DateTime.now();
   DateTime now = DateTime.now();
+  int total = 0;
+
+  void _updateTanggalKeluar() {
+    if (selectedSewa != null && durasi > 0) {
+      DateTime newDateKeluar = selectedDateMasuk;
+
+      if (selectedSewaValue == 1) {
+        newDateKeluar = newDateKeluar.add(Duration(days: durasi * 7));
+      }
+
+      if (selectedSewaValue == 2) {
+        newDateKeluar = newDateKeluar.add(Duration(days: durasi * 30));
+      }
+
+      if (selectedSewaValue == 3) {
+        newDateKeluar = newDateKeluar.add(Duration(days: durasi * 365));
+      }
+
+      setState(() {
+        selectedDateKeluar = newDateKeluar;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    durasiCont.text = '$durasi';
+    print(warehouseCont.selectedWarehouse.value.name);
+    print(warehouseCont.selectedWarehouse.value.warehouseId);
+    print(warehouseCont.selectedWarehouse.value.monthlyPrice);
+    print(warehouseCont.selectedWarehouse.value.annuallyPrice);
+    print(warehouseCont.selectedWarehouse.value.weeklyPrice);
+  }
+
+  void _updateNumber() {
+    setState(() {
+      durasi = int.parse(durasiCont.text) ?? 0;
+      _updateTanggalKeluar();
+    });
+  }
+
+  void _increaseNumber() {
+    setState(() {
+      durasi++;
+      durasiCont.text = '$durasi';
+      _updateTanggalKeluar();
+    });
+  }
+
+  void _decreaseNumber() {
+    setState(() {
+      durasi--;
+      durasiCont.text = '$durasi';
+      _updateTanggalKeluar();
+    });
+  }
+
+  final formatter = NumberFormat("#,###");
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +125,14 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
           'Pengajuan Sewa',
           style: textApp.heading6,
         ),
-        leading: Icon(
-          Icons.arrow_back,
-          color: colorApp.secondaryColor,
-        ),
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: colorApp.secondaryColor,
+            )),
       ),
       body: Stack(children: [
         Padding(
@@ -92,22 +173,47 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text('Gudang Kita Bersama',
+                              Text(widget.selectedWarehouse.name,
+                                  // 'Gudang Kita Bersama',
                                   style: textApp.heading6),
                               const SizedBox(
                                 height: 4,
                               ),
                               Text(
-                                'Jakarta Selatan',
+                                widget.selectedWarehouse.regencyName,
+                                // 'Jakarta Selatan',
                                 style: textApp.bodySmall
                                     .copyWith(fontWeight: FontWeight.w400),
                               ),
                               const SizedBox(height: 8),
-                              Text(
-                                'Rp.20.000.000/bulan',
-                                style: textApp.bodySmall
-                                    .copyWith(fontWeight: FontWeight.w400),
-                              ),
+                              if (selectedSewaValue == null)
+                                Text(
+                                  "Rp.${formatter.format(widget.selectedWarehouse.monthlyPrice)}/Bulan",
+                                  // 'Rp.20.000.000/bulan',
+                                  style: textApp.bodySmall
+                                      .copyWith(fontWeight: FontWeight.w400),
+                                ),
+                              if (selectedSewaValue == 1)
+                                Text(
+                                  "Rp.${formatter.format(widget.selectedWarehouse.weeklyPrice)}/Minggu",
+                                  // 'Rp.20.000.000/bulan',
+                                  style: textApp.bodySmall
+                                      .copyWith(fontWeight: FontWeight.w400),
+                                ),
+                              if (selectedSewaValue == 2)
+                                Text(
+                                  "Rp.${formatter.format(widget.selectedWarehouse.monthlyPrice)}/Bulan",
+                                  // 'Rp.20.000.000/bulan',
+                                  style: textApp.bodySmall
+                                      .copyWith(fontWeight: FontWeight.w400),
+                                ),
+                              if (selectedSewaValue == 3)
+                                Text(
+                                  "Rp.${formatter.format(widget.selectedWarehouse.annuallyPrice)}/Tahun",
+                                  // 'Rp.20.000.000/bulan',
+                                  style: textApp.bodySmall
+                                      .copyWith(fontWeight: FontWeight.w400),
+                                ),
                             ],
                           ),
                         ),
@@ -130,11 +236,75 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
               const SizedBox(
                 height: 12,
               ),
-              Dropdownsss(
-                hitunganSwea: (p0) {
-                  selectedSewa = p0;
-                  print(selectedSewa);
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.56,
+                    child: Dropdownsss(
+                      hitunganSwea: (p0) {
+                        // selectedSewa = p0.toString();
+                        selectedSewaValue = p0;
+                        // print(selectedSewa);
+                        print(selectedSewaValue);
+                        _updateTanggalKeluar();
+                      },
+                      keteranganSwea: (p0) {
+                        selectedSewa = p0;
+                      },
+                    ),
+                  ),
+                  // SizedBox(
+                  //   width: 20,
+                  // )
+                  Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.271,
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: colorApp.dark4),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        GestureDetector(
+                            onTap: () => _decreaseNumber(),
+                            child: SvgPicture.asset('assets/svg/minus.svg')),
+                        SizedBox(
+                          width: 36,
+                          height: 18,
+                          child: TextField(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp(r'\d+')),
+                            ],
+                            onChanged: (value) => _updateNumber(),
+                            style: textApp.bodySmall
+                                .copyWith(fontWeight: FontWeight.w400),
+                            controller: durasiCont,
+                            keyboardType: TextInputType.number,
+                            maxLength: 3,
+                            textAlign: TextAlign.center,
+                            decoration: const InputDecoration(
+                              counterText: "",
+                              contentPadding:
+                                  EdgeInsets.only(top: 10, bottom: 10),
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                            onTap: () => _increaseNumber(),
+                            child: SvgPicture.asset('assets/svg/plus.svg')),
+                      ],
+                    ),
+                  )
+                ],
               ),
               const SizedBox(
                 height: 24,
@@ -219,64 +389,42 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
               const SizedBox(
                 height: 12,
               ),
-              GestureDetector(
-                onTap: () async {
-                  final selectDate = await showDatePicker(
-                      context: context,
-                      initialDate: now,
-                      firstDate: DateTime(1890),
-                      lastDate: DateTime(now.year + 100));
-
-                  setState(() {
-                    if (selectDate != null) {
-                      selectedDateKeluar = selectDate;
-                      dateKeluar = selectedDateKeluar.day.toString();
-                      monthKeluar = selectedDateKeluar.month.toString();
-                      yearKeluar = selectedDateKeluar.year.toString();
-                      // print(selectedDateKeluar.day);
-                      // print(selectedDateKeluar.month);
-                      // print(selectedDateKeluar.year);
-                    }
-                  });
-                },
-                child: Container(
-                  height: 56,
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: colorApp.dark4),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(10))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.calendar_today,
-                            color: colorApp.secondaryColor,
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Tanggal Masuk',
-                                style: textApp.bodySmall.copyWith(
-                                    fontSize: 8, fontWeight: FontWeight.w400),
-                              ),
-                              Text(
-                                DateFormat('dd/MM/yyyy')
-                                    .format(selectedDateKeluar),
-                                style: textApp.bodySmall
-                                    .copyWith(fontWeight: FontWeight.w500),
-                              )
-                            ],
-                          )
-                        ]),
-                  ),
+              Container(
+                height: 56,
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: colorApp.dark4),
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.calendar_today,
+                          color: colorApp.secondaryColor,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Tanggal Masuk',
+                              style: textApp.bodySmall.copyWith(
+                                  fontSize: 8, fontWeight: FontWeight.w400),
+                            ),
+                            Text(
+                              DateFormat('dd/MM/yyyy')
+                                  .format(selectedDateKeluar),
+                              style: textApp.bodySmall
+                                  .copyWith(fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        )
+                      ]),
                 ),
               ),
               const SizedBox(
@@ -301,40 +449,39 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 22),
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Total',
-                            style: textApp.heading6
-                                .copyWith(color: colorApp.light1),
-                          ),
-                          Text(
-                            'Rp.20.000.000,00',
-                            style: textApp.heading6
-                                .copyWith(color: colorApp.light1),
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Durasi Sewa',
-                            style: textApp.bodySmall.copyWith(
-                                color: colorApp.light1,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          Text(
-                            'xx Minggu',
-                            style: textApp.bodySmall.copyWith(
-                                color: colorApp.light1,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          )
-                        ],
-                      ),
+                      if (selectedSewaValue == 0) const SizedBox(),
+                      if (selectedSewaValue == 1 ||
+                          selectedSewaValue == 2 ||
+                          selectedSewaValue == 3)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total',
+                              style: textApp.heading6
+                                  .copyWith(color: colorApp.light1),
+                            ),
+                            if (selectedSewaValue == 0) const SizedBox(),
+                            if (selectedSewaValue == 1)
+                              Text(
+                                'Rp. ${formatter.format(widget.selectedWarehouse.weeklyPrice * durasi)}',
+                                style: textApp.heading6
+                                    .copyWith(color: colorApp.light1),
+                              ),
+                            if (selectedSewaValue == 2)
+                              Text(
+                                'Rp. ${formatter.format(widget.selectedWarehouse.monthlyPrice * durasi)}',
+                                style: textApp.heading6
+                                    .copyWith(color: colorApp.light1),
+                              ),
+                            if (selectedSewaValue == 3)
+                              Text(
+                                'Rp. ${formatter.format(widget.selectedWarehouse.annuallyPrice * durasi)}',
+                                style: textApp.heading6
+                                    .copyWith(color: colorApp.light1),
+                              ),
+                          ],
+                        ),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
@@ -343,9 +490,30 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8))),
                             onPressed: () {
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //     builder: (context) => const KtpScanner()));
-                              // Navigator.of(context).pop();
+                              if (selectedSewaValue == 1) {
+                                total = widget.selectedWarehouse.weeklyPrice *
+                                    durasi;
+                              } else if (selectedSewaValue == 2) {
+                                total = widget.selectedWarehouse.monthlyPrice *
+                                    durasi;
+                              } else if (selectedSewaValue == 3) {
+                                total = widget.selectedWarehouse.annuallyPrice *
+                                    durasi;
+                              }
+                              RentInfo rentWarehouse = RentInfo(
+                                  durasiSewa: durasiCont.text,
+                                  entryDate: DateFormat('dd/MM/yyyy')
+                                      .format(selectedDateMasuk),
+                                  hitunganSewa: selectedSewa!,
+                                  hitunganSewaId: selectedSewaValue!,
+                                  outDate: DateFormat('dd/MM/yyyy')
+                                      .format(selectedDateKeluar),
+                                  totalPrice: total);
+
+                              Get.to(KonfirmasiSewa(
+                                selectedWarehouse: widget.selectedWarehouse,
+                                rentInformation: rentWarehouse,
+                              ));
                             },
                             child: Text('Lanjutkan',
                                 style: textApp.bodySmall.copyWith(

@@ -7,9 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:capstone_wms/widget/warehouse_disewa_item.dart';
 
 class DetailMyWarehouseScreen extends StatefulWidget {
-  final Map<String, dynamic> warehouseData;
+  // final Map<String, dynamic> warehouseData;
+  final warehouseId;
 
-  const DetailMyWarehouseScreen({Key? key, required this.warehouseData})
+  const DetailMyWarehouseScreen({Key? key, required this.warehouseId})
       : super(key: key);
 
   @override
@@ -19,6 +20,13 @@ class DetailMyWarehouseScreen extends StatefulWidget {
 
 class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
   TextCollection textApp = TextCollection();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.warehouseId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +40,7 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                WarehouseItem(item: widget.warehouseData),
+                // WarehouseItem(item: widget.warehouseData),
 
                 // KONTRAK
                 Text(

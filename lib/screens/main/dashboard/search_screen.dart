@@ -7,6 +7,7 @@ import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/bottomsheetFilter.dart';
 import 'package:capstone_wms/components/bs_filter.dart';
 import 'package:capstone_wms/controllers/search_controller.dart';
+import 'package:capstone_wms/controllers/warehouse_controller.dart';
 import 'package:capstone_wms/models/searchwarehouse_model.dart';
 import 'package:capstone_wms/screens/main/detail_gudang/detail_gudang_screen.dart';
 import 'package:capstone_wms/screens/main/favorites/favorite_screen.dart';

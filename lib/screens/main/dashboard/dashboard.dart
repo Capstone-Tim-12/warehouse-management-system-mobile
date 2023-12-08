@@ -5,6 +5,7 @@ import 'package:capstone_wms/controllers/recommendation_cont.dart';
 import 'package:capstone_wms/controllers/search_controller.dart';
 import 'package:capstone_wms/screens/main/chatbot/chatscreen.dart';
 import 'package:capstone_wms/screens/main/dashboard/recommend_list.dart';
+import 'package:capstone_wms/screens/main/detail_gudang/detail_gudang_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -225,8 +226,9 @@ class _DashboardState extends State<Dashboard> {
                   const Spacer(),
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const RecommendList()));
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) => const RecommendList()));
+                      Get.to(() => const RecommendList());
                     },
                     icon: const Icon(Icons.more_horiz),
                   ),
@@ -270,7 +272,10 @@ class _DashboardState extends State<Dashboard> {
                               var warehouse =
                                   recController.recommededData[index];
                               return GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Get.to(() => DetailGudangScreen(
+                                      warehouseId: warehouse['id']));
+                                },
                                 child: SizedBox(
                                   width: 180,
                                   child: Container(
@@ -405,7 +410,10 @@ class _DashboardState extends State<Dashboard> {
                               var warehouse = lowPriceCont.lowPriceData[index];
 
                               return GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Get.to(DetailGudangScreen(
+                                      warehouseId: warehouse['id']));
+                                },
                                 child: SizedBox(
                                   width: 180,
                                   child: Container(

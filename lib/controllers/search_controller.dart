@@ -22,6 +22,7 @@ class FindController extends GetxController {
   // RxList<dynamic>? warehouseData;
   RxList<dynamic> warehouseData = <dynamic>[].obs;
 
+
   void onSearchSubmitted(String param) {
     searchString.value = param;
     Get.to(const SearchScreen(), transition: Transition.rightToLeft);
