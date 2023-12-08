@@ -1,5 +1,8 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
+import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/components/alertverified.dart';
+import 'package:capstone_wms/components/bs_settingfotoprofil.dart';
 import 'package:capstone_wms/screens/auth_screen/user_identity/idverconf.dart';
 import 'package:capstone_wms/screens/main/profile/emailverifikasi.dart';
 import 'package:capstone_wms/screens/main/profile/notification_screen.dart';
@@ -8,6 +11,7 @@ import 'package:capstone_wms/screens/main/profile/verifikasi_identitas.dart';
 import 'package:capstone_wms/screens/splashscreen.dart';
 import 'package:capstone_wms/services/firebase_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -111,7 +115,9 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                     Icons.arrow_right_rounded,
                     color: colorApp.mainColorDarker,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    bottomSheetFotoProfil(context);
+                  },
                 ),
               ),
               SizedBox(
@@ -169,7 +175,8 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                         await checkUserVerification.checkUserIsVerified(userId);
                     print(cekUser);
                     if (cekUser) {
-                      Get.to(const VerifikasiIdentitas());
+                      alertVerified(context);
+                      // Get.to(const VerifikasiIdentitas());
                     } else {
                       Get.to(const StartVerification());
                     }
@@ -286,48 +293,57 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          // alignment: Alignment.topRight,
-                          icon: Align(
-                              alignment: Alignment.centerRight,
-                              child: IconButton(
-                                  onPressed: () => Get.back(),
-                                  icon: const Icon(Icons.cancel_outlined))),
+                          backgroundColor: colorApp.light4,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          // title: const Text(' '),
+                              borderRadius: BorderRadius.circular(8)),
+                          title: Text(
+                            'Keluar Akun',
+                            style: textApp.heading5.copyWith(color: colorApp.mainColor),
+                            textAlign: TextAlign.center,
+                            ),
                           content: Text(
-                            'Apakah anda yakin ingin keluar dari aplikasi?',
-                            style: textApp.bodyMedium.copyWith(
-                              color: colorApp.mainColorDarker,
-                              fontWeight: FontWeight.w600,
+                            'Kamu akan kembali ke halaman login',
+                            style: textApp.smallLabelBlackclear.copyWith(
+                              color: colorApp.mainColor,
                             ),
                           ),
                           actions: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-//                                 ElevatedButton(
-//                                     onPressed: () {
-// // logout(context);
-//                                     },
-//                                     child: const Text('Ya')),
                                 ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: colorApp.light4,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      side: BorderSide(width: 1, color: colorApp.secondaryColor),
+                                    )
+                                  ),
+                                      onPressed: () {
+                                        Get.back();
+                                      }, 
+                                      child: Text(
+                                        'Batalkan',
+                                        style: textApp.extraSmallInvLabel.copyWith(
+                                        color: colorApp.secondaryColor
+                                      ),
+                                        )
+                                      ),
+                                    ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: colorApp.mainColor,
+                                        backgroundColor: colorApp.secondaryColor,
                                         shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10))),
+                                        borderRadius:BorderRadius.circular(8))),
                                     onPressed: () {
-                                      // Get.back();
                                       logout(context);
                                     },
                                     child: Text(
-                                      'Keluar',
-                                      style: textApp.bodyMedium.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
+                                      'Konfirmasi',
+                                      style: textApp.extraSmallInvLabel.copyWith(
+                                        color: colorApp.light4
                                       ),
-                                    ))
+                                    )
+                                ),
                               ],
                             )
                           ],
