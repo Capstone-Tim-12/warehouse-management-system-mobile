@@ -212,7 +212,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           children: [
                                             const SizedBox(height: 8),
                                             Container(
-                                              // width: 80,
+                                              width: 80,
                                               height: 32,
                                               decoration: ShapeDecoration(
                                                 shape: RoundedRectangleBorder(
@@ -228,7 +228,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    'Gudang ${warehouse['warehouseTypeName']}'
+                                                    '${warehouse['warehouseTypeName']}'
                                                         .toUpperCase()
                                                         .toString(),
                                                     textAlign: TextAlign.center,
