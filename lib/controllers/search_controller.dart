@@ -22,12 +22,6 @@ class FindController extends GetxController {
   // RxList<dynamic>? warehouseData;
   RxList<dynamic> warehouseData = <dynamic>[].obs;
 
-  @override
-  void onInit() {
-    getWarehouseData();
-    // TODO: implement onInit
-    super.onInit();
-  }
 
   void onSearchSubmitted(String param) {
     searchString.value = param;

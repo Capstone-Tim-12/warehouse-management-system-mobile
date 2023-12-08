@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:capstone_wms/models/pengajuan_model.dart';
 import 'package:capstone_wms/models/rentinfo_model.dart';
 import 'package:capstone_wms/models/warehouse_model.dart';
 import 'package:capstone_wms/screens/main/detail_gudang/detail_gudang_screen.dart';
+import 'package:capstone_wms/screens/main/sewa/pengajuan_complete.dart';
 import 'package:capstone_wms/services/sewa_services.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_wms/classes/colors_collection.dart';
@@ -35,6 +37,7 @@ class _KonfirmasiSewaState extends State<KonfirmasiSewa> {
   ApplicationServices applicationService = ApplicationServices();
 
   bool isLoading = false;
+  bool isApplicatonLoading = false;
   Map<String, dynamic> userInfo = {};
   final formatter = NumberFormat("#,###");
 
@@ -64,13 +67,52 @@ class _KonfirmasiSewaState extends State<KonfirmasiSewa> {
     }
   }
 
-  
+  Future<void> postApplication() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> formatdate = widget.rentInformation.entryDate.split('/');
+
+    String dateEntry = formatdate[0];
+    String monthEntry = formatdate[1];
+    String yearEntry = formatdate[2];
+
+    RentApplicationModel newRentApp = RentApplicationModel(
+        token: prefs.getString('token')!,
+        warehouseId: widget.selectedWarehouse.warehouseId,
+        paymentSchemeId: widget.rentInformation.hitunganSewaId,
+        duration: int.tryParse(widget.rentInformation.durasiSewa)!,
+        dateEntry: "$yearEntry-$monthEntry-${dateEntry}T00:00:00.000+07:00");
+
+    setState(() {
+      isApplicatonLoading = true;
+    });
+
+    try {
+      final response = await applicationService.rentApplication(newRentApp);
+
+      final responseData = jsonDecode(response.body);
+      print(response.statusCode);
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        Get.to(() => PengajuanSelesai());
+      } else {
+        Get.snackbar(response.statusCode.toString(), responseData['message']);
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      setState(() {
+        isApplicatonLoading = false;
+      });
+    }
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getUserInformation();
+    print(widget.rentInformation.entryDate);
   }
 
   @override
@@ -379,26 +421,32 @@ class _KonfirmasiSewaState extends State<KonfirmasiSewa> {
                                   )
                                 ],
                               ),
-                              SizedBox(
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            colorApp.secondaryColor,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8))),
-                                    onPressed: () {
-                                      // Navigator.of(context).push(MaterialPageRoute(
-                                      //     builder: (context) => const KtpScanner()));
-                                      // Navigator.of(context).pop();
-                                    },
-                                    child: Text('Ajukan Sewa',
-                                        style: textApp.bodySmall.copyWith(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600))),
-                              ),
+                              if (!isApplicatonLoading)
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              colorApp.secondaryColor,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8))),
+                                      onPressed: () {
+                                        // Navigator.of(context).push(MaterialPageRoute(
+                                        //     builder: (context) => const KtpScanner()));
+                                        // Navigator.of(context).pop();
+                                        postApplication();
+                                      },
+                                      child: Text('Ajukan Sewa',
+                                          style: textApp.bodySmall.copyWith(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600))),
+                                ),
+                              if (isApplicatonLoading)
+                                LinearProgressIndicator(
+                                  color: colorApp.secondaryColor,
+                                )
                             ],
                           ),
                         ),
