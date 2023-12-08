@@ -1,5 +1,6 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/screens/main/dashboard/search_screen.dart';
+import 'package:capstone_wms/screens/main/history/history_screen.dart';
 import 'package:capstone_wms/screens/main/stack_screen.dart';
 import 'package:capstone_wms/screens/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,16 +35,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'DigiHouse Mobile',
-      // navigatorKey: navigatorKey,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: colorApp.mainColorDarker),
-        useMaterial3: true,
-      ),
+        title: 'DigiHouse Mobile',
+        // navigatorKey: navigatorKey,
+        theme: ThemeData(
+          colorScheme:
+              ColorScheme.fromSeed(seedColor: colorApp.mainColorDarker),
+          useMaterial3: true,
+        ),
 
-      // home: const SearchScreen(),
-      // home: const MainScreen(),
-      home: const SplashScreen(),
-    );
+        // home: const SearchScreen(),
+        // home: const MainScreen(),
+        home: const SplashScreen());
+    // home: HistoryScreen());
   }
 }

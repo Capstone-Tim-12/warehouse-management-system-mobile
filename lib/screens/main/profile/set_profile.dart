@@ -2,6 +2,7 @@ import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/screens/auth_screen/user_identity/idverconf.dart';
 import 'package:capstone_wms/screens/main/profile/emailverifikasi.dart';
+import 'package:capstone_wms/screens/main/profile/notification_screen.dart';
 import 'package:capstone_wms/screens/main/profile/set_location.dart';
 import 'package:capstone_wms/screens/main/profile/verifikasi_identitas.dart';
 import 'package:capstone_wms/screens/splashscreen.dart';
@@ -263,7 +264,9 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                     Icons.arrow_right_rounded,
                     color: colorApp.mainColorDarker,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(NotificationScreen());
+                  },
                 ),
               ),
               SizedBox(
