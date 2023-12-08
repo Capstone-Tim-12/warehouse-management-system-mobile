@@ -34,6 +34,7 @@ class _BottomSheetLoginState extends State<BottomSheetLogin> {
   TextEditingController passwordcCont = TextEditingController();
   bool isPasswordVisible = false;
   bool isLoading = false;
+  String errorMessage = '';
 
   ColorApp colorApp = ColorApp();
   PaddingCollection paddingApp = PaddingCollection();
@@ -125,24 +126,24 @@ class _BottomSheetLoginState extends State<BottomSheetLogin> {
 
           Get.offAll(() => const MainScreen());
         } else {
-          Get.snackbar("Peringatan", responseData["message"]);
+          Get.snackbar("Peringatan", responseData["message"],
+              snackPosition: SnackPosition.BOTTOM);
         }
       } else {
-        Get.snackbar("Peringatan", responseData["message"],
-            backgroundColor: Colors.white);
+        setState(() {
+          errorMessage = responseData["message"];
+        });
+        // Get.snackbar(
+        //   "Peringatan",
+        //   responseData["message"],
+        //   backgroundColor: Colors.white,
+        // );
+        // Get.snackbar("Peringatan", responseData["message"],
+        //     backgroundColor: Colors.white,
+        //     snackPosition: SnackPosition.BOTTOM,
+        //     snackStyle: SnackStyle.FLOATING,
+        //     );
       }
-
-      // else if (response.statusCode == 400) {
-      //   Get.snackbar("Peringatan", responseData["message"],
-      //       backgroundColor: Colors.white);
-      // } else if (response.statusCode == 404) {
-      //   Get.snackbar("Perignatan", responseData["message"],
-      //       backgroundColor: Colors.white);
-      // } else {
-      //   Get.snackbar(
-      //       "Error", "Login GFagal. Status code: ${response.statusCode}",
-      //       backgroundColor: Colors.white);
-      // }
     } catch (e) {
       print("Error: $e");
     } finally {
@@ -169,227 +170,283 @@ class _BottomSheetLoginState extends State<BottomSheetLogin> {
       child: Padding(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.617,
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(28),
-              )),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.0561,
-                vertical: 32),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Masuk',
-                  style: textApp.heading4,
-                ),
-                Text(
-                  'Selamat datang, silahkan register untuk melanjutkan!',
-                  style: textApp.bodySmall
-                      .copyWith(fontWeight: FontWeight.w500, fontSize: 12),
-                ),
-                const SizedBox(
-                  height: 32,
-                ),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      emailCont.text = value;
-                    });
-                  },
-                  controller: emailCont,
-                  decoration: fieldStyle.emailField,
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      passwordcCont.text = value;
-                    });
-                  },
-                  controller: passwordcCont,
-                  obscureText: isPasswordVisible,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    hintText: 'Enter Your Password',
-                    suffixIcon: IconButton(
-                      onPressed: showPw,
-                      icon: Icon(isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off),
-                    ),
-                    filled: true,
-                    fillColor: const Color(0xFFf8f4fc),
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide:
-                          BorderSide.none, // Set borderSide to BorderSide.none
-                    ),
-                    prefixIcon: const Icon(Icons.lock_outline_rounded),
+        child: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.65,
+            // height: MediaQuery.of(context).size.height * 0.617,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(28),
+                )),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.0561,
+                  vertical: 32),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Masuk',
+                    style: textApp.heading4,
                   ),
-                ),
-                // const SizedBox(height: 1),
-                GestureDetector(
-                  onTap: () {
-                    widget.onForgotPasswordPressed();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                      'Lupoa Kata Sandi?',
-                      textAlign: TextAlign.start,
-                      style: textApp.bodySmall.copyWith(
-                          color: const Color(0xFF0063F7),
-                          fontWeight: FontWeight.w400),
-                    ),
+                  Text(
+                    'Selamat datang, silahkan register untuk melanjutkan!',
+                    style: textApp.bodySmall
+                        .copyWith(fontWeight: FontWeight.w500, fontSize: 12),
                   ),
-                ),
-
-                const SizedBox(
-                  height: 14,
-                ),
-                if (isLoading)
-                  LinearProgressIndicator(
-                    color: colorApp.secondaryColor,
+                  const SizedBox(
+                    height: 32,
                   ),
-                if (!isLoading)
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            disabledBackgroundColor:
-                                colorApp.secondaryColorLighter,
-                            backgroundColor: colorApp.secondaryColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8))),
-                        onPressed: areFieldsFilled()
-                            ? () {
-                                if (emailCont.text.isEmpty) {
-                                  Get.snackbar("Peringatan",
-                                      "Email dan Password Tidak dapat kosong",
-                                      colorText: colorApp.mainColor,
-                                      backgroundColor: colorApp.light1);
-                                } else {
-                                  loginUser();
-                                }
-                              }
-                            : null,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 24),
-                          child: Text(
-                            'Masuk',
-                            style: textApp.bodySmall
-                                .copyWith(color: colorApp.light1),
-                          ),
-                        )),
-                  ),
-
-                const SizedBox(
-                  height: 14,
-                ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 56,
-                      decoration: const ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            strokeAlign: BorderSide.strokeAlignCenter,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Text(
-                      ' or sign in with ',
-                      style: textApp.largeLabelBlack,
-                    ),
-                    Container(
-                      width: 56,
-                      decoration: const ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            strokeAlign: BorderSide.strokeAlignCenter,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        decoration: const BoxDecoration(color: Colors.white),
-                        width: 45,
-                        height: 45,
-                        child: Padding(
-                          padding: paddingApp.iconPadding,
-                          child: SvgPicture.asset('assets/svg/g_logo.svg'),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        decoration: const BoxDecoration(color: Colors.white),
-                        width: 45,
-                        height: 45,
-                        child: Padding(
-                          padding: paddingApp.iconPadding,
-                          child: SvgPicture.asset('assets/svg/fb_logo.svg'),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                // const SizedBox(
-                //   height: 15,
-                // ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Belum Memiliki Akun? ',
-                      style: textApp.bodySmall.copyWith(
-                          color: colorApp.dark1, fontWeight: FontWeight.w400),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        widget.onSignUpPressed();
+                  TextFormField(
+                      onChanged: (value) {
+                        setState(() {
+                          emailCont.text = value;
+                          errorMessage = '';
+                        });
                       },
+                      controller: emailCont,
+                      decoration: fieldStyle.emailField,
+                      validator: (value) {
+                        if (errorMessage == 'email not found') {
+                          return errorMessage;
+                        }
+                        if (errorMessage ==
+                            'input email has on the email tag') {
+                          return errorMessage;
+                        }
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction),
+                  // TextField(
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       emailCont.text = value;
+                  //     });
+                  //   },
+                  //   controller: emailCont,
+                  //   decoration: fieldStyle.emailField,
+                  // ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        passwordcCont.text = value;
+                        errorMessage = '';
+                      });
+                    },
+                    controller: passwordcCont,
+                    obscureText: isPasswordVisible,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      hintText: 'Enter Your Password',
+                      suffixIcon: IconButton(
+                        onPressed: showPw,
+                        icon: Icon(isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                      ),
+                      filled: true,
+                      fillColor: const Color(0xFFf8f4fc),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide
+                            .none, // Set borderSide to BorderSide.none
+                      ),
+                      prefixIcon: const Icon(Icons.lock_outline_rounded),
+                    ),
+                    validator: (value) {
+                      if (errorMessage == 'invalid password') {
+                        return errorMessage;
+                      }
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                  ),
+                  // TextField(
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       passwordcCont.text = value;
+                  //     });
+                  //   },
+                  //   controller: passwordcCont,
+                  //   obscureText: isPasswordVisible,
+                  //   decoration: InputDecoration(
+                  //     labelText: 'Password',
+                  //     hintText: 'Enter Your Password',
+                  //     suffixIcon: IconButton(
+                  //       onPressed: showPw,
+                  //       icon: Icon(isPasswordVisible
+                  //           ? Icons.visibility
+                  //           : Icons.visibility_off),
+                  //     ),
+                  //     filled: true,
+                  //     fillColor: const Color(0xFFf8f4fc),
+                  //     border: const OutlineInputBorder(
+                  //       borderRadius: BorderRadius.all(Radius.circular(10)),
+                  //       borderSide: BorderSide
+                  //           .none, // Set borderSide to BorderSide.none
+                  //     ),
+                  //     prefixIcon: const Icon(Icons.lock_outline_rounded),
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 1),
+                  GestureDetector(
+                    onTap: () {
+                      widget.onForgotPasswordPressed();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8),
                       child: Text(
-                        'Daftar',
+                        'Lupa Kata Sandi?',
                         textAlign: TextAlign.start,
                         style: textApp.bodySmall.copyWith(
                             color: const Color(0xFF0063F7),
                             fontWeight: FontWeight.w400),
                       ),
                     ),
-                  ],
-                )
-              ],
+                  ),
+
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  if (isLoading)
+                    LinearProgressIndicator(
+                      color: colorApp.secondaryColor,
+                    ),
+                  if (!isLoading)
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              disabledBackgroundColor:
+                                  colorApp.secondaryColorLighter,
+                              backgroundColor: colorApp.secondaryColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8))),
+                          onPressed: areFieldsFilled()
+                              ? () {
+                                  if (emailCont.text.isEmpty) {
+                                    Get.snackbar("Peringatan",
+                                        "Email dan Password Tidak dapat kosong",
+                                        colorText: colorApp.mainColor,
+                                        backgroundColor: colorApp.light1);
+                                  } else {
+                                    loginUser();
+                                  }
+                                }
+                              : null,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 24),
+                            child: Text(
+                              'Masuk',
+                              style: textApp.bodySmall
+                                  .copyWith(color: colorApp.light1),
+                            ),
+                          )),
+                    ),
+
+                  const SizedBox(
+                    height: 14,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 56,
+                        decoration: const ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              width: 1,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        ' or sign in with ',
+                        style: textApp.largeLabelBlack,
+                      ),
+                      Container(
+                        width: 56,
+                        decoration: const ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              width: 1,
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          decoration: const BoxDecoration(color: Colors.white),
+                          width: 45,
+                          height: 45,
+                          child: Padding(
+                            padding: paddingApp.iconPadding,
+                            child: SvgPicture.asset('assets/svg/g_logo.svg'),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          decoration: const BoxDecoration(color: Colors.white),
+                          width: 45,
+                          height: 45,
+                          child: Padding(
+                            padding: paddingApp.iconPadding,
+                            child: SvgPicture.asset('assets/svg/fb_logo.svg'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Belum Memiliki Akun? ',
+                        style: textApp.bodySmall.copyWith(
+                            color: colorApp.dark1, fontWeight: FontWeight.w400),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          widget.onSignUpPressed();
+                        },
+                        child: Text(
+                          'Daftar',
+                          textAlign: TextAlign.start,
+                          style: textApp.bodySmall.copyWith(
+                              color: const Color(0xFF0063F7),
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
