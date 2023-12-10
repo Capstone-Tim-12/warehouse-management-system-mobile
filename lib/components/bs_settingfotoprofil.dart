@@ -1,5 +1,7 @@
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/components/bs_avatar.dart';
+import 'package:capstone_wms/services/avatar_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -79,7 +81,9 @@ void bottomSheetFotoProfil(BuildContext context) {
                     children: [
                       IconButton(
                         color: colorApp.mainColor,
-                        onPressed: () {}, 
+                        onPressed: () {
+                          bottomSheetAvatar(context);
+                        }, 
                         icon: const Icon(Icons.person),
                       ),
                       const SizedBox(height: 8),
@@ -98,3 +102,43 @@ void bottomSheetFotoProfil(BuildContext context) {
     },
   );
 }
+
+// void bottomSheetAvatar(BuildContext context) {
+//   showModalBottomSheet(
+//     context: context,
+//     shape: const RoundedRectangleBorder(
+//       borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+//     ),
+//     builder: (BuildContext context) {
+//       return Container(
+//         padding: EdgeInsets.all(24),
+//         width: double.infinity,
+//         height: MediaQuery.of(context).size.height,
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Row(
+//               children: [
+//                 IconButton(
+//                   onPressed: () {
+//                     Get.back();
+//                   }, 
+//                   icon: Icon(
+//                     Icons.arrow_back, 
+//                     color: colorApp.secondaryColor,
+//                   ),
+//                 ),
+//                 Text(
+//                   'Photo Profile',
+//                   style: TextCollection().bodyNormal.copyWith(
+//                     color: colorApp.mainColor
+//                   ),
+//                 )
+//               ],
+//             ),
+//           ]
+//         ),
+//       );
+//     }
+//   );
+// }
