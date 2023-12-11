@@ -248,24 +248,26 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   .copyWith(
                                                       color:
                                                           colorApp.mainColor),
-                                              overflow: TextOverflow.ellipsis,
+                                              // overflow: TextOverflow.ellipsis,
                                             ),
                                             Row(
                                               children: [
                                                 Icon(Icons.location_on_outlined,
                                                     color: colorApp.mainColor),
                                                 const SizedBox(width: 8),
-                                                Text(
-                                                  warehouse['regencyName']
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color:
-                                                          colorApp.mainColor),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                                Expanded(
+                                                  child: Text(
+                                                    warehouse['regencyName']
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color:
+                                                            colorApp.mainColor),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
                                                 ),
                                               ],
                                             ),

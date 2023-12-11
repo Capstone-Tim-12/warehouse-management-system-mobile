@@ -106,14 +106,12 @@ class _MyWarehouseState extends State<MyWarehouse> {
                                     myWarehouseCont.acceptedWarehouse[index];
                                 return InkWell(
                                   onTap: () {
-                                    // Navigator.push(context,
-                                    //     MaterialPageRoute(builder: (context) {
-                                    //   return DetailMyWarehouseScreen(
-                                    //       warehouseData: submittedWarehouse);
-                                    // }));
-                                    // Get.to(() => DetailMyWarehouseScreen(
-                                    //     warehouseId:
-                                    //         acceptedWarehouse['warehouseId']));
+                                    Get.to(() => DetailMyWarehouseScreen(
+                                          warehouseId:
+                                              acceptedWarehouse['warehouseId'],
+                                          transactionId: acceptedWarehouse[
+                                              'transactionId'],
+                                        ));
                                   },
                                   child: Padding(
                                     padding:
@@ -254,9 +252,9 @@ class _MyWarehouseState extends State<MyWarehouse> {
                                     //   return DetailMyWarehouseScreen(
                                     //       warehouseData: submittedWarehouse);
                                     // }));
-                                    Get.to(() => DetailMyWarehouseScreen(
-                                        warehouseId:
-                                            submittedWarehouse['warehouseId']));
+                                    // Get.to(() => DetailMyWarehouseScreen(
+                                    //     warehouseId:
+                                    //         submittedWarehouse['warehouseId']));
                                   },
                                   child: Padding(
                                     padding:
