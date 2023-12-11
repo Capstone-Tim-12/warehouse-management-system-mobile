@@ -7,15 +7,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void bottomSheetAvatar(BuildContext context) {
+class AvatarBottomSheet extends StatefulWidget {
+  const AvatarBottomSheet({super.key});
+
+  @override
+  State<AvatarBottomSheet> createState() => _AvatarBottomSheetState();
+}
+
+class _AvatarBottomSheetState extends State<AvatarBottomSheet> {
+
   AvatarService avatarService = AvatarService();
   late Future<List<dynamic>>? avatarData;
   bool isLoading = false;
 
   Future<void> getAvatarData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    avatarData = null;
-    isLoading = true;
+    setState(() {
+      avatarData = null;
+      isLoading = true;
+    });
 
     try {
       final response = await avatarService.getAvatar(prefs.getString('token')!);
@@ -23,100 +33,119 @@ void bottomSheetAvatar(BuildContext context) {
       Map<String, dynamic> responseData = json.decode(response.body);
 
       if (response.statusCode == 200) {
-        if (responseData['data'] != null) {
-          List<dynamic> avatarList = responseData['data'];
-          avatarData = Future.value(avatarList);
+        if (responseData['data'] == null) {
+          
+          setState(() {
+            avatarData = null;
+            
+          });
         } else {
-          avatarData = null;
+          List<dynamic> avatarList = responseData['data'];
+          setState(() {
+            avatarData = Future.value(avatarList);
+          });
         }
-      }
+      } else {}
     } catch (e) {
       print(e);
-      avatarData = null;
+      setState(() {
+        avatarData = null;
+      });
     } finally {
-      isLoading = false;
+      setState(() {
+        isLoading = false;
+      });
     }
   }
-  
-  getAvatarData();
 
-  showModalBottomSheet(
-    context: context,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-    ),
-    builder: (BuildContext context) {
-      return StatefulBuilder(
-        builder: (BuildContext context, StateSetter setState) {
-          return Container(
-            padding: EdgeInsets.all(24),
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.8,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: colorApp.secondaryColor,
-                      ),
+  @override
+  void initState() {
+    super.initState();
+    avatarData = null;
+    getAvatarData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: colorApp.secondaryColor,
+                ),
+              ),
+              Text(
+                'Photo Profile',
+                style: TextCollection().bodyNormal.copyWith(
+                      color: colorApp.mainColor,
                     ),
-                    Text(
-                      'Photo Profile',
-                      style: TextCollection().bodyNormal.copyWith(
-                            color: colorApp.mainColor,
-                          ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 20),
-                Expanded(
-                  child: FutureBuilder<List<dynamic>>(
-                    future: avatarData,
-                    builder: (context, snapshot) {
-                      if (isLoading) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: colorApp.mainColor,
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else if (snapshot.data == null || avatarData == null) {
-                        return const Center(
-                          child: Text('No data found'),
-                        );
-                      } else {
-                        return GridView.builder(
-                          itemCount: snapshot.data?.length ?? 0,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 8.0,
-                            mainAxisSpacing: 18.0,
-                          ),
-                          itemBuilder: (BuildContext context, int index) {
-                            var avatar = snapshot.data![index];
-                            return CircleAvatar(
-                              radius: 30,
-                              backgroundImage: NetworkImage(avatar['image']),
-                            );
-                          },
-                        );
-                      }
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: FutureBuilder<List<dynamic>>(
+              future: avatarData,
+              builder: (context, snapshot) {
+                if (isLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: colorApp.mainColor,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else if (snapshot.data == null || avatarData == null) {
+                  return const Center(
+                    child: Text('No Avatar found'),
+                  );
+                } else {
+                  return GridView.builder(
+                    itemCount: snapshot.data!.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 5.0,
+                      mainAxisSpacing: 10.0,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      var avatar = snapshot.data![index];
+                      return CircleAvatar(
+                        radius: 25,
+                        backgroundImage: NetworkImage(avatar['image']),
+                      );
                     },
-                  ),
-                ),
-              ],
+                  );
+                }
+              },
             ),
-          );
-        },
-      );
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+void bottomSheetAvatar(BuildContext context) {
+  showModalBottomSheet(
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(12)
+      )
+    ),
+    context: context,
+    builder: (BuildContext context) {
+      return const AvatarBottomSheet();
     },
   );
 }
