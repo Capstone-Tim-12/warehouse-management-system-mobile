@@ -1,6 +1,8 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/screens/main/stack_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PaymentSuccess extends StatelessWidget {
   const PaymentSuccess({super.key});
@@ -127,7 +129,8 @@ class PaymentSuccess extends StatelessWidget {
                                 backgroundColor: ColorApp().mainColorDarker,
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
+                                Get.offAll(() => const MainScreen(),
+                                    transition: Transition.upToDown);
                               },
                               child: Text(
                                 "Kembali Ke Beranda",

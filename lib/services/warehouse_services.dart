@@ -21,7 +21,7 @@ class WarehouseServidces {
   Future<http.Response> getRecommendedWarehouse(SearchWarehouse param) async {
     final response = await http.get(
         Uri.parse(
-            '$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}&recomendation=true'),
+            '$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}&recomendation=true&status=tersedia'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer ${param.token}',
@@ -33,7 +33,7 @@ class WarehouseServidces {
   Future<http.Response> getHigestPriceWarehouse(SearchWarehouse param) async {
     final response = await http.get(
         Uri.parse(
-            '$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}&highestPrice=true'),
+            '$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}&highestPrice=true&status=tersedia'),
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
           'Authorization': 'Bearer ${param.token}',
@@ -45,7 +45,7 @@ class WarehouseServidces {
   Future<http.Response> getLowerPriceWarehouse(SearchWarehouse param) async {
     final response = await http.get(
         Uri.parse(
-            '$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}&lowerPrice=true'),
+            '$baseUrl/warehouse/user/list?page=1&limit=10&search=${param.search}&maxPrice=${param.maxPrice}&minSize=${param.minSize}&maxSize=${param.maxSize}&minPrice=${param.minPrice}&lowerPrice=true&status=tersedia'),
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
           'Authorization': 'Bearer ${param.token}',

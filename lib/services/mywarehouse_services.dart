@@ -28,4 +28,41 @@ class MyWarehouseServices {
 
     return response;
   }
+
+  //detail my warehouse
+
+  Future<http.Response> getWarehouseInfo(String token, String warehouseId) async {
+    final response = await http.get(
+        Uri.parse('$baseUrl/warehouse/info/$warehouseId'),
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $token',
+        });
+
+    return response;
+  }
+
+  Future<http.Response> getInstallmentList(
+      String token, String transactionId) async {
+    final response = await http.get(
+        Uri.parse('$baseUrl/payment/instalment/$transactionId?page=1&limit=10'),
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $token',
+        });
+
+    return response;
+  }
+
+  Future<http.Response> getTransactionIfo(
+      String token, String transactionId) async {
+    final response = await http.get(
+        Uri.parse('$baseUrl/payment/transaction/$transactionId'),
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $token',
+        });
+
+    return response;
+  }
 }

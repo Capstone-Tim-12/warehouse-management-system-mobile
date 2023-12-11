@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:capstone_wms/models/user_model.dart';
+import 'package:capstone_wms/models/virtualaccount_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 class FirebaseServices extends GetxController {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
+  final CollectionReference paymentCollection =
+      FirebaseFirestore.instance.collection('paymentHistory');
+
+  Future<void> addTransaction(VirtualAccountModel param) async {
+    await userCollection.add({
+      'vaName': param.vaName,
+      'vaNumber': param.vaNumber,
+      'xPaymentId': param.xPaymentId,
+      'bankCode': param.bankCode,
+      'nominal': param.nominal,
+      'expiredAt': param.expiredAt
+    });
+  }
 
   Future<void> addUser(UserModel usermodel) async {
     await userCollection.add({
