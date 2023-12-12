@@ -1,5 +1,6 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/chatbot_controller.dart';
 import 'package:capstone_wms/controllers/lowerprice_controller.dart';
 import 'package:capstone_wms/controllers/recommendation_cont.dart';
 import 'package:capstone_wms/controllers/search_controller.dart';
@@ -44,6 +45,7 @@ class _DashboardState extends State<Dashboard> {
   FindController searchController = Get.put(FindController());
   RecommendationController recController = Get.put(RecommendationController());
   LowerPriceController lowPriceCont = Get.put(LowerPriceController());
+  ChatbotController chatbotCont = Get.put(ChatbotController());
   TextEditingController searchCont = TextEditingController();
 
   @override
@@ -53,6 +55,7 @@ class _DashboardState extends State<Dashboard> {
     getLoggedInName();
     recController.getRecommendation();
     lowPriceCont.getLowPriceWarehouse();
+    chatbotCont.getUserId();
   }
 
   @override
@@ -330,6 +333,7 @@ class _DashboardState extends State<Dashboard> {
                                                   fontWeight: FontWeight.normal,
                                                   fontSize: 12,
                                                 ),
+                                                overflow: TextOverflow.ellipsis,
                                               ),
                                               const SizedBox(height: 15),
                                               Text(
@@ -468,6 +472,7 @@ class _DashboardState extends State<Dashboard> {
                                                   fontWeight: FontWeight.normal,
                                                   fontSize: 12,
                                                 ),
+                                                overflow: TextOverflow.ellipsis,
                                               ),
                                               const SizedBox(height: 15),
                                               Text(

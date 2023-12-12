@@ -14,14 +14,56 @@ class FirebaseServices extends GetxController {
   final CollectionReference paymentCollection =
       FirebaseFirestore.instance.collection('paymentHistory');
 
+  final CollectionReference messagesCollection =
+      FirebaseFirestore.instance.collection('messages');
+
+  final currentTimestamp = Timestamp.now();
+
   Future<void> addTransaction(VirtualAccountModel param) async {
-    await userCollection.add({
+    await paymentCollection.add({
       'vaName': param.vaName,
       'vaNumber': param.vaNumber,
       'xPaymentId': param.xPaymentId,
       'bankCode': param.bankCode,
       'nominal': param.nominal,
       'expiredAt': param.expiredAt
+    });
+  }
+
+  Future<void> resetChatByUserId(int userId) async {
+    try {
+      CollectionReference messages =
+          FirebaseFirestore.instance.collection('messages');
+      QuerySnapshot querySnapshot =
+          await messages.where('userId', isEqualTo: userId).get();
+      for (QueryDocumentSnapshot document in querySnapshot.docs) {
+        await document.reference.delete();
+      }
+      print('Chat for userId $userId reset successfully');
+    } catch (e) {
+      print('Error resetting chat: $e');
+    }
+  }
+
+  Future<void> saveUserMessage(String message, int userId, Timestamp create,
+      int userMessageIndex) async {
+    await messagesCollection.add({
+      'userId': userId,
+      'role': 'user',
+      'message': message,
+      'createdAt': create,
+      'index': userMessageIndex
+    });
+  }
+
+  Future<void> saveBotMessage(
+      String message, int userId, Timestamp create, int botMessageindex) async {
+    await messagesCollection.add({
+      'userId': userId,
+      'role': 'bot',
+      'message': message,
+      'createdAt': create,
+      'index': botMessageindex
     });
   }
 
@@ -80,6 +122,16 @@ class FirebaseServices extends GetxController {
         .get();
 
     return snapshot.docs.first.id;
+  }
+
+  Future<bool> isMessageSent(int uid, Timestamp timecek) async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+        .instance
+        .collection('messages')
+        .where('createdAt', isEqualTo: timecek)
+        .get();
+
+    return snapshot.docs.isNotEmpty;
   }
 
   Future<bool> checkUserIsVerified(int userid) async {

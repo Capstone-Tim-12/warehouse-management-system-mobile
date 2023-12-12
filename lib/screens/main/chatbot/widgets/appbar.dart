@@ -1,6 +1,8 @@
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/chatbot_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({super.key});
@@ -8,11 +10,15 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     TextCollection textApp = TextCollection();
+    ChatbotController chatbot = Get.put(ChatbotController());
 
     return AppBar(
         leading: IconButton(
             color: colorApp.light4,
-            onPressed: () {},
+            onPressed: () async {
+              await chatbot.resetChatBot();
+              Get.back();
+            },
             icon: const Icon(
               Icons.arrow_back,
               size: 40,

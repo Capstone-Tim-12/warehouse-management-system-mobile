@@ -1,6 +1,7 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/auth_bg.dart';
+import 'package:capstone_wms/controllers/chatbot_controller.dart';
 import 'package:capstone_wms/controllers/userlocation_controller.dart';
 import 'package:capstone_wms/models/user_model.dart';
 import 'package:capstone_wms/models/userlocation_model.dart';

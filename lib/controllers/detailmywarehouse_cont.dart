@@ -22,6 +22,12 @@ class DetailMyWarehouseController extends GetxController {
   // RxList<dynamic> transactionInfo = <dynamic>[].obs;
   RxMap transactionInfo = {}.obs;
 
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+  }
+
   void setTransInstalID(String idTransaksiParam, int idInstallment) {
     idTransaksi.value = idTransaksiParam;
     instalmentID.value = idInstallment;
