@@ -6,6 +6,7 @@ import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/bottomsheetFilter.dart';
 import 'package:capstone_wms/components/bs_filter.dart';
+import 'package:capstone_wms/controllers/favorite_controller.dart';
 import 'package:capstone_wms/controllers/search_controller.dart';
 import 'package:capstone_wms/controllers/warehouse_controller.dart';
 import 'package:capstone_wms/models/searchwarehouse_model.dart';
@@ -34,6 +35,7 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchCont = TextEditingController();
   // late TextEditingController searchCont;
   FindController searchController = Get.put(FindController());
+  FavoriteController favoriteController = Get.put(FavoriteController());
   WarehouseServidces warehoouseServices = WarehouseServidces();
   FavoriteService favoriteService = FavoriteService();
   bool isLoading = false;
@@ -324,6 +326,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         padding: const EdgeInsets.all(1.0),
                                         child: IconButton(
                                             onPressed: () async {
+                                              // await favoriteController.addToFavorites(warehouse['id']);
                                               final response =
                                                   await favoriteService
                                                       .addToFavorites(
@@ -331,6 +334,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               print(response.statusCode);
                                               print(warehouse['id']);
                                               if (response.statusCode == 201) {
+                                                // favoriteController.favoriteList;
                                                 Get.snackbar(
                                                   "Berhasil",
                                                   "Berhasil ditambahkan ke favorit",
