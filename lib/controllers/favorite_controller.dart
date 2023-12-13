@@ -38,7 +38,6 @@
 
     Future<void> deleteFavorite(String id) async {
       isLoading.value = true;
-
       try {
         final response = await favoriteService.deleteFromFavorites(id);
         if (response.statusCode == 200) {

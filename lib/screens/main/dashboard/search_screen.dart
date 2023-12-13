@@ -326,22 +326,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                         padding: const EdgeInsets.all(1.0),
                                         child: IconButton(
                                             onPressed: () async {
-                                              // await favoriteController.addToFavorites(warehouse['id']);
-                                              final response =
-                                                  await favoriteService
-                                                      .addToFavorites(
-                                                          warehouse['id']);
-                                              print(response.statusCode);
-                                              print(warehouse['id']);
-                                              if (response.statusCode == 201) {
-                                                // favoriteController.favoriteList;
-                                                Get.snackbar(
-                                                  "Berhasil",
-                                                  "Berhasil ditambahkan ke favorit",
-                                                  backgroundColor:
-                                                      colorApp.light1,
-                                                );
-                                              }
+                                              await favoriteController
+                                                  .addToFavorites(
+                                                      warehouse['id']);
                                             },
                                             icon: const Icon(
                                               Icons.star_border_outlined,
