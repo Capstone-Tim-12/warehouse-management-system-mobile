@@ -179,18 +179,48 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                       alignment: Alignment.topLeft,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        // mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            // "Rp.3.000.000.000,00",
-                            // "Rp. 3 Miliar",
-                            "Rp. ${formatter.format(warehouseData!['annualPrice'])}/Tahun",
-                            // warehouseData!['annualPrice'].toString(),
-                            style: TextCollection().bodyLarge,
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            warehouseData!['name'].toString(),
-                            style: TextCollection().bodyNormal,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    // "Rp.3.000.000.000,00",
+                                    // "Rp. 3 Miliar",
+                                    // warehouseData!['annualPrice'].toString(),
+                                    warehouseData!['name'].toString(),
+                                    style: TextCollection().bodyNormal,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    "Rp. ${formatter.format(warehouseData!['annualPrice'])}/Tahun",
+                                    style: TextCollection().bodyNormal,
+                                  ),
+                                ],
+                              ),
+                              FittedBox(
+                                fit: BoxFit.cover,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: ColorApp().mainColor,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "${warehouseData!['warehouseType']}",
+                                      style:
+                                          TextCollection().bodySmall2.copyWith(
+                                                color: Colors.white,
+                                              ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 5),
                           Text(
