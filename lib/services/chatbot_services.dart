@@ -44,8 +44,8 @@ class ChatbotServices {
       Map<String, String> header = {
         'Content-Type': 'application/json;charset=UTF-8',
         'Charset': 'utf-8',
-        'Authorization':
-            'Bearer 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',
+        'Authorization': 'Bearer apikey',
+        // 'Bearer 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',
       };
 
       // String promptData =

@@ -189,13 +189,13 @@ class _ChatScreenState extends State<ChatScreen> {
                                         onPressed: () {
                                           Timestamp currentTimestamp =
                                               Timestamp.now();
-                                          // chatbotCont.sendMessage(
-                                          //     messageCont.text,
-                                          //     currentTimestamp);
-                                          chatbotCont.sendChatMessage(
-                                            messageCont.text,
-                                            currentTimestamp,
-                                          );
+                                          chatbotCont.sendMessage(
+                                              messageCont.text,
+                                              currentTimestamp);
+                                          // chatbotCont.sendChatMessage(
+                                          //   messageCont.text,
+                                          //   currentTimestamp,
+                                          // );
 
                                           messageCont.clear();
                                         },

@@ -54,14 +54,14 @@ class ChatbotController extends GetxController {
     }
   }
 
-  Future<void> sendMessage(
-      String message, Timestamp sentTime, int msgIndex) async {
+  Future<void> sendMessage(String message, Timestamp sentTime) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isSending.value = true;
     String token = prefs.getString('token')!;
 
     try {
-      await firebase.saveUserMessage(message, userId.value, sentTime, msgIndex);
+      await firebase.saveUserMessage(
+          message, userId.value, sentTime, messageIndex.value);
       // final responsefromAPi = await chatbot.getResponse(prompt: message);
       final responsefromAPi = await chatbot.sendMessage(token, message);
       Map<String, dynamic> responseData = jsonDecode(responsefromAPi.body);
@@ -72,8 +72,8 @@ class ChatbotController extends GetxController {
         //     firebase.saveBotMessage(botResponse, userId.value, sentTime));
         botResponse.value = responsebot;
         if (botResponse.isNotEmpty) {
-          firebase.saveBotMessage(
-              botResponse.value, userId.value, currentTimestamp, msgIndex + 1);
+          firebase.saveBotMessage(botResponse.value, userId.value,
+              currentTimestamp, messageIndex.value + 1);
         }
         // firebase.saveBotMessage(botResponse, userId.value, sentTime);
       } else {
@@ -83,6 +83,7 @@ class ChatbotController extends GetxController {
       print(e);
     } finally {
       isSending.value = false;
+      messageIndex.value = messageIndex.value + 2;
     }
   }
 
