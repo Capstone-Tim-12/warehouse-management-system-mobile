@@ -27,6 +27,7 @@ class AuthService {
 
     return response;
   }
+
   // static Future<Map<String, dynamic>> logInUser(
   //     String email, String password) async {
   //   final response = await http.post(Uri.parse('$baseUrl/user/login'),

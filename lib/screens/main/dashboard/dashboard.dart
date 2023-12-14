@@ -96,22 +96,20 @@ class _DashboardState extends State<Dashboard> {
               color: ColorApp().light4,
             ),
           ),
-          IconButton(
-            onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const RecommendList(),
-              //   ),
-              // );
-              Get.to(() => const ChatScreen(),
-                  transition: Transition.rightToLeft);
-            },
-            icon: Icon(
-              Icons.chat_rounded,
-              color: ColorApp().light4,
+          Obx(
+            () => IconButton(
+              onPressed: chatbotCont.isLoading.value
+                  ? null
+                  : () {
+                      Get.to(() => const ChatScreen(),
+                          transition: Transition.rightToLeft);
+                    },
+              icon: Icon(
+                Icons.chat_rounded,
+                color: ColorApp().light4,
+              ),
             ),
-          ),
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -229,8 +227,6 @@ class _DashboardState extends State<Dashboard> {
                   const Spacer(),
                   IconButton(
                     onPressed: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => const RecommendList()));
                       Get.to(() => const RecommendList());
                     },
                     icon: const Icon(Icons.more_horiz),

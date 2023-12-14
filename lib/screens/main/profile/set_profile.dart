@@ -3,7 +3,9 @@ import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/alertverified.dart';
 import 'package:capstone_wms/components/bs_settingfotoprofil.dart';
+import 'package:capstone_wms/controllers/profile_controller.dart';
 import 'package:capstone_wms/screens/auth_screen/user_identity/idverconf.dart';
+import 'package:capstone_wms/screens/main/history/history_screen.dart';
 import 'package:capstone_wms/screens/main/profile/emailverifikasi.dart';
 import 'package:capstone_wms/screens/main/profile/notification_screen.dart';
 import 'package:capstone_wms/screens/main/profile/set_location.dart';
@@ -31,20 +33,19 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   ColorApp colorApp = ColorApp();
   TextCollection textApp = TextCollection();
   IconsCollection icons = IconsCollection();
+  ProfileController profileCont = Get.put(ProfileController());
 
   FirebaseServices checkUserVerification = FirebaseServices();
 
   void logout(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // Clear data from SharedPreferences
     prefs.remove('userId');
     prefs.remove('name');
     prefs.remove('token');
     prefs.remove('email');
     prefs.remove('userDoc');
 
-    // Navigate back to the splash screen
     Get.off(() => const SplashScreen());
   }
 
@@ -61,12 +62,14 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     // TODO: implement initState
     super.initState();
     setUid();
+    profileCont.getUserInfo();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+        body: Obx(
+      () => SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
           child: Column(
@@ -256,7 +259,9 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                     Icons.arrow_right_rounded,
                     color: colorApp.mainColorDarker,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(HistoryScreen());
+                  },
                 ),
               ),
               SizedBox(
@@ -298,9 +303,10 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                               borderRadius: BorderRadius.circular(8)),
                           title: Text(
                             'Keluar Akun',
-                            style: textApp.heading5.copyWith(color: colorApp.mainColor),
+                            style: textApp.heading5
+                                .copyWith(color: colorApp.mainColor),
                             textAlign: TextAlign.center,
-                            ),
+                          ),
                           content: Text(
                             'Kamu akan kembali ke halaman login',
                             style: textApp.smallLabelBlackclear.copyWith(
@@ -312,38 +318,39 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: colorApp.light4,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      side: BorderSide(width: 1, color: colorApp.secondaryColor),
-                                    )
-                                  ),
-                                      onPressed: () {
-                                        Get.back();
-                                      }, 
-                                      child: Text(
-                                        'Batalkan',
-                                        style: textApp.extraSmallInvLabel.copyWith(
-                                        color: colorApp.secondaryColor
-                                      ),
-                                        )
-                                      ),
-                                    ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: colorApp.secondaryColor,
+                                        backgroundColor: colorApp.light4,
                                         shape: RoundedRectangleBorder(
-                                        borderRadius:BorderRadius.circular(8))),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          side: BorderSide(
+                                              width: 1,
+                                              color: colorApp.secondaryColor),
+                                        )),
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: Text(
+                                      'Batalkan',
+                                      style: textApp.extraSmallInvLabel
+                                          .copyWith(
+                                              color: colorApp.secondaryColor),
+                                    )),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            colorApp.secondaryColor,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8))),
                                     onPressed: () {
                                       logout(context);
                                     },
                                     child: Text(
                                       'Konfirmasi',
-                                      style: textApp.extraSmallInvLabel.copyWith(
-                                        color: colorApp.light4
-                                      ),
-                                    )
-                                ),
+                                      style: textApp.extraSmallInvLabel
+                                          .copyWith(color: colorApp.light4),
+                                    )),
                               ],
                             )
                           ],
@@ -357,6 +364,6 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

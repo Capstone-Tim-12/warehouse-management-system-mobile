@@ -54,6 +54,13 @@ class _SearchScreenState extends State<SearchScreen> {
             ));
   }
 
+  String capitalizeFirstLetter(String text) {
+    if (text == null || text.isEmpty) {
+      return text;
+    }
+    return text[0].toUpperCase() + text.substring(1);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -212,7 +219,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           children: [
                                             const SizedBox(height: 8),
                                             Container(
-                                              width: 80,
+                                              // width: 80,
                                               height: 32,
                                               decoration: ShapeDecoration(
                                                 shape: RoundedRectangleBorder(
@@ -228,8 +235,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    '${warehouse['warehouseTypeName']}'
-                                                        .toUpperCase()
+                                                    'Gudang ${capitalizeFirstLetter(warehouse['warehouseTypeName'])}'
+                                                        // '${warehouse['warehouseTypeName']}'
+
                                                         .toString(),
                                                     textAlign: TextAlign.center,
                                                     style: textCollection
@@ -250,6 +258,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                           colorApp.mainColor),
                                               // overflow: TextOverflow.ellipsis,
                                             ),
+                                            const SizedBox(height: 16),
                                             Row(
                                               children: [
                                                 Icon(Icons.location_on_outlined,

@@ -22,6 +22,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   bool isLoading = false;
   final formatter = NumberFormat("#,###");
 
+  String capitalizeFirstLetter(String text) {
+    if (text == null || text.isEmpty) {
+      return text;
+    }
+    return text[0].toUpperCase() + text.substring(1);
+  }
+
   Future<void> getWarehouseData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -137,7 +144,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                   children: [
                                     const SizedBox(height: 8),
                                     Container(
-                                      width: 80,
+                                      // width: 80,
                                       height: 32,
                                       decoration: ShapeDecoration(
                                         shape: RoundedRectangleBorder(
@@ -152,8 +159,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            '${item['warehouseTypeName']}'
-                                                .toUpperCase(),
+                                            'Gudang ${capitalizeFirstLetter(item['warehouseTypeName'])}'
+                                            // '${item['warehouseTypeName']}'
+                                            ,
                                             textAlign: TextAlign.center,
                                             style: textCollection.bodySmall
                                                 .copyWith(
@@ -167,20 +175,23 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                       item['name'],
                                       style: textCollection.bodyNormal
                                           .copyWith(color: colorApp.mainColor),
-                                      overflow: TextOverflow.ellipsis,
+                                      // overflow: TextOverflow.ellipsis,
                                     ),
-                                    // const SizedBox(height: 16),
+                                    const SizedBox(height: 16),
                                     Row(
                                       children: [
                                         Icon(Icons.location_on_outlined,
                                             color: colorApp.mainColor),
                                         const SizedBox(width: 8),
-                                        Text(
-                                          item['regencyName'],
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                              color: colorApp.mainColor),
+                                        Expanded(
+                                          child: Text(
+                                            item['regencyName'],
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: colorApp.mainColor),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -252,7 +263,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 8),
                     ],
                   );
                 },
