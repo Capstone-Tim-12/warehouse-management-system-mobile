@@ -203,12 +203,30 @@ class _SearchScreenState extends State<SearchScreen> {
                                     children: [
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
-                                        child: Image.network(
-                                          "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                                          width: 142,
-                                          height: 227,
-                                          fit: BoxFit.cover,
-                                        ),
+                                        child: warehouse['image'] != null &&
+                                                Uri.parse(warehouse['image'])
+                                                    .isAbsolute
+                                            ? Image.network(
+                                                warehouse['image'],
+                                                width: 142,
+                                                height: 227,
+                                                fit: BoxFit.cover,
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return Image.network(
+                                                    "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                    width: 142,
+                                                    height: 227,
+                                                    fit: BoxFit.cover,
+                                                  );
+                                                },
+                                              )
+                                            : Image.network(
+                                                "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                width: 142,
+                                                height: 227,
+                                                fit: BoxFit.cover,
+                                              ),
                                       ),
                                       const SizedBox(width: 9),
                                       Expanded(

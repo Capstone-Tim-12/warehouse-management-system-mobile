@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/profile_controller.dart';
 import 'package:capstone_wms/services/avatar_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class AvatarBottomSheet extends StatefulWidget {
 }
 
 class _AvatarBottomSheetState extends State<AvatarBottomSheet> {
-
+  ProfileController profilCont = Get.put(ProfileController());
   AvatarService avatarService = AvatarService();
   late Future<List<dynamic>>? avatarData;
   bool isLoading = false;
@@ -34,10 +35,8 @@ class _AvatarBottomSheetState extends State<AvatarBottomSheet> {
 
       if (response.statusCode == 200) {
         if (responseData['data'] == null) {
-          
           setState(() {
             avatarData = null;
-            
           });
         } else {
           List<dynamic> avatarList = responseData['data'];
@@ -113,16 +112,24 @@ class _AvatarBottomSheetState extends State<AvatarBottomSheet> {
                 } else {
                   return GridView.builder(
                     itemCount: snapshot.data!.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: 5.0,
                       mainAxisSpacing: 10.0,
                     ),
                     itemBuilder: (BuildContext context, int index) {
                       var avatar = snapshot.data![index];
-                      return CircleAvatar(
-                        radius: 25,
-                        backgroundImage: NetworkImage(avatar['image']),
+                      return InkWell(
+                        onTap: () async {
+                          await profilCont.updatePFPwithAvatar(avatar['image']);
+                          await profilCont.getUserInfo();
+                          Get.back();
+                        },
+                        child: CircleAvatar(
+                          radius: 25,
+                          backgroundImage: NetworkImage(avatar['image']),
+                        ),
                       );
                     },
                   );
@@ -139,10 +146,7 @@ class _AvatarBottomSheetState extends State<AvatarBottomSheet> {
 void bottomSheetAvatar(BuildContext context) {
   showModalBottomSheet(
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(
-        top: Radius.circular(12)
-      )
-    ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
     context: context,
     builder: (BuildContext context) {
       return const AvatarBottomSheet();

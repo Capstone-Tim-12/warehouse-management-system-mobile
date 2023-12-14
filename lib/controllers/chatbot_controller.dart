@@ -87,37 +87,37 @@ class ChatbotController extends GetxController {
     }
   }
 
-  Future<void> sendChatMessage(String message, Timestamp sentTime) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    isSending.value = true;
-    String token = prefs.getString('token')!;
+  // Future<void> sendChatMessage(String message, Timestamp sentTime) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   isSending.value = true;
+  //   String token = prefs.getString('token')!;
 
-    try {
-      await firebase.saveUserMessage(
-          message, userId.value, sentTime, messageIndex.value);
-      final GptData responsefromAPi =
-          await chatbot.getResponse(prompt: message);
-      // final responsefromAPi = await chatbot.sendMessage(token, message);
-      // Map<String, dynamic> responseData = jsonDecode(responsefromAPi.body);
-      // final GptData gptResponseData =
+  //   try {
+  //     await firebase.saveUserMessage(
+  //         message, userId.value, sentTime, messageIndex.value);
+  //     final GptData responsefromAPi =
+  //         await chatbot.getResponse(prompt: message);
+  //     // final responsefromAPi = await chatbot.sendMessage(token, message);
+  //     // Map<String, dynamic> responseData = jsonDecode(responsefromAPi.body);
+  //     // final GptData gptResponseData =
 
-      if (responsefromAPi.choices[0].message.content.isNotEmpty) {
-        String responsebot = responsefromAPi.choices[0].message.content;
-        botResponse.value = responsebot;
-        if (botResponse.isNotEmpty) {
-          firebase.saveBotMessage(botResponse.value, userId.value,
-              currentTimestamp, messageIndex.value + 1);
-          // .then((value) => messageIndex.value + 2);
-        }
-        // firebase.saveBotMessage(botResponse, userId.value, sentTime);
-      } else {
-        Get.snackbar("Peringatan", 'something went wrong');
-      }
-    } catch (e) {
-      print(e);
-    } finally {
-      isSending.value = false;
-      messageIndex.value = messageIndex.value + 2;
-    }
-  }
+  //     if (responsefromAPi.choices[0].message.content.isNotEmpty) {
+  //       String responsebot = responsefromAPi.choices[0].message.content;
+  //       botResponse.value = responsebot;
+  //       if (botResponse.isNotEmpty) {
+  //         firebase.saveBotMessage(botResponse.value, userId.value,
+  //             currentTimestamp, messageIndex.value + 1);
+  //         // .then((value) => messageIndex.value + 2);
+  //       }
+  //       // firebase.saveBotMessage(botResponse, userId.value, sentTime);
+  //     } else {
+  //       Get.snackbar("Peringatan", 'something went wrong');
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   } finally {
+  //     isSending.value = false;
+  //     messageIndex.value = messageIndex.value + 2;
+  //   }
+  // }
 }

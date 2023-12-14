@@ -29,54 +29,54 @@ class ChatbotServices {
     return response;
   }
 
-  Future<GptData> getResponse({required String prompt}) async {
-    late GptData modelData = GptData(
-        id: '',
-        object: '',
-        created: 0,
-        model: '',
-        choices: [],
-        usage: Usage(promptTokens: 0, completionTokens: 0, totalTokens: 0));
+  // Future<GptData> getResponse({required String prompt}) async {
+  //   late GptData modelData = GptData(
+  //       id: '',
+  //       object: '',
+  //       created: 0,
+  //       model: '',
+  //       choices: [],
+  //       usage: Usage(promptTokens: 0, completionTokens: 0, totalTokens: 0));
 
-    try {
-      var endpoint = Uri.parse('https://api.openai.com/v1/chat/completions');
+  //   try {
+  //     var endpoint = Uri.parse('https://api.openai.com/v1/chat/completions');
 
-      Map<String, String> header = {
-        'Content-Type': 'application/json;charset=UTF-8',
-        'Charset': 'utf-8',
-        'Authorization': 'Bearer apikey',
-        // 'Bearer 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',
-      };
+  //     Map<String, String> header = {
+  //       'Content-Type': 'application/json;charset=UTF-8',
+  //       'Charset': 'utf-8',
+  //       'Authorization': 'Bearer apikey',
+  //       // 'Bearer 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',
+  //     };
 
-      String promptData = prompt;
+  //     String promptData = prompt;
 
-      final dataBody = jsonEncode({
-        "model": "gpt-3.5-turbo",
-        "messages": [
-          {
-            "role": "system",
-            "content":
-                "kau adalah sebuah aplikasi untuk jual beli gudang bernama DigiHouse"
-          },
-          {"role": "user", "content": promptData}
-        ],
-        "temperature": 1,
-        "max_tokens": 512,
-        "top_p": 1,
-        "frequency_penalty": 0,
-        "presence_penalty": 0
-      });
+  //     final dataBody = jsonEncode({
+  //       "model": "gpt-3.5-turbo",
+  //       "messages": [
+  //         {
+  //           "role": "system",
+  //           "content":
+  //               "kau adalah sebuah aplikasi untuk jual beli gudang bernama DigiHouse"
+  //         },
+  //         {"role": "user", "content": promptData}
+  //       ],
+  //       "temperature": 1,
+  //       "max_tokens": 512,
+  //       "top_p": 1,
+  //       "frequency_penalty": 0,
+  //       "presence_penalty": 0
+  //     });
 
-      var response = await http.post(endpoint, headers: header, body: dataBody);
+  //     var response = await http.post(endpoint, headers: header, body: dataBody);
 
-      if (response.statusCode == 200) {
-        modelData = gptDataFromJson(response.body);
-      }
-    } catch (e) {
-      print(e);
-      throw Exception(e);
-    }
+  //     if (response.statusCode == 200) {
+  //       modelData = gptDataFromJson(response.body);
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //     throw Exception(e);
+  //   }
 
-    return modelData;
-  }
+  //   return modelData;
+  // }
 }

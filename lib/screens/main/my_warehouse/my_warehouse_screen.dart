@@ -147,9 +147,35 @@ class _MyWarehouseState extends State<MyWarehouse> {
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(12.0),
-                                              child: Image.network(
-                                                  'https://th.bing.com/th?id=OIP.jIg6qxA83ebRm-TqLPDO0QHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2',
-                                                  fit: BoxFit.fill),
+                                              child: acceptedWarehouse[
+                                                              'image'] !=
+                                                          null &&
+                                                      Uri.parse(
+                                                              acceptedWarehouse[
+                                                                  'image'])
+                                                          .isAbsolute
+                                                  ? Image.network(
+                                                      acceptedWarehouse[
+                                                          'image'],
+                                                      // width: 142,
+                                                      // height: 227,
+                                                      fit: BoxFit.fill,
+                                                      errorBuilder: (context,
+                                                          error, stackTrace) {
+                                                        return Image.network(
+                                                          "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                          // width: 142,
+                                                          // height: 227,
+                                                          fit: BoxFit.fill,
+                                                        );
+                                                      },
+                                                    )
+                                                  : Image.network(
+                                                      "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                      // width: 142,
+                                                      // height: 227,
+                                                      fit: BoxFit.fill,
+                                                    ),
                                             ),
                                           ),
                                           const SizedBox(
@@ -290,9 +316,35 @@ class _MyWarehouseState extends State<MyWarehouse> {
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(12.0),
-                                              child: Image.network(
-                                                  'https://th.bing.com/th?id=OIP.jIg6qxA83ebRm-TqLPDO0QHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2',
-                                                  fit: BoxFit.fill),
+                                              child: submittedWarehouse[
+                                                              'image'] !=
+                                                          null &&
+                                                      Uri.parse(
+                                                              submittedWarehouse[
+                                                                  'image'])
+                                                          .isAbsolute
+                                                  ? Image.network(
+                                                      submittedWarehouse[
+                                                          'image'],
+                                                      width: 142,
+                                                      height: 227,
+                                                      fit: BoxFit.cover,
+                                                      errorBuilder: (context,
+                                                          error, stackTrace) {
+                                                        return Image.network(
+                                                          "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                          width: 142,
+                                                          height: 227,
+                                                          fit: BoxFit.cover,
+                                                        );
+                                                      },
+                                                    )
+                                                  : Image.network(
+                                                      "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                      width: 142,
+                                                      height: 227,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                             ),
                                           ),
                                           const SizedBox(

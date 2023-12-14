@@ -10,7 +10,8 @@ void alertVerified(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         backgroundColor: colorApp.light4,
-        contentPadding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -20,39 +21,40 @@ void alertVerified(BuildContext context) {
             Text(
               'Verifikasi Identitas',
               style: TextCollection().heading5.copyWith(
-                color: colorApp.mainColor,
-              ),
-              ),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.12),
-              IconButton(
-                onPressed: () => Get.back(), 
-                icon: const Icon(
-                  Icons.close
+                    color: colorApp.mainColor,
                   ),
-                color: colorApp.mainColor,
-                ),
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SvgPicture.asset(
-                'assets/svg/icon_verified.svg',
-                fit: BoxFit.fill,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.1,
-              ),
-              const SizedBox(height: 18), 
-              Text(
-                'Identitas Anda telah diverifikasi',
-                style: TextCollection().heading7.copyWith(
-                  color: colorApp.mainColor,
-                ),
-                textAlign: TextAlign.center,
-                ),
-            ],
-          ),
-        );
+            ),
+            // SizedBox(width: MediaQuery.of(context).size.width * 0.12),
+            const SizedBox(
+              width: 20,
+            ),
+            IconButton(
+              onPressed: () => Get.back(),
+              icon: const Icon(Icons.close),
+              color: colorApp.mainColor,
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgPicture.asset(
+              'assets/svg/icon_verified.svg',
+              fit: BoxFit.fill,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.1,
+            ),
+            const SizedBox(height: 18),
+            Text(
+              'Identitas Anda telah diverifikasi',
+              style: TextCollection().heading7.copyWith(
+                    color: colorApp.mainColor,
+                  ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      );
     },
   );
 }

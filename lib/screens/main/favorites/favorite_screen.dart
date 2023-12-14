@@ -128,13 +128,26 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child: Image.network(
-                                  "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                                  // item['imageURL'],
-                                  width: 142,
-                                  height: 227,
-                                  fit: BoxFit.cover,
-                                ),
+                                child: item['image'] != null &&
+                                        Uri.parse(item['image']).isAbsolute
+                                    ? Image.network(
+                                        item['image'],
+                                        width: 142,
+                                        height: 227,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return const Placeholder(
+                                            fallbackHeight: 227,
+                                            fallbackWidth: 142,
+                                          );
+                                        },
+                                      )
+                                    : const Placeholder(
+                                        // You can use any placeholder widget or just an empty container
+                                        fallbackHeight: 227,
+                                        fallbackWidth: 142,
+                                      ),
                               ),
                               const SizedBox(width: 9),
                               Expanded(
