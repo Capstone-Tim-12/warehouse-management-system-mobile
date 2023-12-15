@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/favorite_controller.dart';
 import 'package:capstone_wms/services/favorite_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,11 +16,13 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
+  // FavoriteController favoriteController = Get.find<FavoriteController>();
+  FavoriteController favoriteController = Get.put(FavoriteController());
   FavoriteService favoriteService = FavoriteService();
   final ColorApp colorApp = ColorApp();
   final TextCollection textCollection = TextCollection();
-  late Future<List<dynamic>>? warehouseData;
-  bool isLoading = false;
+  // late Future<List<dynamic>>? warehouseData;
+  // bool isLoading = false;
   final formatter = NumberFormat("#,###");
 
   String capitalizeFirstLetter(String text) {
@@ -28,45 +31,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     }
     return text[0].toUpperCase() + text.substring(1);
   }
-
-  Future<void> getWarehouseData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      warehouseData = null;
-      isLoading = true;
-    });
-
-    try {
-      final response =
-          await favoriteService.getFavorites(prefs.getString('token')!);
-      Map<String, dynamic> responseData = json.decode(response.body);
-
-      if (response.statusCode == 200) {
-        if (responseData['data'] == null) {
-          setState(() {
-            warehouseData = null;
-          });
-        } else {
-          List<dynamic> favoriteList = responseData['data'];
-          setState(() {
-            warehouseData = Future.value(favoriteList);
-          });
-        }
-      } else {}
-    } catch (e) {
-      print(e);
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-
+  
   @override
   void initState() {
     super.initState();
-    warehouseData = null;
-    getWarehouseData();
+    favoriteController.favoriteList;
+    favoriteController.getWarehouseData();
   }
 
   @override
@@ -75,58 +45,43 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       appBar: AppBar(
         title: Text('Favorite', style: textCollection.heading6),
       ),
-      // body: isLoading ? const Center(child: CircularProgressIndicator()) : SingleChildScrollView(
       body: Padding(
-        // padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.055),
         padding: const EdgeInsets.all(12),
-        child: FutureBuilder<List<dynamic>>(
-          // future: warehouseData != null ? warehouseData : null,
-          future: warehouseData,
-          builder: (context, snapshot) {
-            if (isLoading) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: colorApp.mainColor,
-                ),
-              );
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else if (snapshot.data == null || warehouseData == null) {
-              return const Center(
-                child: Text('No data found'),
-              );
-            } else {
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: snapshot.data?.length ?? 0,
-                itemBuilder: (context, int index) {
-                  var item = snapshot.data![index];
-                  return Column(
-                    children: [
-                      Card(
-                        color: Colors.white,
-                        elevation: 4,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Container(
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            // shadows: [
-                            //   BoxShadow(
-                            //     color: colorApp.dark4,
-                            //     offset: const Offset(4, 4),
-                            //     blurRadius: 10,
-                            //   ),
-                            // ],
+        child: Obx (() => FutureBuilder<List<dynamic>>(
+            future: favoriteController.favoriteList.isNotEmpty 
+            ? Future.value(favoriteController.favoriteList)
+            : null,
+            builder: (context, snapshot) {
+              if (favoriteController.isLoading.value) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: colorApp.mainColor,
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else if (snapshot.data == null || favoriteController.favoriteList.isEmpty) {
+                return const Center(
+                  child: Text('No data found'),
+                );
+              } else {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: favoriteController.favoriteList.length,
+                  itemBuilder: (context, int index) {
+                    var item = favoriteController.favoriteList[index];
+                    return Column(
+                      children: [
+                        Card(
+                          color: Colors.white,
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
+                          child: Container(
+                            decoration: ShapeDecoration(
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 child: item['image'] != null &&
                                         Uri.parse(item['image']).isAbsolute
@@ -167,10 +122,19 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                               BorderRadius.circular(8),
                                         ),
                                       ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        item['name'],
+                                        style: textCollection.bodyNormal
+                                            .copyWith(color: colorApp.mainColor),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      // const SizedBox(height: 16),
+                                      Row(
                                         children: [
+                                          Icon(Icons.location_on_outlined,
+                                              color: colorApp.mainColor),
+                                          const SizedBox(width: 8),
                                           Text(
                                             'Gudang ${capitalizeFirstLetter(item['warehouseTypeName'])}'
                                             // '${item['warehouseTypeName']}'
@@ -234,55 +198,68 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                               fontWeight: FontWeight.w500,
                                               fontSize: 10,
                                             ),
-                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      "Rp. ${formatter.format(item['annualPrice'])}/Tahun",
-                                      style: textCollection.bodySmall
-                                          .copyWith(color: colorApp.mainColor),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 8),
-                                  ],
+                                          const SizedBox(width: 8),
+                                          Icon(Icons.apartment,
+                                              color: colorApp.mainColor),
+                                          const SizedBox(width: 8),
+                                          Flexible(
+                                            child: Text(
+                                              "${formatter.format(item['buildingArea'])} m²",
+                                              style: TextStyle(
+                                                color: colorApp.mainColor,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 10,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        "Rp. ${formatter.format(item['annualPrice'])}/Tahun",
+                                        style: textCollection.bodySmall
+                                            .copyWith(color: colorApp.mainColor),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 8),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(1.0),
-                                child: IconButton(
-                                    onPressed: () async {
-                                      final response = await favoriteService
-                                          .deleteFromFavorites(
-                                              item['id'].toString());
-                                      print(response.statusCode);
-                                      print(item['id']);
-                                      if (response.statusCode == 200) {
-                                        getWarehouseData();
-                                        Get.snackbar(
-                                          "Berhasil",
-                                          "Berhasil dihapus dari favorit",
-                                          backgroundColor: colorApp.light1,
-                                        );
-                                      }
-                                    },
-                                    icon: const Icon(
-                                      Icons.star,
-                                    )),
-                              ),
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.all(1.0),
+                                  child: IconButton(
+                                      onPressed: () async {
+                                        await favoriteController.deleteFavorite(item['id'].toString());
+                                        // final response = await favoriteService.deleteFromFavorites(item['id'].toString());
+                                        // print(response.statusCode);
+                                        // print(item['id']);
+                                        // if (response.statusCode == 200) {
+                                          favoriteController.getWarehouseData();
+                                        //   Get.snackbar(
+                                        //     "Berhasil",
+                                        //     "Berhasil dihapus dari favorit",
+                                        //     backgroundColor: colorApp.light1,
+                                        //   );
+                                        // }
+                                      },
+                                      icon: const Icon(
+                                        Icons.star,
+                                      )),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                    ],
-                  );
-                },
-              );
-            }
-          },
+                        const SizedBox(height: 16),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+          ),
         ),
       ),
     );
