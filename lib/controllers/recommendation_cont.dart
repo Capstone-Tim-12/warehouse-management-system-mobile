@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:capstone_wms/controllers/search_controller.dart';
 import 'package:capstone_wms/models/searchwarehouse_model.dart';
 import 'package:capstone_wms/services/warehouse_services.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ class RecommendationController extends GetxController {
   WarehouseServidces warehoouseServices = WarehouseServidces();
   RxList<dynamic> recommededData = <dynamic>[].obs;
   RxBool isRecommendationLoading = false.obs;
+  FindController searchCont = Get.put(FindController());
 
   Future<void> getRecommendation() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -24,8 +26,8 @@ class RecommendationController extends GetxController {
           minSize: '',
           maxSize: '');
 
-      final response =
-          await warehoouseServices.getRecommendedWarehouse(recomendedWarehouse);
+      final response = await warehoouseServices.getRecommendedWarehouse(
+          recomendedWarehouse, searchCont.recentPage.value.toString());
 
       Map<String, dynamic> responseData = jsonDecode(response.body);
       print(response.statusCode);

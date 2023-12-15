@@ -14,7 +14,8 @@ void bottomSheetFotoProfil(BuildContext context) {
     ),
     builder: (BuildContext context) {
       return Container(
-        padding: const EdgeInsets.only(top: 24, bottom: 24, left: 16, right: 16),
+        padding:
+            const EdgeInsets.only(top: 24, bottom: 24, left: 16, right: 16),
         height: MediaQuery.of(context).size.height * 0.28,
         child: Column(
           children: [
@@ -23,17 +24,17 @@ void bottomSheetFotoProfil(BuildContext context) {
                 IconButton(
                   onPressed: () {
                     Get.back();
-                  }, 
+                  },
                   icon: Icon(
-                    Icons.arrow_back, 
+                    Icons.arrow_back,
                     color: colorApp.secondaryColor,
                   ),
                 ),
                 Text(
                   'Photo Profile',
-                  style: TextCollection().bodyNormal.copyWith(
-                    color: colorApp.mainColor
-                  ),
+                  style: TextCollection()
+                      .bodyNormal
+                      .copyWith(color: colorApp.mainColor),
                 )
               ],
             ),
@@ -47,13 +48,15 @@ void bottomSheetFotoProfil(BuildContext context) {
                     children: [
                       IconButton(
                         color: colorApp.mainColor,
-                        onPressed: () {}, 
+                        onPressed: () {},
                         icon: const Icon(Icons.camera_alt_sharp),
                       ),
-                      const SizedBox(height: 8), 
+                      const SizedBox(height: 8),
                       Text(
-                        'Kamera', 
-                        style: TextCollection().heading7.copyWith(color: colorApp.mainColor),
+                        'Kamera',
+                        style: TextCollection()
+                            .heading7
+                            .copyWith(color: colorApp.mainColor),
                       ),
                     ],
                   ),
@@ -64,13 +67,15 @@ void bottomSheetFotoProfil(BuildContext context) {
                     children: [
                       IconButton(
                         color: colorApp.mainColor,
-                        onPressed: () {}, 
+                        onPressed: () {},
                         icon: const Icon(Icons.photo_outlined),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Gallery', 
-                        style: TextCollection().heading7.copyWith(color: colorApp.mainColor),
+                        'Gallery',
+                        style: TextCollection()
+                            .heading7
+                            .copyWith(color: colorApp.mainColor),
                       ),
                     ],
                   ),
@@ -82,14 +87,17 @@ void bottomSheetFotoProfil(BuildContext context) {
                       IconButton(
                         color: colorApp.mainColor,
                         onPressed: () {
+                          Get.back();
                           bottomSheetAvatar(context);
-                        }, 
+                        },
                         icon: const Icon(Icons.person),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Avatar', 
-                        style: TextCollection().heading7.copyWith(color: colorApp.mainColor),
+                        'Avatar',
+                        style: TextCollection()
+                            .heading7
+                            .copyWith(color: colorApp.mainColor),
                       ),
                     ],
                   ),

@@ -52,7 +52,7 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Stack(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height,
+              // height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Padding(
                 padding:
@@ -114,8 +114,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                 return BubbleChat(
                                     isUser: isUserMessage,
                                     message: data['message'],
-                                    pfp:
-                                        'https://www.dropbox.com/scl/fi/zm4qf7xeh7ud25bbz89d2/file_McA1BYrVsSPEiGaruY6V.png?rlkey=dcyvrn8e3b0xvlhs2pqyevso6&raw=1');
+                                    pfp: chatbotCont.userInfo['photo']);
+                                // 'https://www.dropbox.com/scl/fi/zm4qf7xeh7ud25bbz89d2/file_McA1BYrVsSPEiGaruY6V.png?rlkey=dcyvrn8e3b0xvlhs2pqyevso6&raw=1');
                               }).toList(),
                             ),
                           ),

@@ -70,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
                   backgroundColor: appColor.secondaryColor,
                   child: Icon(Icons.warehouse_rounded, color: appColor.light1),
                 ),
-                label: 'Gudfangku',
+                label: 'Gudangku',
               ),
               // BottomNavigationBarItem(
               //   icon: Icon(Icons.chat),

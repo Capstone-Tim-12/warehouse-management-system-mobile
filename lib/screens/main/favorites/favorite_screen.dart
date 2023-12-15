@@ -25,6 +25,13 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   // bool isLoading = false;
   final formatter = NumberFormat("#,###");
 
+  String capitalizeFirstLetter(String text) {
+    if (text == null || text.isEmpty) {
+      return text;
+    }
+    return text[0].toUpperCase() + text.substring(1);
+  }
+  
   @override
   void initState() {
     super.initState();
@@ -76,59 +83,43 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
+                                child: item['image'] != null &&
+                                        Uri.parse(item['image']).isAbsolute
+                                    ? Image.network(
+                                        item['image'],
+                                        width: 142,
+                                        height: 227,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return const Placeholder(
+                                            fallbackHeight: 227,
+                                            fallbackWidth: 142,
+                                          );
+                                        },
+                                      )
+                                    : const Placeholder(
+                                        // You can use any placeholder widget or just an empty container
+                                        fallbackHeight: 227,
+                                        fallbackWidth: 142,
+                                      ),
                               ),
-                              // shadows: [
-                              //   BoxShadow(
-                              //     color: colorApp.dark4,
-                              //     offset: const Offset(4, 4),
-                              //     blurRadius: 10,
-                              //   ),
-                              // ],
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                                    // item['imageURL'],
-                                    width: 142,
-                                    height: 227,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                const SizedBox(width: 9),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(height: 8),
-                                      Container(
-                                        width: 80,
-                                        height: 32,
-                                        decoration: ShapeDecoration(
-                                          shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                width: 1, color: colorApp.dark1),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              '${item['warehouseTypeName']}'
-                                                  .toUpperCase(),
-                                              textAlign: TextAlign.center,
-                                              style: textCollection.bodySmall
-                                                  .copyWith(
-                                                      color: colorApp.mainColor),
-                                            ),
-                                          ],
+                              const SizedBox(width: 9),
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 8),
+                                    Container(
+                                      // width: 80,
+                                      height: 32,
+                                      decoration: ShapeDecoration(
+                                        shape: RoundedRectangleBorder(
+                                          side: BorderSide(
+                                              width: 1, color: colorApp.dark1),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                       ),
                                       const SizedBox(height: 16),
@@ -145,22 +136,63 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                               color: colorApp.mainColor),
                                           const SizedBox(width: 8),
                                           Text(
+                                            'Gudang ${capitalizeFirstLetter(item['warehouseTypeName'])}'
+                                            // '${item['warehouseTypeName']}'
+                                            ,
+                                            textAlign: TextAlign.center,
+                                            style: textCollection.bodySmall
+                                                .copyWith(
+                                                    color: colorApp.mainColor),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      item['name'],
+                                      style: textCollection.bodyNormal
+                                          .copyWith(color: colorApp.mainColor),
+                                      // overflow: TextOverflow.ellipsis,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.location_on_outlined,
+                                            color: colorApp.mainColor),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Text(
                                             item['regencyName'],
                                             style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w500,
                                                 color: colorApp.mainColor),
+                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 16),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.crop_square,
-                                              color: colorApp.mainColor),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            "${formatter.format(item['surfaceArea'])} m²",
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.crop_square,
+                                            color: colorApp.mainColor),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          "${formatter.format(item['surfaceArea'])} m²",
+                                          style: TextStyle(
+                                            color: colorApp.mainColor,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Icon(Icons.apartment,
+                                            color: colorApp.mainColor),
+                                        const SizedBox(width: 8),
+                                        Flexible(
+                                          child: Text(
+                                            "${formatter.format(item['buildingArea'])} m²",
                                             style: TextStyle(
                                               color: colorApp.mainColor,
                                               fontWeight: FontWeight.w500,

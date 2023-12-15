@@ -372,7 +372,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     minSize.clear();
                   },
                   child: Text(
-                    "Delete",
+                    "Reset",
                     style: textapp.bodySmall.copyWith(
                       color: ColorApp().light4,
                     ),
@@ -393,6 +393,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     onPressed: () {
                       Get.back();
                       widget.onFilterPressed;
+                      cont.clearWarehouseData();
                       cont.getWarehouseData();
                       // cont.resetFilter();
                     },

@@ -63,14 +63,17 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorApp().mainColorDarker,
-        leading: const Padding(
-          padding: EdgeInsets.only(left: 12.0, top: 10.0, bottom: 10.0),
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(
-              "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww",
-            ),
-          ),
-        ),
+        leading: Padding(
+            padding: const EdgeInsets.only(left: 12.0, top: 10.0, bottom: 10.0),
+            child: Obx(
+              () => CircleAvatar(
+                backgroundImage: NetworkImage(chatbotCont.isLoading.value
+                    ? "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww"
+                    :
+                    // "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww",
+                    chatbotCont.userInfo['photo']),
+              ),
+            )),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -89,29 +92,27 @@ class _DashboardState extends State<Dashboard> {
           ],
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.notifications_rounded,
-              color: ColorApp().light4,
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: Icon(
+          //     Icons.notifications_rounded,
+          //     color: ColorApp().light4,
+          //   ),
+          // ),
+          Obx(
+            () => IconButton(
+              onPressed: chatbotCont.isLoading.value
+                  ? null
+                  : () {
+                      Get.to(() => const ChatScreen(),
+                          transition: Transition.rightToLeft);
+                    },
+              icon: Icon(
+                Icons.chat_rounded,
+                color: ColorApp().light4,
+              ),
             ),
-          ),
-          IconButton(
-            onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const RecommendList(),
-              //   ),
-              // );
-              Get.to(() => const ChatScreen(),
-                  transition: Transition.rightToLeft);
-            },
-            icon: Icon(
-              Icons.chat_rounded,
-              color: ColorApp().light4,
-            ),
-          ),
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -139,6 +140,7 @@ class _DashboardState extends State<Dashboard> {
                             //   searchController.searchString.value = value;
                             // },
                             onSubmitted: (value) {
+                              searchController.clearWarehouseData();
                               searchController
                                   .onSearchSubmitted(searchCont.text);
                             },
@@ -229,8 +231,6 @@ class _DashboardState extends State<Dashboard> {
                   const Spacer(),
                   IconButton(
                     onPressed: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (context) => const RecommendList()));
                       Get.to(() => const RecommendList());
                     },
                     icon: const Icon(Icons.more_horiz),
@@ -302,10 +302,30 @@ class _DashboardState extends State<Dashboard> {
                                       children: [
                                         SizedBox(
                                           height: 130,
-                                          child: Image.network(
-                                            "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
-                                            fit: BoxFit.fitHeight,
-                                          ),
+                                          child: warehouse['image'] != null &&
+                                                  Uri.parse(warehouse['image'])
+                                                      .isAbsolute
+                                              ? Image.network(
+                                                  warehouse['image'],
+                                                  // width: 142,
+                                                  // height: 227,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return Image.network(
+                                                      "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                      // width: 142,
+                                                      // height: 227,
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
+                                                )
+                                              : Image.network(
+                                                  "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                                                  // width: 142,
+                                                  // height: 227,
+                                                  fit: BoxFit.cover,
+                                                ),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -441,10 +461,30 @@ class _DashboardState extends State<Dashboard> {
                                       children: [
                                         SizedBox(
                                           height: 130,
-                                          child: Image.network(
-                                            "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
-                                            fit: BoxFit.fitHeight,
-                                          ),
+                                          child: warehouse['image'] != null &&
+                                                  Uri.parse(warehouse['image'])
+                                                      .isAbsolute
+                                              ? Image.network(
+                                                  warehouse['image'],
+                                                  // width: 142,
+                                                  // height: 227,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return Image.network(
+                                                      "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                      // width: 142,
+                                                      // height: 227,
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
+                                                )
+                                              : Image.network(
+                                                  "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                                                  // width: 142,
+                                                  // height: 227,
+                                                  fit: BoxFit.cover,
+                                                ),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
