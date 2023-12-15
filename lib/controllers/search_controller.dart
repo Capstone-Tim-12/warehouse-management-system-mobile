@@ -15,6 +15,9 @@ class FindController extends GetxController {
   RxString maxSize = ''.obs;
   RxString minSize = ''.obs;
   RxBool isLoading = false.obs;
+  RxBool isMoreLoading = false.obs;
+
+  RxInt recentPage = 1.obs;
 
   RxBool recommended = false.obs;
   RxBool lowerPrice = false.obs;
@@ -22,10 +25,14 @@ class FindController extends GetxController {
   // RxList<dynamic>? warehouseData;
   RxList<dynamic> warehouseData = <dynamic>[].obs;
 
-
   void onSearchSubmitted(String param) {
     searchString.value = param;
     Get.to(const SearchScreen(), transition: Transition.rightToLeft);
+  }
+
+  void clearWarehouseData() async {
+    warehouseData.clear();
+    recentPage.value = 1;
   }
 
   void onSearchChanged(String param) {
@@ -70,10 +77,21 @@ class FindController extends GetxController {
     higherPrice.value = false;
   }
 
+  void loadMoreData() async {
+    if (!isMoreLoading.value) {
+      isMoreLoading.value = true;
+      recentPage.value += 1;
+      await getWarehouseData();
+      print('recent page: ${recentPage.value}');
+      isMoreLoading.value = false;
+    }
+  }
+
   Future<void> getWarehouseData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isLoading.value = true;
-    warehouseData.clear();
+    // isMoreLoading.value = true;
+    // warehouseData.clear();
     try {
       SearchWarehouse getWarehouseList = SearchWarehouse(
         token: prefs.getString('token')!,
@@ -85,14 +103,14 @@ class FindController extends GetxController {
       );
 
       if (recommended.value) {
-        final response =
-            await warehoouseServices.getRecommendedWarehouse(getWarehouseList);
+        final response = await warehoouseServices.getRecommendedWarehouse(
+            getWarehouseList, recentPage.toString());
         Map<String, dynamic> responseData = json.decode(response.body);
         print(response.statusCode);
 
         if (response.statusCode == 200) {
           if (responseData['data'] == null) {
-            warehouseData.value = [];
+            // warehouseData.value = [];
           } else {
             List<dynamic> warehouseList = responseData['data'];
             warehouseData.addAll(warehouseList);
@@ -104,12 +122,12 @@ class FindController extends GetxController {
           );
         }
       } else if (lowerPrice.value) {
-        final response =
-            await warehoouseServices.getLowerPriceWarehouse(getWarehouseList);
+        final response = await warehoouseServices.getLowerPriceWarehouse(
+            getWarehouseList, recentPage.toString());
         Map<String, dynamic> responseData = json.decode(response.body);
         if (response.statusCode == 200) {
           if (responseData['data'] == null) {
-            warehouseData.value = [];
+            // warehouseData.value = [];
           } else {
             List<dynamic> warehouseList = responseData['data'];
             warehouseData.addAll(warehouseList);
@@ -121,12 +139,12 @@ class FindController extends GetxController {
           );
         }
       } else if (higherPrice.value) {
-        final response =
-            await warehoouseServices.getHigestPriceWarehouse(getWarehouseList);
+        final response = await warehoouseServices.getHigestPriceWarehouse(
+            getWarehouseList, recentPage.toString());
         Map<String, dynamic> responseData = json.decode(response.body);
         if (response.statusCode == 200) {
           if (responseData['data'] == null) {
-            warehouseData.value = [];
+            // warehouseData.value = [];
           } else {
             List<dynamic> warehouseList = responseData['data'];
             warehouseData.addAll(warehouseList);
@@ -138,8 +156,8 @@ class FindController extends GetxController {
           );
         }
       } else {
-        final response =
-            await warehoouseServices.getWarehouseList(getWarehouseList);
+        final response = await warehoouseServices.getWarehouseList(
+            getWarehouseList, recentPage.toString());
 
         print(response.statusCode);
         print(response.body);
@@ -153,7 +171,7 @@ class FindController extends GetxController {
               List<dynamic> warehouseList = responseData['data'];
               warehouseData.addAll(warehouseList);
             } else {
-              warehouseData.value = []; // Set warehouseData to an empty list
+              // warehouseData.value = []; // Set warehouseData to an empty list
             }
             // if (responseData['data'] == null) {
             //   warehouseData.value = [];

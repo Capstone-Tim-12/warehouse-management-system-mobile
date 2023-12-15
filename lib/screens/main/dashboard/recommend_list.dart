@@ -226,7 +226,8 @@ class _RecommendListState extends State<RecommendList> {
                                             style: textCollection.bodyNormal
                                                 .copyWith(
                                                     color: colorApp.mainColor),
-                                            // overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                           const SizedBox(height: 16),
                                           Row(

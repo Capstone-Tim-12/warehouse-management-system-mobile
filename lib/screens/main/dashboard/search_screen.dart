@@ -31,6 +31,8 @@ class _SearchScreenState extends State<SearchScreen> {
   TextCollection textCollection = TextCollection();
   DecorationCollection fieldStyle = DecorationCollection();
 
+  final ScrollController scrollController = ScrollController();
+
   TextEditingController searchCont = TextEditingController();
   // late TextEditingController searchCont;
   FindController searchController = Get.put(FindController());
@@ -49,7 +51,7 @@ class _SearchScreenState extends State<SearchScreen> {
         builder: (context) => BottomSheetFilter(
               onFilterPressed: () {
                 // Get.back();
-                searchController.getWarehouseData();
+                // searchController.getWarehouseData();
               },
             ));
   }
@@ -61,6 +63,16 @@ class _SearchScreenState extends State<SearchScreen> {
     return text[0].toUpperCase() + text.substring(1);
   }
 
+  void _scrollListener() {
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
+      // print('call');
+      searchController.loadMoreData();
+    } else {
+      // print('don\'t call');
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -69,6 +81,7 @@ class _SearchScreenState extends State<SearchScreen> {
     // warehouseData = null;
     // getWarehouseData();
     searchController.getWarehouseData();
+    scrollController.addListener(() => _scrollListener());
   }
 
   @override
@@ -90,7 +103,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
-                        onPressed: () => Get.back(),
+                        onPressed: () {
+                          Get.back();
+                          searchController.clearWarehouseData;
+                        },
                         icon: Icon(
                           Icons.arrow_back_outlined,
                           color: colorApp.secondaryColor,
@@ -165,161 +181,159 @@ class _SearchScreenState extends State<SearchScreen> {
                     );
                   } else {
                     return ListView.builder(
-                      itemCount: searchController.warehouseData.length,
+                      controller: scrollController,
+                      itemCount: searchController.isMoreLoading.value
+                          ? searchController.warehouseData.length + 1
+                          : searchController.warehouseData.length,
                       itemBuilder: (context, index) {
-                        var warehouse = searchController.warehouseData[index];
-                        return GestureDetector(
-                          onTap: () {
-                            // disini buat ke detail screen nanti
-                            // Get.to(()=> DetailGudang())
-                            Get.to(() => DetailGudangScreen(
-                                warehouseId: warehouse['id']));
-                          },
-                          child: Column(
-                            children: [
-                              Card(
-                                color: Colors.white,
-                                elevation: 4,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Container(
-                                  decoration: ShapeDecoration(
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    shadows: [
-                                      BoxShadow(
-                                        color: colorApp.dark4,
-                                        offset: const Offset(4, 4),
-                                        blurRadius: 10,
-                                      ),
-                                    ],
+                        if (index < searchController.warehouseData.length) {
+                          var warehouse = searchController.warehouseData[index];
+                          return GestureDetector(
+                            onTap: () {
+                              // disini buat ke detail screen nanti
+                              // Get.to(()=> DetailGudang())
+                              Get.to(() => DetailGudangScreen(
+                                  warehouseId: warehouse['id']));
+                            },
+                            child: Column(
+                              children: [
+                                Card(
+                                  color: Colors.white,
+                                  elevation: 4,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
+                                  child: Container(
+                                    decoration: ShapeDecoration(
+                                      color: Colors.white,
+                                      shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
-                                        child: warehouse['image'] != null &&
-                                                Uri.parse(warehouse['image'])
-                                                    .isAbsolute
-                                            ? Image.network(
-                                                warehouse['image'],
-                                                width: 142,
-                                                height: 227,
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (context, error,
-                                                    stackTrace) {
-                                                  return Image.network(
-                                                    "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                                                    width: 142,
-                                                    height: 227,
-                                                    fit: BoxFit.cover,
-                                                  );
-                                                },
-                                              )
-                                            : Image.network(
-                                                "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                                                width: 142,
-                                                height: 227,
-                                                fit: BoxFit.cover,
-                                              ),
                                       ),
-                                      const SizedBox(width: 9),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const SizedBox(height: 8),
-                                            Container(
-                                              // width: 80,
-                                              height: 32,
-                                              decoration: ShapeDecoration(
-                                                shape: RoundedRectangleBorder(
-                                                  side: BorderSide(
-                                                      width: 1,
-                                                      color: colorApp.dark1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
+                                      shadows: [
+                                        BoxShadow(
+                                          color: colorApp.dark4,
+                                          offset: const Offset(4, 4),
+                                          blurRadius: 10,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: warehouse['image'] != null &&
+                                                  Uri.parse(warehouse['image'])
+                                                      .isAbsolute
+                                              ? Image.network(
+                                                  warehouse['image'],
+                                                  width: 142,
+                                                  height: 227,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return Image.network(
+                                                      "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                      width: 142,
+                                                      height: 227,
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
+                                                )
+                                              : Image.network(
+                                                  "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                  width: 142,
+                                                  height: 227,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                        ),
+                                        const SizedBox(width: 9),
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(height: 8),
+                                              Container(
+                                                // width: 80,
+                                                height: 32,
+                                                decoration: ShapeDecoration(
+                                                  shape: RoundedRectangleBorder(
+                                                    side: BorderSide(
+                                                        width: 1,
+                                                        color: colorApp.dark1),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'Gudang ${capitalizeFirstLetter(warehouse['warehouseTypeName'])}'
+                                                          // '${warehouse['warehouseTypeName']}'
+
+                                                          .toString(),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: textCollection
+                                                          .bodySmall
+                                                          .copyWith(
+                                                              color: colorApp
+                                                                  .mainColor),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                              const SizedBox(height: 16),
+                                              Text(
+                                                warehouse['name'].toString(),
+                                                style: textCollection.bodyNormal
+                                                    .copyWith(
+                                                        color:
+                                                            colorApp.mainColor),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              const SizedBox(height: 16),
+                                              Row(
                                                 children: [
-                                                  Text(
-                                                    'Gudang ${capitalizeFirstLetter(warehouse['warehouseTypeName'])}'
-                                                        // '${warehouse['warehouseTypeName']}'
-
-                                                        .toString(),
-                                                    textAlign: TextAlign.center,
-                                                    style: textCollection
-                                                        .bodySmall
-                                                        .copyWith(
-                                                            color: colorApp
-                                                                .mainColor),
+                                                  Icon(
+                                                      Icons
+                                                          .location_on_outlined,
+                                                      color:
+                                                          colorApp.mainColor),
+                                                  const SizedBox(width: 8),
+                                                  Expanded(
+                                                    child: Text(
+                                                      warehouse['regencyName']
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: colorApp
+                                                              .mainColor),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
                                                   ),
                                                 ],
                                               ),
-                                            ),
-                                            const SizedBox(height: 16),
-                                            Text(
-                                              warehouse['name'].toString(),
-                                              style: textCollection.bodyNormal
-                                                  .copyWith(
+                                              const SizedBox(height: 16),
+                                              Row(
+                                                children: [
+                                                  Icon(Icons.crop_square,
                                                       color:
                                                           colorApp.mainColor),
-                                              // overflow: TextOverflow.ellipsis,
-                                            ),
-                                            const SizedBox(height: 16),
-                                            Row(
-                                              children: [
-                                                Icon(Icons.location_on_outlined,
-                                                    color: colorApp.mainColor),
-                                                const SizedBox(width: 8),
-                                                Expanded(
-                                                  child: Text(
-                                                    warehouse['regencyName']
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color:
-                                                            colorApp.mainColor),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 16),
-                                            Row(
-                                              children: [
-                                                Icon(Icons.crop_square,
-                                                    color: colorApp.mainColor),
-                                                const SizedBox(width: 8),
-                                                Text(
-                                                  " ${formatter.format(warehouse['surfaceArea'])} m²"
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                    color: colorApp.mainColor,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 10,
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Icon(Icons.apartment,
-                                                    color: colorApp.mainColor),
-                                                const SizedBox(width: 8),
-                                                Flexible(
-                                                  child: Text(
-                                                    "${formatter.format(warehouse['buildingArea'])} m²"
+                                                  const SizedBox(width: 8),
+                                                  Text(
+                                                    " ${formatter.format(warehouse['surfaceArea'])} m²"
                                                         .toString(),
                                                     style: TextStyle(
                                                       color: colorApp.mainColor,
@@ -327,57 +341,82 @@ class _SearchScreenState extends State<SearchScreen> {
                                                           FontWeight.w500,
                                                       fontSize: 10,
                                                     ),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 10),
-                                            Text(
-                                              "Rp. ${formatter.format(warehouse['annualPrice'])}/Tahun"
-                                                  .toString(),
-                                              style: textCollection.bodySmall
-                                                  .copyWith(
+                                                  const SizedBox(width: 8),
+                                                  Icon(Icons.apartment,
                                                       color:
                                                           colorApp.mainColor),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            const SizedBox(height: 8),
-                                          ],
+                                                  const SizedBox(width: 8),
+                                                  Flexible(
+                                                    child: Text(
+                                                      "${formatter.format(warehouse['buildingArea'])} m²"
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                        color:
+                                                            colorApp.mainColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 10,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Text(
+                                                "Rp. ${formatter.format(warehouse['annualPrice'])}/Tahun"
+                                                    .toString(),
+                                                style: textCollection.bodySmall
+                                                    .copyWith(
+                                                        color:
+                                                            colorApp.mainColor),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              const SizedBox(height: 8),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(1.0),
-                                        child: IconButton(
-                                            onPressed: () async {
-                                              final response =
-                                                  await favoriteService
-                                                      .addToFavorites(
-                                                          warehouse['id']);
-                                              print(response.statusCode);
-                                              print(warehouse['id']);
-                                              if (response.statusCode == 201) {
-                                                Get.snackbar(
-                                                  "Berhasil",
-                                                  "Berhasil ditambahkan ke favorit",
-                                                  backgroundColor:
-                                                      colorApp.light1,
-                                                );
-                                              }
-                                            },
-                                            icon: const Icon(
-                                              Icons.star_border_outlined,
-                                            )),
-                                      ),
-                                    ],
+                                        Padding(
+                                          padding: const EdgeInsets.all(1.0),
+                                          child: IconButton(
+                                              onPressed: () async {
+                                                final response =
+                                                    await favoriteService
+                                                        .addToFavorites(
+                                                            warehouse['id']);
+                                                print(response.statusCode);
+                                                print(warehouse['id']);
+                                                if (response.statusCode ==
+                                                    201) {
+                                                  Get.snackbar(
+                                                    "Berhasil",
+                                                    "Berhasil ditambahkan ke favorit",
+                                                    backgroundColor:
+                                                        colorApp.light1,
+                                                  );
+                                                }
+                                              },
+                                              icon: const Icon(
+                                                Icons.star_border_outlined,
+                                              )),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                            ],
-                          ),
-                        );
+                                const SizedBox(height: 8),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Center(
+                            child: LinearProgressIndicator(
+                              color: colorApp.mainColor,
+                            ),
+                          );
+                        }
                       },
                     );
                   }

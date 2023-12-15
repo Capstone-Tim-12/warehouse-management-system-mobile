@@ -100,6 +100,7 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
     // searchCont = TextEditingController(text: widget.searchQuery);
     getDetailWarehouse();
     // setSelectedWarehouseState();
+    // print(warehouseData!['image']);
   }
 
   @override
@@ -139,10 +140,34 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                 children: [
                   SizedBox(
                     width: double.infinity,
-                    child: Image.network(
-                      'https://picsum.photos/300/200?random=4',
-                      fit: BoxFit.fill,
-                    ),
+                    child: warehouseData!['image'] != null &&
+                            warehouseData!['image'].isNotEmpty
+                        // &&
+                        // Uri.parse(warehouseData!['image'][0]).isAbsolute
+                        ? Image.network(
+                            warehouseData!['image'].length > 0
+                                ? warehouseData!['image'][0]
+                                : "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                            fit: BoxFit.fill,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.network(
+                                "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                // width: 142,
+                                // height: 227,
+                                fit: BoxFit.fill,
+                              );
+                            },
+                          )
+                        : Image.network(
+                            "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                            // width: 142,
+                            // height: 227,
+                            fit: BoxFit.fill,
+                          ),
+                    // child: Image.network(
+                    //   'https://picsum.photos/300/200?random=4',
+                    //   fit: BoxFit.fill,
+                    // ),
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -151,10 +176,37 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                         flex: 1,
                         child: SizedBox(
                           width: double.infinity,
-                          child: Image.network(
-                            'https://picsum.photos/300/200?random=1',
-                            fit: BoxFit.fill,
-                          ),
+                          child: warehouseData!['image'] != null &&
+                                  warehouseData!['image'].isNotEmpty
+                              // &&
+                              // Uri.parse(warehouseData!['image'][1])
+                              //     .isAbsolute
+                              ? Image.network(
+                                  warehouseData!['image'].length > 1
+                                      ? warehouseData!['image'][1]
+                                      : "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                  // width: 142,
+                                  // height: 227,
+                                  fit: BoxFit.fill,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.network(
+                                      "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                      // width: 142,
+                                      // height: 227,
+                                      fit: BoxFit.fill,
+                                    );
+                                  },
+                                )
+                              : Image.network(
+                                  "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                  // width: 142,
+                                  // height: 227,
+                                  fit: BoxFit.fill,
+                                ),
+                          // child: Image.network(
+                          //   'https://picsum.photos/300/200?random=1',
+                          //   fit: BoxFit.fill,
+                          // ),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -162,10 +214,38 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                         flex: 1,
                         child: SizedBox(
                           width: double.infinity,
-                          child: Image.network(
-                            'https://picsum.photos/300/200?random=3',
-                            fit: BoxFit.fill,
-                          ),
+                          child: warehouseData!['image'] != null
+                              // &&
+                              //         warehouseData!['image'].isNotEmpty
+                              // &&
+                              // Uri.parse(warehouseData!['image'][2])
+                              //     .isAbsolute
+                              ? Image.network(
+                                  warehouseData!['image'].length > 2
+                                      ? warehouseData!['image'][2]
+                                      : "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                  // width: 142,
+                                  // height: 227,
+                                  fit: BoxFit.fill,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.network(
+                                      "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                      // width: 142,
+                                      // height: 227,
+                                      fit: BoxFit.fill,
+                                    );
+                                  },
+                                )
+                              : Image.network(
+                                  "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                  // width: 142,
+                                  // height: 227,
+                                  fit: BoxFit.fill,
+                                ),
+                          // child: Image.network(
+                          //   'https://picsum.photos/300/200?random=3',
+                          //   fit: BoxFit.fill,
+                          // ),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -174,15 +254,44 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                         child: GestureDetector(
                           onTap: () {
                             print('sudah ditekan');
-                            Get.to(() => ListPicture());
+                            Get.to(() => ListPicture(
+                                  img: warehouseData!['image'] != null &&
+                                          warehouseData!['image'].isNotEmpty
+                                      ? warehouseData!['image']
+                                      : [],
+                                ));
                           },
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
-                              Image.network(
-                                'https://picsum.photos/300/200?random=2',
-                                fit: BoxFit.fill,
-                              ),
+                              warehouseData!['image'] != null &&
+                                      warehouseData!['image'].isNotEmpty
+                                  // &&
+                                  // warehouseData!['image'].length >= 3
+                                  ? Image.network(
+                                      warehouseData!['image'].length > 3
+                                          ? warehouseData!['image'][3]
+                                          : warehouseData!['image'][0],
+                                      // width: 142,
+                                      // height: 227,
+                                      fit: BoxFit.fill,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Image.network(
+                                          "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                          // width: 142,
+                                          // height: 227,
+                                          fit: BoxFit.fill,
+                                        );
+                                      },
+                                    )
+                                  : Image.network(
+                                      // "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                      warehouseData!['image'][0],
+                                      // width: 142,
+                                      // height: 227,
+                                      fit: BoxFit.fill,
+                                    ),
                               Container(
                                 width: double.infinity,
                                 height: 90,

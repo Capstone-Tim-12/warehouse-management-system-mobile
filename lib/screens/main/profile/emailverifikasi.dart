@@ -176,7 +176,7 @@ class _EmailVerifikasiState extends State<EmailVerifikasi> {
                                                       ),
                                                     ),
                                                     onPressed: profileCont
-                                                            .isOTPSent.value
+                                                            .isUpdateLoading.value
                                                         ? null
                                                         : () async {
                                                             BuildContext ctx =
@@ -186,7 +186,6 @@ class _EmailVerifikasiState extends State<EmailVerifikasi> {
                                                                     newEmailCont
                                                                         .text,
                                                                     ctx);
-
                                                             // auth.resendOTP();
                                                             //  await AuthService.resendOTP(email);
                                                             // showDialogOtp(context);

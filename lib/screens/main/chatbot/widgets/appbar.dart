@@ -27,22 +27,30 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         toolbarHeight: 100,
         backgroundColor: colorApp.mainColor,
-        title: Column(
-          children: [
-            Text(
-              "Chat with",
-              style: textApp.extraSmallLabel.copyWith(
-                color: colorApp.light4,
-                fontSize: 17,
+        title: Obx(
+          () => Column(
+            children: [
+              Text(
+                "Chat with",
+                style: textApp.extraSmallLabel.copyWith(
+                  color: colorApp.light4,
+                  fontSize: 17,
+                ),
               ),
-            ),
-            Text(
-              "DigiHouse Bot",
-              style: textApp.bodyLarge.copyWith(
-                color: colorApp.light4,
+              Text(
+                "DigiHouse Bot",
+                style: textApp.bodyLarge.copyWith(
+                  color: colorApp.light4,
+                ),
               ),
-            ),
-          ],
+              if (chatbot.isSending.value)
+                Text(
+                  'Bot sedang mengetik...',
+                  style: textApp.bodySmall.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.w400),
+                ),
+            ],
+          ),
         ),
         actions: const [
           Padding(

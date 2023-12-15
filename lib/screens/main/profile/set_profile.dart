@@ -59,12 +59,17 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     });
   }
 
+  void getuser() async {
+    await profileCont.getUserInfo();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     setUid();
-    profileCont.getUserInfo();
+    // profileCont.getUserInfo();
+    getuser();
   }
 
   @override

@@ -245,220 +245,223 @@ class _BotomSheetOTPEmailState extends State<BotomSheetOTPEmail> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.409,
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(28),
-              )),
-          child: Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.0561,
-              right: MediaQuery.of(context).size.width * 0.0561,
-              top: 32,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Verifikasi Email',
-                  style: textApp.heading4,
-                ),
-                Text(
-                  'Silahkan masukkan 4 digit kode yang diterima melalui email anda',
-                  style: textApp.bodySmall
-                      .copyWith(fontWeight: FontWeight.w500, fontSize: 12),
-                ),
-                const SizedBox(
-                  height: 22,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      height: 80,
-                      width: 65,
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            otpCont1.text = value;
-                          });
-                        },
-                        style: textApp.heading2.copyWith(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                        keyboardType: TextInputType.number,
-                        maxLength: 1,
-                        controller: otpCont1,
-                        textAlign: TextAlign.center,
-                        decoration:
-                            fieldStyle.otpField.copyWith(counterText: ''),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.409,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(28),
+                )),
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.0561,
+                right: MediaQuery.of(context).size.width * 0.0561,
+                top: 32,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Verifikasi Email',
+                    style: textApp.heading4,
+                  ),
+                  Text(
+                    'Silahkan masukkan 4 digit kode yang diterima melalui email anda',
+                    style: textApp.bodySmall
+                        .copyWith(fontWeight: FontWeight.w500, fontSize: 12),
+                  ),
+                  const SizedBox(
+                    height: 22,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        height: 80,
+                        width: 65,
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              otpCont1.text = value;
+                            });
+                          },
+                          style: textApp.heading2.copyWith(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                          keyboardType: TextInputType.number,
+                          maxLength: 1,
+                          controller: otpCont1,
+                          textAlign: TextAlign.center,
+                          decoration:
+                              fieldStyle.otpField.copyWith(counterText: ''),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SizedBox(
-                      height: 80,
-                      width: 65,
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            otpCont2.text = value;
-                          });
-                        },
-                        style: textApp.heading2.copyWith(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                        keyboardType: TextInputType.number,
-                        maxLength: 1,
-                        controller: otpCont2,
-                        textAlign: TextAlign.center,
-                        decoration:
-                            fieldStyle.otpField.copyWith(counterText: ''),
+                      const SizedBox(
+                        width: 10,
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SizedBox(
-                      height: 80,
-                      width: 65,
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            otpCont3.text = value;
-                          });
-                        },
-                        style: textApp.heading2.copyWith(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                        keyboardType: TextInputType.number,
-                        maxLength: 1,
-                        controller: otpCont3,
-                        textAlign: TextAlign.center,
-                        decoration:
-                            fieldStyle.otpField.copyWith(counterText: ''),
+                      SizedBox(
+                        height: 80,
+                        width: 65,
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              otpCont2.text = value;
+                            });
+                          },
+                          style: textApp.heading2.copyWith(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                          keyboardType: TextInputType.number,
+                          maxLength: 1,
+                          controller: otpCont2,
+                          textAlign: TextAlign.center,
+                          decoration:
+                              fieldStyle.otpField.copyWith(counterText: ''),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SizedBox(
-                      height: 80,
-                      width: 65,
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            otpCont4.text = value;
-                          });
-                        },
-                        style: textApp.heading2.copyWith(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                        keyboardType: TextInputType.number,
-                        maxLength: 1,
-                        controller: otpCont4,
-                        textAlign: TextAlign.center,
-                        decoration:
-                            fieldStyle.otpField.copyWith(counterText: ''),
+                      const SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'belum menerima email? ',
-                      style: textApp.bodySmall.copyWith(
-                          color: colorApp.dark1,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12),
-                    ),
-                    if (!isCooldown)
-                      GestureDetector(
-                        onTap: () {
-                          getSignUpdOTP();
-                          startTimer();
-                        },
-                        child: Text(
-                          'klik untuk mengirim ulang',
+                      SizedBox(
+                        height: 80,
+                        width: 65,
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              otpCont3.text = value;
+                            });
+                          },
+                          style: textApp.heading2.copyWith(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                          keyboardType: TextInputType.number,
+                          maxLength: 1,
+                          controller: otpCont3,
+                          textAlign: TextAlign.center,
+                          decoration:
+                              fieldStyle.otpField.copyWith(counterText: ''),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                        height: 80,
+                        width: 65,
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              otpCont4.text = value;
+                            });
+                          },
+                          style: textApp.heading2.copyWith(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
+                          keyboardType: TextInputType.number,
+                          maxLength: 1,
+                          controller: otpCont4,
+                          textAlign: TextAlign.center,
+                          decoration:
+                              fieldStyle.otpField.copyWith(counterText: ''),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'belum menerima email? ',
+                        style: textApp.bodySmall.copyWith(
+                            color: colorApp.dark1,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12),
+                      ),
+                      if (!isCooldown)
+                        GestureDetector(
+                          onTap: () {
+                            getSignUpdOTP();
+                            startTimer();
+                          },
+                          child: Text(
+                            'klik untuk mengirim ulang',
+                            textAlign: TextAlign.start,
+                            style: textApp.bodySmall.copyWith(
+                                color: const Color(0xFF0063F7),
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12),
+                          ),
+                        ),
+                      if (isCooldown)
+                        Text(
+                          formatDuration(_currentSeconds),
                           textAlign: TextAlign.start,
                           style: textApp.bodySmall.copyWith(
                               color: const Color(0xFF0063F7),
                               fontWeight: FontWeight.w400,
                               fontSize: 12),
-                        ),
-                      ),
-                    if (isCooldown)
-                      Text(
-                        formatDuration(_currentSeconds),
-                        textAlign: TextAlign.start,
-                        style: textApp.bodySmall.copyWith(
-                            color: const Color(0xFF0063F7),
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12),
-                      )
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                if (isLoading)
-                  LinearProgressIndicator(
-                    color: colorApp.secondaryColor,
+                        )
+                    ],
                   ),
-                if (isLoading == false)
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            disabledBackgroundColor:
-                                colorApp.secondaryColorLighter,
-                            backgroundColor: colorApp.secondaryColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8))),
-                        onPressed: areFieldsFilled()
-                            ? () {
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => const MainScreen()));
-                                // widget.onEmailOTPPressed();
-                                if (otpCont1.text.isEmpty ||
-                                    otpCont2.text.isEmpty ||
-                                    otpCont3.text.isEmpty ||
-                                    otpCont4.text.isEmpty) {
-                                  Get.snackbar(
-                                      "Peringatan", "Harap Isi Semua Field");
-                                } else {
-                                  inputOtp();
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  if (isLoading)
+                    LinearProgressIndicator(
+                      color: colorApp.secondaryColor,
+                    ),
+                  if (isLoading == false)
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              disabledBackgroundColor:
+                                  colorApp.secondaryColorLighter,
+                              backgroundColor: colorApp.secondaryColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8))),
+                          onPressed: areFieldsFilled()
+                              ? () {
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //     builder: (context) => const MainScreen()));
+                                  // widget.onEmailOTPPressed();
+                                  if (otpCont1.text.isEmpty ||
+                                      otpCont2.text.isEmpty ||
+                                      otpCont3.text.isEmpty ||
+                                      otpCont4.text.isEmpty) {
+                                    Get.snackbar(
+                                        "Peringatan", "Harap Isi Semua Field");
+                                  } else {
+                                    inputOtp();
+                                  }
                                 }
-                              }
-                            : null,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 24),
-                          child: Text(
-                            'Lanjutkan',
-                            style: textApp.bodySmall
-                                .copyWith(color: colorApp.light1),
-                          ),
-                        )),
-                  ),
-              ],
+                              : null,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 24),
+                            child: Text(
+                              'Lanjutkan',
+                              style: textApp.bodySmall
+                                  .copyWith(color: colorApp.light1),
+                            ),
+                          )),
+                    ),
+                ],
+              ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 }

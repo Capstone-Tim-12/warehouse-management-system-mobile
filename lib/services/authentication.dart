@@ -49,7 +49,7 @@ class AuthService {
   //   }
   // }
 
-  Future<Map<String, dynamic>> registerUser(
+  Future<http.Response> registerUser(
       String userName, String email, String password) async {
     final response = await http.post(
       Uri.parse('$baseUrl/user/register'),
@@ -65,18 +65,37 @@ class AuthService {
       }),
     );
 
-    if (response.statusCode == 201) {
-      print("Pas Daftar");
-      print(response.statusCode);
-      print(response.body);
-      return Map<String, dynamic>.from(json.decode(response.body));
-    } else {
-      print("Pas gagal daftar");
-      print(response.statusCode);
-      print(response.body);
-      throw Exception('Failed to register user');
-    }
+    return response;
   }
+
+  // Future<Map<String, dynamic>> registerUser(
+  //     String userName, String email, String password) async {
+  //   final response = await http.post(
+  //     Uri.parse('$baseUrl/user/register'),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "longitude": "${userLocationCont.userLocation.value.longitude}",
+  //       "latitude": "${userLocationCont.userLocation.value.latitude}"
+  //     }, // Set the Content-Type header
+  //     body: json.encode({
+  //       "username": userName,
+  //       "email": email,
+  //       "password": password,
+  //     }),
+  //   );
+
+  //   if (response.statusCode == 201) {
+  //     print("Pas Daftar");
+  //     print(response.statusCode);
+  //     print(response.body);
+  //     return Map<String, dynamic>.from(json.decode(response.body));
+  //   } else {
+  //     print("Pas gagal daftar");
+  //     print(response.statusCode);
+  //     print(response.body);
+  //     throw Exception('Failed to register user');
+  //   }
+  // }
 
   // static Future<Map<String, dynamic>> verifyOtp(
   //     String email, String otp) async {

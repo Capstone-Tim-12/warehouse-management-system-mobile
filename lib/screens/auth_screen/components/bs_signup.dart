@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:capstone_wms/controllers/signup_controller.dart';
 import 'package:capstone_wms/models/signup_model.dart';
 import 'package:capstone_wms/models/user_model.dart';
@@ -27,6 +29,7 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
   bool isPasswordVisible = false;
   bool isRePasswordVisible = false;
   bool isLoading = false;
+  String errorMessage = '';
 
   final SignUpController signUpCont = Get.put(SignUpController());
   AuthService authService = AuthService();
@@ -69,12 +72,12 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
         isLoading = true;
       });
 
-      final responseData = await authService.registerUser(
-          nameCont.text.toString(),
-          emailCont.text.toString(),
-          passwordcCont.text.toString());
+      final response = await authService.registerUser(nameCont.text.toString(),
+          emailCont.text.toString(), passwordcCont.text.toString());
 
-      if (responseData["status"]) {
+      Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 201) {
         SignUp newUser = SignUp(
           username: nameCont.text,
           email: emailCont.text,
@@ -87,7 +90,10 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
         // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         //   content: Text(responseData["message"]),
         // ));
-        Get.snackbar("Peringatan", responseData["message"]);
+        setState(() {
+          errorMessage = responseData["message"];
+        });
+        // Get.snackbar("Peringatan", responseData["message"]);
       }
     } catch (e) {
       print(e);
@@ -155,12 +161,23 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
                 const SizedBox(
                   height: 20,
                 ),
-                TextField(
+                TextFormField(
                   onChanged: (value) {
                     setState(() {
                       emailCont.text = value;
+                      errorMessage = '';
                     });
                   },
+                  validator: (value) {
+                    if (errorMessage == 'email already exists') {
+                      return errorMessage;
+                    }
+
+                    if (errorMessage == 'input email has on the email tag') {
+                      return errorMessage;
+                    }
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: emailCont,
                   decoration: fieldStyle.emailField,
                 ),
@@ -197,12 +214,21 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
                 const SizedBox(
                   height: 20,
                 ),
-                TextField(
+                TextFormField(
                   onChanged: (value) {
                     setState(() {
                       rePasswordcCont.text = value;
+                      errorMessage = '';
                     });
                   },
+                  validator: (value) {
+                    if (rePasswordcCont.text != passwordcCont.text) {
+                      errorMessage = 'password not match';
+
+                      return errorMessage;
+                    }
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: rePasswordcCont,
                   obscureText: isRePasswordVisible,
                   decoration: InputDecoration(
@@ -241,21 +267,22 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
                                 borderRadius: BorderRadius.circular(8))),
                         onPressed: areFieldsFilled()
                             ? () {
-                                if (nameCont.text.isEmpty ||
-                                    emailCont.text.isEmpty ||
-                                    passwordcCont.text.isEmpty ||
-                                    rePasswordcCont.text.isEmpty) {
-                                  Get.snackbar(
-                                      "Peringatan", "Harap Isi Semua Field",
-                                      backgroundColor: colorApp.light1);
-                                } else if (passwordcCont.text !=
-                                    rePasswordcCont.text) {
-                                  Get.snackbar(
-                                      "Peringatan", "Password Tidak Sama",
-                                      backgroundColor: colorApp.light1);
-                                } else {
-                                  daftarUser();
-                                }
+                                // if (nameCont.text.isEmpty ||
+                                //     emailCont.text.isEmpty ||
+                                //     passwordcCont.text.isEmpty ||
+                                //     rePasswordcCont.text.isEmpty) {
+                                //   Get.snackbar(
+                                //       "Peringatan", "Harap Isi Semua Field",
+                                //       backgroundColor: colorApp.light1);
+                                // } else if (passwordcCont.text !=
+                                //     rePasswordcCont.text) {
+                                //   Get.snackbar(
+                                //       "Peringatan", "Password Tidak Sama",
+                                //       backgroundColor: colorApp.light1);
+                                // } else {
+                                //   daftarUser();
+                                // }
+                                daftarUser();
                               }
                             : null,
                         child: Padding(

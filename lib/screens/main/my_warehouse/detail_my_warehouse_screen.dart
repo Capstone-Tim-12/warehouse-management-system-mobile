@@ -88,14 +88,42 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 // mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Image.network(
-                                    'https://media.istockphoto.com/id/1227641291/id/foto/tampilan-sudut-tinggi-gudang-yang-ditumpuk-dengan-kotak-dalam-ukuran-berbeda.jpg?s=1024x1024&w=is&k=20&c=e4JHyQcfhRt0sR-AH1CslMYFBLtkfmyvgmShLDIDqQ4=',
-                                    // Image.network(
-                                    //   'https://via.placeholder.com/142x160',
-                                    fit: BoxFit.fitHeight,
-                                    width: 142,
-                                    height: 160,
-                                  ),
+                                  detailMyWarehouseCont
+                                                  .warehouseInfo['image'] !=
+                                              null &&
+                                          Uri.parse(detailMyWarehouseCont
+                                                  .warehouseInfo['image'])
+                                              .isAbsolute
+                                      ? Obx(() => Image.network(
+                                            detailMyWarehouseCont
+                                                .warehouseInfo['image'],
+                                            width: 142,
+                                            height: 227,
+                                            fit: BoxFit.cover,
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              return Image.network(
+                                                "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                width: 142,
+                                                height: 227,
+                                                fit: BoxFit.cover,
+                                              );
+                                            },
+                                          ))
+                                      : Image.network(
+                                          "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                          width: 142,
+                                          height: 227,
+                                          fit: BoxFit.cover,
+                                        ),
+                                  // Image.network(
+                                  //   'https://media.istockphoto.com/id/1227641291/id/foto/tampilan-sudut-tinggi-gudang-yang-ditumpuk-dengan-kotak-dalam-ukuran-berbeda.jpg?s=1024x1024&w=is&k=20&c=e4JHyQcfhRt0sR-AH1CslMYFBLtkfmyvgmShLDIDqQ4=',
+                                  //   // Image.network(
+                                  //   //   'https://via.placeholder.com/142x160',
+                                  //   fit: BoxFit.fitHeight,
+                                  //   width: 142,
+                                  //   height: 160,
+                                  // ),
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),

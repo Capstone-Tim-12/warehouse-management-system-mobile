@@ -148,15 +148,14 @@ class _MyWarehouseState extends State<MyWarehouse> {
                                               borderRadius:
                                                   BorderRadius.circular(12.0),
                                               child: acceptedWarehouse[
-                                                              'image'] !=
+                                                              'warehouseImage'] !=
                                                           null &&
-                                                      Uri.parse(
-                                                              acceptedWarehouse[
-                                                                  'image'])
+                                                      Uri.parse(acceptedWarehouse[
+                                                              'warehouseImage'])
                                                           .isAbsolute
                                                   ? Image.network(
                                                       acceptedWarehouse[
-                                                          'image'],
+                                                          'warehouseImage'],
                                                       // width: 142,
                                                       // height: 227,
                                                       fit: BoxFit.fill,
@@ -317,15 +316,14 @@ class _MyWarehouseState extends State<MyWarehouse> {
                                               borderRadius:
                                                   BorderRadius.circular(12.0),
                                               child: submittedWarehouse[
-                                                              'image'] !=
+                                                              'warehouseImage'] !=
                                                           null &&
-                                                      Uri.parse(
-                                                              submittedWarehouse[
-                                                                  'image'])
+                                                      Uri.parse(submittedWarehouse[
+                                                              'warehouseImage'])
                                                           .isAbsolute
                                                   ? Image.network(
                                                       submittedWarehouse[
-                                                          'image'],
+                                                          'warehouseImage'],
                                                       width: 142,
                                                       height: 227,
                                                       fit: BoxFit.cover,

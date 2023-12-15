@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:capstone_wms/controllers/search_controller.dart';
 import 'package:capstone_wms/models/searchwarehouse_model.dart';
 import 'package:capstone_wms/services/warehouse_services.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ class LowerPriceController extends GetxController {
   WarehouseServidces warehoouseServices = WarehouseServidces();
   RxList<dynamic> lowPriceData = <dynamic>[].obs;
   RxBool isLowPriceLoading = false.obs;
+  FindController searchCont = Get.put(FindController());
 
   Future<void> getLowPriceWarehouse() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -25,7 +27,7 @@ class LowerPriceController extends GetxController {
           maxSize: '');
 
       final response =
-          await warehoouseServices.getLowerPriceWarehouse(lowPriceWarehouse);
+          await warehoouseServices.getLowerPriceWarehouse(lowPriceWarehouse, searchCont.recentPage.value.toString());
 
       Map<String, dynamic> responseData = jsonDecode(response.body);
 

@@ -140,6 +140,7 @@ class _DashboardState extends State<Dashboard> {
                             //   searchController.searchString.value = value;
                             // },
                             onSubmitted: (value) {
+                              searchController.clearWarehouseData();
                               searchController
                                   .onSearchSubmitted(searchCont.text);
                             },

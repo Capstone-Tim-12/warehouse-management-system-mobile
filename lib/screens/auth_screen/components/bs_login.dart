@@ -172,7 +172,7 @@ class _BottomSheetLoginState extends State<BottomSheetLogin> {
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SingleChildScrollView(
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.65,
+            height: MediaQuery.of(context).size.height * 0.69,
             // height: MediaQuery.of(context).size.height * 0.617,
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
@@ -193,7 +193,7 @@ class _BottomSheetLoginState extends State<BottomSheetLogin> {
                     style: textApp.heading4,
                   ),
                   Text(
-                    'Selamat datang, silahkan register untuk melanjutkan!',
+                    'Selamat datang, silahkan masuk terlebih dahulu untuk melanjutkan!',
                     style: textApp.bodySmall
                         .copyWith(fontWeight: FontWeight.w500, fontSize: 12),
                   ),
