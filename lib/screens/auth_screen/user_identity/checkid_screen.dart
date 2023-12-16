@@ -453,7 +453,7 @@ class _CheckIdentityState extends State<CheckIdentity> {
                               showUserAdress.userAddress.value.regency,
                               style: textApp.bodyNormal
                                   .copyWith(fontWeight: FontWeight.w400),
-                              // textAlign: TextAlign.end,
+                              textAlign: TextAlign.end,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -476,12 +476,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                           ],
                         ),
                         Obx(
-                          () => Flexible(
+                          () => Expanded(
                             child: Text(
                               showUserAdress.userAddress.value.district,
                               style: textApp.bodyNormal
                                   .copyWith(fontWeight: FontWeight.w400),
                               textAlign: TextAlign.end,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         )
@@ -503,12 +504,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                           ],
                         ),
                         Obx(
-                          () => Flexible(
+                          () => Expanded(
                             child: Text(
                               showUserAdress.userAddress.value.fullAdress,
                               style: textApp.bodyNormal
                                   .copyWith(fontWeight: FontWeight.w400),
                               textAlign: TextAlign.end,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         )
