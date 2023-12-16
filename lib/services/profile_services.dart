@@ -48,7 +48,7 @@ class ProfileServices {
     return response;
   }
 
-  Future<Response<dynamic>> uploadFoto(String token, File foto) async {
+  Future<Response<dynamic>> uploadFoto(String token, XFile foto) async {
     try {
       Dio dio = Dio();
       FormData formData = FormData.fromMap({

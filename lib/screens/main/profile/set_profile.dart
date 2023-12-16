@@ -97,8 +97,10 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                           Obx(
                             () => CircleAvatar(
                               radius: 50.0,
-                              backgroundImage:
-                                  NetworkImage(profileCont.userInfo['photo']),
+                              backgroundImage: NetworkImage(profileCont
+                                      .userInfo['photo'].isNotEmpty
+                                  ? profileCont.userInfo['photo']
+                                  : 'https://www.dropbox.com/scl/fi/03b8pgage93n6qcf5fwme/file_ybdYreruY46xVUqWf2rE.png?rlkey=fhkzti4pdohc4brfm952g6xyo&raw=1'),
                               backgroundColor: Colors.transparent,
                             ),
                           ),
@@ -172,7 +174,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                                 child: SizedBox(
                                   width: double.infinity,
                                   height: MediaQuery.of(context).size.height *
-                                      0.201,
+                                      0.265,
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
                                     child: Column(
@@ -198,54 +200,6 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                                                 style: TextCollection()
                                                     .heading6White,
                                               ),
-                                              const SizedBox(
-                                                width: 120,
-                                              ),
-                                              Obx(() => ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor: colorApp
-                                                          .secondaryColor,
-                                                      disabledBackgroundColor:
-                                                          colorApp
-                                                              .secondaryColorLighter,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0),
-                                                      ),
-                                                    ),
-                                                    onPressed: profileCont
-                                                            .isUpdateLoading
-                                                            .value
-                                                        ? null
-                                                        : () async {
-                                                            if (usernameCont
-                                                                    .text
-                                                                    .length <=
-                                                                6) {
-                                                              Get.snackbar(
-                                                                  "Peringatan",
-                                                                  "Username Minimal 6 Digit");
-                                                            } else {
-                                                              await profileCont
-                                                                  .updateUsername(
-                                                                      usernameCont
-                                                                          .text);
-                                                              profileCont
-                                                                  .getUserInfo();
-                                                              Get.back();
-                                                            }
-                                                          },
-                                                    child: Text(
-                                                      "Ganti",
-                                                      style: TextCollection()
-                                                          .heading6White,
-                                                      selectionColor:
-                                                          colorApp.light1,
-                                                    ),
-                                                  ))
                                             ],
                                           ),
                                         ),
@@ -280,6 +234,57 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                                             ),
                                           ),
                                         ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        // Obx(() => )
+
+                                        SizedBox(
+                                            width: double.infinity,
+                                            child: Obx(
+                                              () => ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      colorApp.secondaryColor,
+                                                  disabledBackgroundColor:
+                                                      colorApp
+                                                          .secondaryColorLighter,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                                onPressed: profileCont
+                                                        .isUpdateLoading.value
+                                                    ? null
+                                                    : () async {
+                                                        if (usernameCont
+                                                                .text.length <=
+                                                            7) {
+                                                          Get.snackbar(
+                                                              "Peringatan",
+                                                              "Username Minimal 7 Digit");
+                                                        } else {
+                                                          Get.back();
+                                                          await profileCont
+                                                              .updateUsername(
+                                                                  usernameCont
+                                                                      .text);
+                                                          profileCont
+                                                              .getUserInfo();
+                                                          usernameCont.clear();
+                                                        }
+                                                      },
+                                                child: Text(
+                                                  "Ganti",
+                                                  style: TextCollection()
+                                                      .heading6White,
+                                                  selectionColor:
+                                                      colorApp.light1,
+                                                ),
+                                              ),
+                                            ))
                                       ],
                                     ),
                                   ),

@@ -305,10 +305,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                           ],
                         ),
                         Obx(
-                          () => Text(
-                            showUserIdentity.userIdentity.value.job,
-                            style: textApp.bodyNormal
-                                .copyWith(fontWeight: FontWeight.w400),
+                          () => Expanded(
+                            child: Text(
+                              showUserIdentity.userIdentity.value.job,
+                              style: textApp.bodyNormal
+                                  .copyWith(fontWeight: FontWeight.w400),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         )
                       ],
@@ -445,12 +448,13 @@ class _CheckIdentityState extends State<CheckIdentity> {
                           ],
                         ),
                         Obx(
-                          () => Flexible(
+                          () => Expanded(
                             child: Text(
                               showUserAdress.userAddress.value.regency,
                               style: textApp.bodyNormal
                                   .copyWith(fontWeight: FontWeight.w400),
-                              textAlign: TextAlign.end,
+                              // textAlign: TextAlign.end,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         )
@@ -513,6 +517,9 @@ class _CheckIdentityState extends State<CheckIdentity> {
                   ]),
                 ),
               ),
+              const SizedBox(
+                height: 270,
+              )
             ]),
           ),
           Positioned(

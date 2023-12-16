@@ -61,31 +61,47 @@ class _SelfieKTPState extends State<SelfieKTP> {
     _cameraController?.dispose();
   }
 
-  void verifiyingUser() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-      await takePic();
+  // void verifiyingUser() async {
+  //   try {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     await takePic();
 
-      if (picTaken) {
-        await upKTPPicToStorage();
-        if (isKTPUploading) {
-          await upSelfPicToStorage();
-          if (isSelfUploading) {
-            await updateUser();
-            if (isUpdating) {
-              await verifyUser();
-            }
-          }
-        }
-        // if (isUploading) {
-        //   await updateUser();
-        //   if (isUpdating) {
-        //     await verifyUser();
-        //   }
-        // }
-      }
+  //     if (picTaken) {
+  //       await upKTPPicToStorage();
+  //       if (isKTPUploading) {
+  //         await upSelfPicToStorage();
+  //         if (isSelfUploading) {
+  //           await updateUser();
+  //           if (isUpdating) {
+  //             await verifyUser();
+  //           }
+  //         }
+  //       }
+  //       // if (isUploading) {
+  //       //   await updateUser();
+  //       //   if (isUpdating) {
+  //       //     await verifyUser();
+  //       //   }
+  //       // }
+  //     }
+  //   } catch (e) {
+  //     Get.snackbar("Peringatan", "Terjadi kesalahan",
+  //         backgroundColor: colorApp.light1);
+  //   } finally {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   }
+  // }
+
+  void verifiyingUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      await verifyUser();
     } catch (e) {
       Get.snackbar("Peringatan", "Terjadi kesalahan",
           backgroundColor: colorApp.light1);

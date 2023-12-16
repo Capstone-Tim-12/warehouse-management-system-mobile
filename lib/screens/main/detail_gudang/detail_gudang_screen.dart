@@ -345,7 +345,9 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                                 // width: 60,
                                 // height: 20,
                                 decoration: BoxDecoration(
-                                    color: colorApp.mainColor,
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        width: 1, color: Colors.black),
                                     borderRadius: BorderRadius.circular(10)),
 
                                 child: Padding(
@@ -354,7 +356,7 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                                     'Gudang ${capitalizeFirstLetter(warehouseData!['warehouseType'])}',
                                     // warehouseData!['warehouseType'],
                                     style: TextCollection().bodySmall.copyWith(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                         fontWeight: FontWeight.w400),
                                   ),
                                 ),
