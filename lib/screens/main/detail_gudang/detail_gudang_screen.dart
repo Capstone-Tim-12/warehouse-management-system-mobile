@@ -37,6 +37,13 @@ late GoogleMapController mapController;
 //List<dynamic>? detailWarehouseId;
 List<dynamic>? detailWarehouseId;
 
+String capitalizeFirstLetter(String text) {
+  if (text == null || text.isEmpty) {
+    return text;
+  }
+  return text[0].toUpperCase() + text.substring(1);
+}
+
 class _DetailGudangScreenState extends State<DetailGudangScreen> {
   // List<dynamic>? detailgudang;
   // Map<String, dynamic> warehouseData = {};
@@ -321,32 +328,64 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                           Text(
                             // "Rp.3.000.000.000,00",
                             // "Rp. 3 Miliar",
-                            "Rp. ${formatter.format(warehouseData!['annualPrice'])}/Tahun",
+                            warehouseData!['name'].toString(),
+                            // "Rp. ${formatter.format(warehouseData!['annualPrice'])}/Tahun",
                             // warehouseData!['annualPrice'].toString(),
                             style: TextCollection().bodyLarge,
                           ),
                           const SizedBox(height: 5),
-                          Text(
-                            warehouseData!['name'].toString(),
-                            style: TextCollection().bodyNormal,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Rp. ${formatter.format(warehouseData!['annualPrice'])}/Tahun",
+                                style: TextCollection().bodyNormal,
+                              ),
+                              Container(
+                                // width: 60,
+                                // height: 20,
+                                decoration: BoxDecoration(
+                                    color: colorApp.mainColor,
+                                    borderRadius: BorderRadius.circular(10)),
+
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Text(
+                                    'Gudang ${capitalizeFirstLetter(warehouseData!['warehouseType'])}',
+                                    // warehouseData!['warehouseType'],
+                                    style: TextCollection().bodySmall.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                           const SizedBox(height: 5),
-                          Text(
-                            warehouseData!['regencyName'].toString(),
-                            // "Sudirman, Bandung",
-                            style: TextCollection()
-                                .bodySmall
-                                .copyWith(fontWeight: FontWeight.normal),
+                          Row(
+                            children: [
+                              const Icon(Icons.location_on_outlined, size: 18),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              Text(
+                                warehouseData!['regencyName'].toString(),
+                                // "Sudirman, Bandung",
+                                style: TextCollection()
+                                    .bodySmall
+                                    .copyWith(fontWeight: FontWeight.normal),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 5),
-                          Text(
-                            "Gudang ${warehouseData!['warehouseType']}",
-                            // warehouseData!['warehouseType'].toString(),
-                            // "Gudang",
-                            style: TextCollection()
-                                .bodySmall
-                                .copyWith(fontWeight: FontWeight.normal),
-                          ),
+                          // Text(
+                          //   "Gudang ${warehouseData!['warehouseType']}",
+                          //   // warehouseData!['warehouseType'].toString(),
+                          //   // "Gudang",
+                          //   style: TextCollection()
+                          //       .bodySmall
+                          //       .copyWith(fontWeight: FontWeight.normal),
+                          // ),
                           const SizedBox(height: 15),
                           Text(
                             // warehouseData!['name'].toString(),
