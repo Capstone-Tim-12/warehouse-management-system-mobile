@@ -2,13 +2,16 @@ import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:capstone_wms/classes/constants/urls_collection.dart';
 import 'package:dio/dio.dart';
 // import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileServices {
-  static const String baseUrl =
-      "http://ec2-18-139-162-85.ap-southeast-1.compute.amazonaws.com:8086";
+  // static const String baseUrl =
+  //     "http://ec2-18-139-162-85.ap-southeast-1.compute.amazonaws.com:8086";
+
+  String baseUrl = UrlCollection().urlProd;
 
   Future<http.Response> getUserInfo(String token) async {
     final response = await http.get(
@@ -45,34 +48,33 @@ class ProfileServices {
     return response;
   }
 
-Future<Response<dynamic>> uploadFoto(String token, File foto) async {
-  try {
-    Dio dio = Dio();
-    FormData formData = FormData.fromMap({
-      'photo': await MultipartFile.fromFile(
-        foto.path,
-        filename: foto.path,
-      ),
-    });
+  Future<Response<dynamic>> uploadFoto(String token, File foto) async {
+    try {
+      Dio dio = Dio();
+      FormData formData = FormData.fromMap({
+        'photo': await MultipartFile.fromFile(
+          foto.path,
+          filename: foto.path,
+        ),
+      });
 
-    Response<dynamic> response = await dio.post(
-      '$baseUrl/user/upload/photo',
-      data: formData,
-      options: Options(
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer $token',
-        },
-      ),
-    );
+      Response<dynamic> response = await dio.post(
+        '$baseUrl/user/upload/photo',
+        data: formData,
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
 
-    return response;
-  } catch (error) {
-    print('Error uploading photo: $error');
-    rethrow;
+      return response;
+    } catch (error) {
+      print('Error uploading photo: $error');
+      rethrow;
+    }
   }
-}
-
 
   // Future<http.Response> uploadFoto(String token, dynamic foto) async {
   //   final response = await http.post(Uri.parse('$baseUrl/user/upload/photo'),

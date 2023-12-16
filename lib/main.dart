@@ -1,4 +1,5 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
+import 'package:capstone_wms/screens/auth_screen/user_identity/verification_success.dart';
 import 'package:capstone_wms/screens/main/dashboard/search_screen.dart';
 import 'package:capstone_wms/screens/main/history/history_screen.dart';
 import 'package:capstone_wms/screens/main/stack_screen.dart';
@@ -42,9 +43,7 @@ class MyApp extends StatelessWidget {
               ColorScheme.fromSeed(seedColor: colorApp.mainColorDarker),
           useMaterial3: true,
         ),
-
-        // home: const SearchScreen(),
-        // home: const MainScreen(),
+        // home: VerificationSuccess());
         home: const SplashScreen());
     // home: HistoryScreen());
   }

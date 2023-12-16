@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:capstone_wms/classes/constants/urls_collection.dart';
 import 'package:capstone_wms/controllers/userlocation_controller.dart';
 import 'package:capstone_wms/models/userlocation_model.dart';
 import 'package:capstone_wms/models/verifiyuser_model.dart';
@@ -8,8 +9,10 @@ import 'package:http/http.dart' as http;
 
 class AuthService {
   UserLocationController userLocationCont = Get.put(UserLocationController());
-  static const String baseUrl =
-      "http://ec2-18-139-162-85.ap-southeast-1.compute.amazonaws.com:8086";
+  // static const String baseUrl =
+  //     "http://ec2-18-139-162-85.ap-southeast-1.compute.amazonaws.com:8086";
+
+  String baseUrl = UrlCollection().urlProd;
 
   Future<http.Response> logInUser(String email, String password) async {
     final response = await http.post(
@@ -118,7 +121,7 @@ class AuthService {
   //     throw Exception('Failed to verify OTP');
   //   }
   // }
-  static Future<http.Response> verifyOtp(String email, String otp) async {
+  Future<http.Response> verifyOtp(String email, String otp) async {
     final response = await http.post(
       Uri.parse('$baseUrl/user/otp-verify'),
       headers: {"Content-Type": "application/json"},
@@ -131,7 +134,7 @@ class AuthService {
     return response;
   }
 
-  static Future<http.Response> resendOTP(String email) async {
+  Future<http.Response> resendOTP(String email) async {
     final response = await http.post(Uri.parse('$baseUrl/user/resend-otp'),
         headers: {"Content-Type": "application/json"},
         body: json.encode({
@@ -179,7 +182,7 @@ class AuthService {
   //   }
   // }
 
-  static Future<Map<String, dynamic>> resetPassword(
+  Future<Map<String, dynamic>> resetPassword(
       String verifyId, String email, String newPassword) async {
     final response = await http.post(Uri.parse('$baseUrl/user/reset-password'),
         headers: {"Content-Type": "application/json"},

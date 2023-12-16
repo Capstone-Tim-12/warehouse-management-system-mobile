@@ -112,7 +112,7 @@ class _BotomSheetOTPEmailState extends State<BotomSheetOTPEmail> {
       });
 
       final otpResponse =
-          await AuthService.verifyOtp(signUpCont.signUpUser.value.email, otp);
+          await AuthService().verifyOtp(signUpCont.signUpUser.value.email, otp);
       final otpData = json.decode(otpResponse.body);
       if (otpResponse.statusCode == 200) {
         // final otpData = json.decode(otpResponse.body);
@@ -227,7 +227,7 @@ class _BotomSheetOTPEmailState extends State<BotomSheetOTPEmail> {
   Future<void> getSignUpdOTP() async {
     try {
       final response =
-          await AuthService.resendOTP(signUpCont.signUpUser.value.email);
+          await AuthService().resendOTP(signUpCont.signUpUser.value.email);
 
       final responseData = json.decode(response.body);
 

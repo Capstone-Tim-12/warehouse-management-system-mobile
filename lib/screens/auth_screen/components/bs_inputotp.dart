@@ -91,7 +91,7 @@ class _BottomSheetOTPState extends State<BottomSheetOTP> {
       });
 
       final otpResponse =
-          await AuthService.verifyOtp(forgotPWController.email.value, otp);
+          await AuthService().verifyOtp(forgotPWController.email.value, otp);
       final otpData = json.decode(otpResponse.body);
       if (otpResponse.statusCode == 200) {
         // final otpData = json.decode(otpResponse.body);
@@ -117,7 +117,7 @@ class _BottomSheetOTPState extends State<BottomSheetOTP> {
   Future<void> getNewPasswordOTP() async {
     try {
       final response =
-          await AuthService.resendOTP(forgotPWController.email.value);
+          await AuthService().resendOTP(forgotPWController.email.value);
 
       final responseData = json.decode(response.body);
 

@@ -1,3 +1,4 @@
+import 'package:capstone_wms/classes/constants/urls_collection.dart';
 import 'package:capstone_wms/controllers/userlocation_controller.dart';
 import 'package:capstone_wms/models/userlocation_model.dart';
 import 'package:geolocator/geolocator.dart';
@@ -6,8 +7,10 @@ import 'package:http/http.dart' as http;
 
 class LocationService {
   UserLocationController saveUserLoc = Get.put(UserLocationController());
-  static const String baseUrl =
-      "http://ec2-18-139-162-85.ap-southeast-1.compute.amazonaws.com:8086";
+  // static const String baseUrl =
+  //     "http://ec2-18-139-162-85.ap-southeast-1.compute.amazonaws.com:8086";
+
+  String baseUrl = UrlCollection().urlProd;
 
   Future<http.Response> getRegencyList(String selectedProvince) async {
     final response = await http.get(Uri.parse("$baseUrl/user/regency/$selectedProvince"));

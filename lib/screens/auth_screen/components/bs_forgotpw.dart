@@ -40,7 +40,7 @@ class _BottomSheetForgotPwState extends State<BottomSheetForgotPw> {
         isLoading = true;
       });
 
-      final response = await AuthService.resendOTP(emailCont.text);
+      final response = await AuthService().resendOTP(emailCont.text);
 
       final responseData = json.decode(response.body);
 

@@ -7,6 +7,7 @@ import 'package:capstone_wms/components/auth_bg.dart';
 import 'package:capstone_wms/screens/main/dashboard/dashboard.dart';
 import 'package:capstone_wms/screens/main/stack_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class VerificationSuccess extends StatelessWidget {
   VerificationSuccess({super.key});
@@ -38,86 +39,63 @@ class VerificationSuccess extends StatelessWidget {
       //   automaticallyImplyLeading: false,
       //   // leading: const BackButton(),
       // ),
-      body: SizedBox(
-        width: screenWidth,
-        height: screenHeight,
-        child: Stack(
-          children: [
-            const AuthBg(),
-            Padding(
-              // padding: paddingApp.signInPadding,
-              padding: const EdgeInsets.only(
-                  top: 180, left: 27, right: 22, bottom: 127),
-              child: Container(
-                width: screenWidth * 0.9,
-                height: 382,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    // color: colorApp.blugrey,
-                    borderRadius: BorderRadius.circular(20)),
-                child: Column(
-                  // mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 23,
-                    ),
-                    Text(
-                      'Verifikasi Identitas Berhasil',
-                      style: textApp.heading5,
-                      textAlign: TextAlign.center,
-                    ),
-                    Icon(
-                      Icons.check,
-                      color: colorApp.secondaryColor,
-                      size: 140,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: Text(
-                        'Identitas berhasil diverifikasi, Sekarang anda dapat menggunakan semua fitur aplikasi',
-                        textAlign: TextAlign.center,
-                        style: textApp.bodySmall,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: colorApp.secondaryColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8))),
-                        onPressed: () {
-                          // Navigator.of(context).pushAndRemoveUntil(
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const LoginScreen(),
-                          //   ),
-                          //   (route) => false,
-                          // );
-
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => const MainScreen()),
-                            (Route<dynamic> route) => false,
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 24),
-                          child: Text(
-                            'Home',
-                            style: TextStyle(color: colorApp.light1),
-                          ),
-                        )),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
+      body: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+          ),
+          width: screenWidth,
+          height: screenHeight,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.check_rounded,
+                  color: colorApp.stateSuccess,
+                  size: 180,
                 ),
-              ),
-            )
-          ],
+                Text(
+                  'Verifikasi Identitas Anda Berhasil',
+                  style: textApp.heading6.copyWith(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 19,
+                      color: colorApp.stateSuccess),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.887,
+                  child: Text(
+                    'Silakan lihat menu ‘Profil’ untuk mengetahui status verifikasi identitas akun anda ',
+                    style:
+                        textApp.bodySmall.copyWith(fontWeight: FontWeight.w400),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              ],
+            ),
+          )),
+
+      bottomSheet: Container(
+        height: 60,
+        width: double.infinity,
+        decoration: const BoxDecoration(color: Colors.white),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: colorApp.mainColor,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)))),
+              onPressed: () {
+                Get.offAll(() => const MainScreen());
+              },
+              child: Text(
+                'Kembali ke Beranda',
+                style: textApp.bodySmall
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+              )),
         ),
       ),
     );

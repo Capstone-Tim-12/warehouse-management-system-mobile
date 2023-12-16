@@ -53,7 +53,7 @@ class _SearchScreenState extends State<SearchScreen> {
         builder: (context) => BottomSheetFilter(
               onFilterPressed: () {
                 // Get.back();
-                // searchController.getWarehouseData();
+                searchController.getWarehouseData();
               },
             ));
   }
@@ -107,7 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     IconButton(
                         onPressed: () {
                           Get.back();
-                          searchController.clearWarehouseData;
+                          searchController.clearWarehouseData();
                         },
                         icon: Icon(
                           Icons.arrow_back_outlined,
@@ -123,6 +123,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: TextField(
                         onSubmitted: (value) {
                           searchController.onSearchChanged(value);
+                          searchController.clearWarehouseData();
                           searchController.getWarehouseData();
                           print(searchCont.text);
                         },
@@ -172,7 +173,16 @@ class _SearchScreenState extends State<SearchScreen> {
                     );
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
-                  } else if (snapshot.data == null ||
+                  }
+                  // else if (snapshot.connectionState ==
+                  //     ConnectionState.waiting) {
+                  //   return Center(
+                  //     child: CircularProgressIndicator(
+                  //       color: colorApp.secondaryColor,
+                  //     ),
+                  //   );
+                  // }
+                  else if (snapshot.data == null ||
                       searchController.warehouseData.isEmpty) {
                     return Center(
                       child: Text(
@@ -278,8 +288,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   children: [
                                                     Text(
                                                       'Gudang ${capitalizeFirstLetter(warehouse['warehouseTypeName'])}'
-                                                          // '${warehouse['warehouseTypeName']}'
-
                                                           .toString(),
                                                       textAlign:
                                                           TextAlign.center,
@@ -380,20 +388,20 @@ class _SearchScreenState extends State<SearchScreen> {
                                             ],
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(1.0),
-                                        child: IconButton(
-                                            onPressed: () async {
-                                              await favoriteController
-                                                  .addToFavorites(
-                                                      warehouse['id']);
-                                            },
-                                            icon: const Icon(
-                                              Icons.star_border_outlined,
-                                            )),
-                                      ),
-                                    ],
+                                        Padding(
+                                          padding: const EdgeInsets.all(1.0),
+                                          child: IconButton(
+                                              onPressed: () async {
+                                                await favoriteController
+                                                    .addToFavorites(
+                                                        warehouse['id']);
+                                              },
+                                              icon: const Icon(
+                                                Icons.star_border_outlined,
+                                              )),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(height: 8),

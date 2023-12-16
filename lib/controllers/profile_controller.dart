@@ -74,7 +74,7 @@ class ProfileController extends GetxController {
   Future<void> processOTP(String email, String otp, BuildContext ctx) async {
     isOTPProcessed.value = true;
     try {
-      final otpResponse = await AuthService.verifyOtp(email, otp);
+      final otpResponse = await AuthService().verifyOtp(email, otp);
       final otpData = json.decode(otpResponse.body);
       print(otpResponse.statusCode);
       if (otpResponse.statusCode == 200) {

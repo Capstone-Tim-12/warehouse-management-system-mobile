@@ -66,7 +66,7 @@ class _BottomSheetNewPWState extends State<BottomSheetNewPW> {
         isLoading = true;
       });
 
-      final responseData = await AuthService.resetPassword(
+      final responseData = await AuthService().resetPassword(
           forgotPWController.verifyId.value,
           forgotPWController.email.value,
           newPwCont.text);

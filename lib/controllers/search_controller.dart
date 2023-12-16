@@ -92,6 +92,7 @@ class FindController extends GetxController {
     isLoading.value = true;
     // isMoreLoading.value = true;
     // warehouseData.clear();
+
     try {
       SearchWarehouse getWarehouseList = SearchWarehouse(
         token: prefs.getString('token')!,
@@ -110,6 +111,9 @@ class FindController extends GetxController {
 
         if (response.statusCode == 200) {
           if (responseData['data'] == null) {
+            if (warehouseData.isEmpty) {
+              warehouseData.value = [];
+            }
             // warehouseData.value = [];
           } else {
             List<dynamic> warehouseList = responseData['data'];
@@ -127,6 +131,9 @@ class FindController extends GetxController {
         Map<String, dynamic> responseData = json.decode(response.body);
         if (response.statusCode == 200) {
           if (responseData['data'] == null) {
+            if (warehouseData.isEmpty) {
+              warehouseData.value = [];
+            }
             // warehouseData.value = [];
           } else {
             List<dynamic> warehouseList = responseData['data'];
@@ -144,6 +151,9 @@ class FindController extends GetxController {
         Map<String, dynamic> responseData = json.decode(response.body);
         if (response.statusCode == 200) {
           if (responseData['data'] == null) {
+            if (warehouseData.isEmpty) {
+              warehouseData.value = [];
+            }
             // warehouseData.value = [];
           } else {
             List<dynamic> warehouseList = responseData['data'];
@@ -166,19 +176,25 @@ class FindController extends GetxController {
         if (response.statusCode == 200) {
           try {
             Map<String, dynamic> responseData = jsonDecode(response.body);
-            if (responseData.containsKey('data') &&
-                responseData['data'] != null) {
-              List<dynamic> warehouseList = responseData['data'];
-              warehouseData.addAll(warehouseList);
-            } else {
-              // warehouseData.value = []; // Set warehouseData to an empty list
-            }
-            // if (responseData['data'] == null) {
-            //   warehouseData.value = [];
-            // } else {
+            // if (responseData.containsKey('data') &&
+            //     responseData['data'] != null) {
             //   List<dynamic> warehouseList = responseData['data'];
             //   warehouseData.addAll(warehouseList);
+            // } else {
+            //   // warehouseData.value = []; // Set warehouseData to an empty list
             // }
+            if (responseData['data'] == null) {
+              if (warehouseData.isEmpty) {
+                warehouseData.value = [];
+              } else if (warehouseData.isNotEmpty &&
+                  responseData['data'] == null &&
+                  searchString.isNotEmpty) {
+                print(responseData['data']);
+              }
+            } else {
+              List<dynamic> warehouseList = responseData['data'];
+              warehouseData.addAll(warehouseList);
+            }
           } catch (e) {
             print(e);
           }
