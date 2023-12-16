@@ -390,53 +390,51 @@ class _EditAddressState extends State<EditAddress> {
                     textAlignVertical: TextAlignVertical.top,
                   ),
                 ),
+                const SizedBox(
+                  height: 148,
+                )
               ],
             ),
           ),
-          Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                color: colorApp.bgAuthScaffold,
-                // height: 200,
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 22),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: colorApp.mainColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8))),
-                          onPressed: () {
-                            AddressModel newVerUser = AddressModel(
-                                country: selectedCountry,
-                                province: selectedProvince,
-                                provinceId: selectedProvinceId,
-                                regency: selectedCity,
-                                regencyId: selectedCityId,
-                                district: selectedDistrict,
-                                districtId: selectedDistrictId,
-                                fullAdress: alamatCont.text);
-
-                            verUserAddress.updateUserAddress(newVerUser);
-
-                            Get.back();
-                          },
-                          child: Text('Ubah',
-                              style: textApp.largeLabel.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500))),
-                    ),
-                  ),
-                ),
-              ))
         ],
+      ),
+      bottomNavigationBar: Container(
+        color: colorApp.bgAuthScaffold,
+        height: 100,
+        width: MediaQuery.of(context).size.width,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 22),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: colorApp.mainColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8))),
+                  onPressed: () {
+                    AddressModel newVerUser = AddressModel(
+                        country: selectedCountry,
+                        province: selectedProvince,
+                        provinceId: selectedProvinceId,
+                        regency: selectedCity,
+                        regencyId: selectedCityId,
+                        district: selectedDistrict,
+                        districtId: selectedDistrictId,
+                        fullAdress: alamatCont.text);
+
+                    verUserAddress.updateUserAddress(newVerUser);
+
+                    Get.back();
+                  },
+                  child: Text('Ubah',
+                      style: textApp.largeLabel.copyWith(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500))),
+            ),
+          ),
+        ),
       ),
     );
   }

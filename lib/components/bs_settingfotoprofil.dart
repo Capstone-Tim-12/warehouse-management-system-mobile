@@ -1,12 +1,17 @@
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/bs_avatar.dart';
+import 'package:capstone_wms/controllers/profile_controller.dart';
 import 'package:capstone_wms/services/avatar_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void bottomSheetFotoProfil(BuildContext context) {
+  ProfileController proCont = Get.put(ProfileController());
+
   showModalBottomSheet(
+    isDismissible: proCont.isUpdateLoading.value ? false : true,
+    enableDrag: proCont.isUpdateLoading.value ? false : true,
     showDragHandle: true,
     context: context,
     shape: const RoundedRectangleBorder(
@@ -46,10 +51,16 @@ void bottomSheetFotoProfil(BuildContext context) {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(
-                        color: colorApp.mainColor,
-                        onPressed: () {},
-                        icon: const Icon(Icons.camera_alt_sharp),
+                      Obx(
+                        () => IconButton(
+                          color: colorApp.mainColor,
+                          onPressed: proCont.isUpdateLoading.value
+                              ? null
+                              : () {
+                                  proCont.choosePfpFromCamera();
+                                },
+                          icon: const Icon(Icons.camera_alt_sharp),
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Text(
@@ -65,10 +76,16 @@ void bottomSheetFotoProfil(BuildContext context) {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(
-                        color: colorApp.mainColor,
-                        onPressed: () {},
-                        icon: const Icon(Icons.photo_outlined),
+                      Obx(
+                        () => IconButton(
+                          color: colorApp.mainColor,
+                          onPressed: proCont.isUpdateLoading.value
+                              ? null
+                              : () {
+                                  proCont.choosePfpFromGallery();
+                                },
+                          icon: const Icon(Icons.photo_outlined),
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Text(
@@ -84,13 +101,17 @@ void bottomSheetFotoProfil(BuildContext context) {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(
-                        color: colorApp.mainColor,
-                        onPressed: () {
-                          Get.back();
-                          bottomSheetAvatar(context);
-                        },
-                        icon: const Icon(Icons.person),
+                      Obx(
+                        () => IconButton(
+                          color: colorApp.mainColor,
+                          onPressed: proCont.isUpdateLoading.value
+                              ? null
+                              : () {
+                                  Get.back();
+                                  bottomSheetAvatar(context);
+                                },
+                          icon: const Icon(Icons.person),
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Text(

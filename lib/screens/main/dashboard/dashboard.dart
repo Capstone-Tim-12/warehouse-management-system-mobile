@@ -5,6 +5,7 @@ import 'package:capstone_wms/controllers/lowerprice_controller.dart';
 import 'package:capstone_wms/controllers/recommendation_cont.dart';
 import 'package:capstone_wms/controllers/search_controller.dart';
 import 'package:capstone_wms/screens/main/chatbot/chatscreen.dart';
+import 'package:capstone_wms/screens/main/dashboard/lowprice_screen.dart';
 import 'package:capstone_wms/screens/main/dashboard/recommend_list.dart';
 import 'package:capstone_wms/screens/main/detail_gudang/detail_gudang_screen.dart';
 import 'package:flutter/material.dart';
@@ -391,7 +392,9 @@ class _DashboardState extends State<Dashboard> {
                   ),
                   const Spacer(),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => const LowPriceList());
+                    },
                     icon: const Icon(Icons.more_horiz),
                   ),
                 ],

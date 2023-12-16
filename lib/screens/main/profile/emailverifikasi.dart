@@ -88,7 +88,7 @@ class _EmailVerifikasiState extends State<EmailVerifikasi> {
                                 child: SizedBox(
                                   width: double.infinity,
                                   height: MediaQuery.of(context).size.height *
-                                      0.201,
+                                      0.265,
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
                                     child: Column(
@@ -114,94 +114,11 @@ class _EmailVerifikasiState extends State<EmailVerifikasi> {
                                                 style: TextCollection()
                                                     .heading6White,
                                               ),
-                                              const SizedBox(
-                                                width: 120,
-                                              ),
-                                              // Obx(() => ElevatedButton(
-                                              //       style: ElevatedButton
-                                              //           .styleFrom(
-                                              //         backgroundColor: colorApp
-                                              //             .secondaryColor,
-                                              //         disabledBackgroundColor:
-                                              //             colorApp
-                                              //                 .secondaryColorLighter,
-                                              //         shape:
-                                              //             RoundedRectangleBorder(
-                                              //           borderRadius:
-                                              //               BorderRadius
-                                              //                   .circular(5.0),
-                                              //         ),
-                                              //       ),
-                                              //       // onPressed: profileCont
-                                              //       //         .isOTPSent.value
-                                              //       //     ? null
-                                              //       //     : () async {
-                                              //       //         BuildContext ctx =
-                                              //       //             context;
-                                              //       //         await profileCont
-                                              //       //             .updateUserEmail(
-                                              //       //                 newEmailCont
-                                              //       //                     .text,
-                                              //       //                 ctx);
+                                              // const SizedBox(
+                                              //   width: 120,
+                                              // ),
 
-                                              //       //         // auth.resendOTP();
-                                              //       //         //  await AuthService.resendOTP(email);
-                                              //       //         // showDialogOtp(context);
-                                              //       //       },
-                                              //       onPressed: () {
-                                              //         showDialogOtp(context,
-                                              //             newEmailCont.text);
-                                              //       },
-                                              //       child: Text(
-                                              //         "Kirim Kode",
-                                              //         style: TextCollection()
-                                              //             .heading6White,
-                                              //         selectionColor:
-                                              //             colorApp.light1,
-                                              //       ),
-                                              //     ))
-                                              Obx(() => ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor: colorApp
-                                                          .secondaryColor,
-                                                      disabledBackgroundColor:
-                                                          colorApp
-                                                              .secondaryColorLighter,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0),
-                                                      ),
-                                                    ),
-                                                    onPressed: profileCont
-                                                            .isUpdateLoading.value
-                                                        ? null
-                                                        : () async {
-                                                            BuildContext ctx =
-                                                                context;
-                                                            await profileCont
-                                                                .updateUserEmail(
-                                                                    newEmailCont
-                                                                        .text,
-                                                                    ctx);
-                                                            // auth.resendOTP();
-                                                            //  await AuthService.resendOTP(email);
-                                                            // showDialogOtp(context);
-                                                          },
-                                                    // onPressed: () {
-                                                    //   showDialogOtp(context,
-                                                    //       newEmailCont.text);
-                                                    // },
-                                                    child: Text(
-                                                      "Kirim Kode",
-                                                      style: TextCollection()
-                                                          .heading6White,
-                                                      selectionColor:
-                                                          colorApp.light1,
-                                                    ),
-                                                  ))
+                                              // Obx(() => )
                                             ],
                                           ),
                                         ),
@@ -239,6 +156,52 @@ class _EmailVerifikasiState extends State<EmailVerifikasi> {
                                             ),
                                           ),
                                         ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: Obx(() => ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      colorApp.secondaryColor,
+                                                  disabledBackgroundColor:
+                                                      colorApp
+                                                          .secondaryColorLighter,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                  ),
+                                                ),
+                                                onPressed: profileCont
+                                                        .isUpdateLoading.value
+                                                    ? null
+                                                    : () async {
+                                                        BuildContext ctx =
+                                                            context;
+                                                        await profileCont
+                                                            .updateUserEmail(
+                                                                newEmailCont
+                                                                    .text,
+                                                                ctx);
+                                                        // auth.resendOTP();
+                                                        //  await AuthService.resendOTP(email);
+                                                        // showDialogOtp(context);
+                                                      },
+                                                // onPressed: () {
+                                                //   showDialogOtp(context,
+                                                //       newEmailCont.text);
+                                                // },
+                                                child: Text(
+                                                  "Kirim Kode",
+                                                  style: TextCollection()
+                                                      .heading6White,
+                                                  selectionColor:
+                                                      colorApp.light1,
+                                                ),
+                                              )),
+                                        )
                                       ],
                                     ),
                                   ),

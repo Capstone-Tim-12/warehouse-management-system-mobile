@@ -1,5 +1,6 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/lowerprice_controller.dart';
 import 'package:capstone_wms/controllers/recommendation_cont.dart';
 import 'package:capstone_wms/controllers/search_controller.dart';
 import 'package:capstone_wms/screens/main/detail_gudang/detail_gudang_screen.dart';
@@ -8,27 +9,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class RecommendList extends StatefulWidget {
-  const RecommendList({super.key});
+class LowPriceList extends StatefulWidget {
+  const LowPriceList({super.key});
 
   @override
-  State<RecommendList> createState() => _RecommendListState();
+  State<LowPriceList> createState() => _LowPriceListState();
 }
 
-class _RecommendListState extends State<RecommendList> {
+class _LowPriceListState extends State<LowPriceList> {
   final ColorApp colorApp = ColorApp();
   final TextCollection textCollection = TextCollection();
 
   FindController searchController = Get.put(FindController());
   FavoriteService favoriteService = FavoriteService();
-  RecommendationController recController = Get.put(RecommendationController());
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    recController.getRecommendation();
-  }
+  LowerPriceController lowPriceCont = Get.put(LowerPriceController());
 
   final formatter = NumberFormat("#,###");
 
@@ -40,19 +34,26 @@ class _RecommendListState extends State<RecommendList> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    lowPriceCont.getLowPriceWarehouse();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rekomendasi Lokasi', style: textCollection.heading6),
+        title: Text('Gudang Termurah', style: textCollection.heading6),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: Obx(() => FutureBuilder<List<dynamic>>(
-            future: recController.recommededData.isNotEmpty
-                ? Future.value(recController.recommededData)
+            future: lowPriceCont.lowPriceData.isNotEmpty
+                ? Future.value(lowPriceCont.lowPriceData)
                 : null,
             builder: (context, snapshot) {
-              if (recController.isRecommendationLoading.value) {
+              if (lowPriceCont.isLowPriceLoading.value) {
                 return Center(
                   child: CircularProgressIndicator(
                     color: ColorApp().mainColor,
@@ -61,7 +62,7 @@ class _RecommendListState extends State<RecommendList> {
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else if (snapshot.data == null ||
-                  recController.recommededData.isEmpty) {
+                  lowPriceCont.lowPriceData.isEmpty) {
                 return Center(
                   child: Text(
                     'Gudang Tidak Ditemukan',
@@ -73,9 +74,9 @@ class _RecommendListState extends State<RecommendList> {
               } else {
                 return ListView.builder(
                     // scrollDirection: Axis.horizontal,
-                    itemCount: recController.recommededData.length,
+                    itemCount: lowPriceCont.lowPriceData.length,
                     itemBuilder: (context, index) {
-                      var warehouse = recController.recommededData[index];
+                      var warehouse = lowPriceCont.lowPriceData[index];
                       return InkWell(
                         onTap: () => Get.to(() =>
                             DetailGudangScreen(warehouseId: warehouse['id'])),
@@ -106,13 +107,6 @@ class _RecommendListState extends State<RecommendList> {
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
-                                      // child: Image.network(
-                                      //   // "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                                      //   warehouse['image'],
-                                      //   width: 142,
-                                      //   height: 227,
-                                      //   fit: BoxFit.cover,
-                                      // ),
                                       child: warehouse['image'] != null &&
                                               Uri.parse(warehouse['image'])
                                                   .isAbsolute

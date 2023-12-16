@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
@@ -8,13 +9,14 @@ import 'package:capstone_wms/services/authentication.dart';
 import 'package:capstone_wms/services/profile_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileController extends GetxController {
   ProfileServices profileService = ProfileServices();
   AuthService auth = AuthService();
 
-  Rx<File?> selectedImg = Rx<File?>(null);
+  Rx<XFile?> selectedImg = Rx<XFile?>(null);
   RxBool isLoading = false.obs;
   RxBool isUpdateLoading = false.obs;
   RxBool isOTPSent = false.obs;
@@ -23,8 +25,58 @@ class ProfileController extends GetxController {
 
   RxInt otpStatusCode = 0.obs;
 
-  void setSelectedImg(File img) async {
+  void setSelectedImg(XFile img) async {
     selectedImg.value = img;
+  }
+
+  void choosePfpFromCamera() async {
+    final ImagePicker picker = ImagePicker();
+    isUpdateLoading.value = true;
+
+    final pickedPfp = await picker.pickImage(source: ImageSource.camera);
+
+    try {
+      if (pickedPfp != null) {
+        print(pickedPfp.path);
+        XFile selectedPfp = XFile(pickedPfp.path);
+        // Update the selected image in your controller
+        // setSelectedImg(selectedPfp);
+
+        await updatePhotoProfile(selectedPfp);
+      } else {
+        Get.snackbar("Peringatan", "Terjadi Kesalahan");
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      Get.back();
+      isUpdateLoading.value = false;
+    }
+  }
+
+  void choosePfpFromGallery() async {
+    final ImagePicker picker = ImagePicker();
+    isUpdateLoading.value = true;
+
+    final pickedPfp = await picker.pickImage(source: ImageSource.gallery);
+
+    try {
+      if (pickedPfp != null) {
+        print(pickedPfp.path);
+        XFile selectedPfp = XFile(pickedPfp.path);
+        // Update the selected image in your controller
+        // setSelectedImg(selectedPfp);
+
+        await updatePhotoProfile(selectedPfp);
+      } else {
+        Get.snackbar("Peringatan", "Terjadi Kesalahan");
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      Get.back();
+      isUpdateLoading.value = false;
+    }
   }
 
   Future<void> getUserInfo() async {
@@ -111,21 +163,27 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<void> updatePhotoProfile(dynamic foto) async {
+  Future<void> updatePhotoProfile(XFile foto) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isUpdateLoading.value = true;
+    // isUpdateLoading.value = true;
     String tokn = prefs.getString('token')!;
     try {
+      print(tokn);
       final response = await profileService.uploadFoto(tokn, foto);
+      print(response.statusCode);
 
       Map<String, dynamic> responseData = response.data;
+      print(responseData['message']);
+      print(responseData['data']);
 
       if (response.statusCode == 200) {
-        String imgUrl = responseData['urlImage'];
+        String imgUrl = responseData['data']['urlImage'];
         final uploadPfp = await profileService.updateProfilePic(tokn, imgUrl);
         Map<String, dynamic> responseUpdateImg = jsonDecode(uploadPfp.body);
-        if (uploadPfp.statusCode == 200) {
-          Get.snackbar("Peringatan", "Photo Profile Berhasil");
+        if (responseUpdateImg['message'] == "Success") {
+          // Get.snackbar("Peringatan", "Photo Profile Berhasil");
+          Get.back();
+          await getUserInfo();
         } else {
           Get.snackbar("Peringatan", responseUpdateImg['message']);
         }
@@ -133,7 +191,7 @@ class ProfileController extends GetxController {
     } catch (e) {
       print(e);
     } finally {
-      isUpdateLoading.value = false;
+      // isUpdateLoading.value = false;
     }
   }
 

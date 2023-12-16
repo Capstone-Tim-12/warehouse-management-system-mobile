@@ -398,6 +398,9 @@ class _EditIdentityState extends State<EditIdentity> {
                         ],
                       )),
                 ),
+                const SizedBox(
+                  height: 200,
+                )
               ],
             ),
           ),
