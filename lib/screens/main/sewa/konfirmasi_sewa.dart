@@ -160,14 +160,32 @@ class _KonfirmasiSewaState extends State<KonfirmasiSewa> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             // mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.network(
-                                'https://media.istockphoto.com/id/1227641291/id/foto/tampilan-sudut-tinggi-gudang-yang-ditumpuk-dengan-kotak-dalam-ukuran-berbeda.jpg?s=1024x1024&w=is&k=20&c=e4JHyQcfhRt0sR-AH1CslMYFBLtkfmyvgmShLDIDqQ4=',
-                                // Image.network(
-                                //   'https://via.placeholder.com/142x160',
-                                fit: BoxFit.fitHeight,
-                                width: 142,
-                                height: 160,
-                              ),
+                              widget.selectedWarehouse.image != null &&
+                                      Uri.parse(widget
+                                              .selectedWarehouse.image?[0])
+                                          .isAbsolute
+                                  ? Image.network(
+                                      // 'https://media.istockphoto.com/id/1227641291/id/foto/tampilan-sudut-tinggi-gudang-yang-ditumpuk-dengan-kotak-dalam-ukuran-berbeda.jpg?s=1024x1024&w=is&k=20&c=e4JHyQcfhRt0sR-AH1CslMYFBLtkfmyvgmShLDIDqQ4=',
+                                      widget.selectedWarehouse.image?[0],
+                                      // Image.network(
+                                      //   'https://via.placeholder.com/142x160',
+                                      fit: BoxFit.fitHeight,
+                                      width: 142,
+                                      height: 160, errorBuilder:
+                                          (context, error, stackTrace) {
+                                      return Image.network(
+                                        "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                                        width: 142,
+                                        height: 160,
+                                        fit: BoxFit.fitHeight,
+                                      );
+                                    })
+                                  : Image.network(
+                                      "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                                      width: 142,
+                                      height: 160,
+                                      fit: BoxFit.fitHeight,
+                                    ),
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
