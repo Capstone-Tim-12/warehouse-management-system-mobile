@@ -6,8 +6,6 @@ import 'package:http/http.dart' as http;
 class WarehouseServidces {
   // UrlCollection urls = UrlCollection();
   String baseUrl = UrlCollection().urlProd;
-  // static const String baseUrl =
-  //     "http://ec2-18-139-162-85.ap-southeast-1.compute.amazonaws.com:8086";
 
   Future<http.Response> getWarehouseList(
       SearchWarehouse param, String page) async {

@@ -5,8 +5,6 @@ import 'package:capstone_wms/models/pengajuan_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApplicationServices {
-  // static const String baseUrl =
-  //     "http://ec2-18-139-162-85.ap-southeast-1.compute.amazonaws.com:8086";
 
   String baseUrl = UrlCollection().urlProd;
 

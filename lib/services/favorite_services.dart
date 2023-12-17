@@ -5,8 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoriteService {
-  // static const String baseUrl =
-  //     "http://ec2-18-139-162-85.ap-southeast-1.compute.amazonaws.com:8086";
   String baseUrl = UrlCollection().urlProd;
 
   Future<http.Response> addToFavorites(int warehouseId) async {
