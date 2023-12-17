@@ -50,21 +50,28 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
       DateTime newDateKeluar = selectedDateMasuk;
 
       if (selectedSewaValue == 1) {
-        newDateKeluar = newDateKeluar.add(Duration(days: durasi * 7));
+        setState(() {
+          newDateKeluar = newDateKeluar.add(Duration(days: durasi * 7));
+        });
       }
 
       if (selectedSewaValue == 2) {
-        newDateKeluar = newDateKeluar.add(Duration(days: durasi * 30));
+        setState(() {
+          newDateKeluar = newDateKeluar.add(Duration(days: durasi * 30));
+        });
       }
 
       if (selectedSewaValue == 3) {
-        newDateKeluar = newDateKeluar.add(Duration(days: durasi * 365));
+        setState(() {
+          newDateKeluar = newDateKeluar.add(Duration(days: durasi * 365));
+        });
       }
 
       setState(() {
         selectedDateKeluar = newDateKeluar;
       });
     }
+    setState(() {});
   }
 
   @override
@@ -77,6 +84,7 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
     print(warehouseCont.selectedWarehouse.value.monthlyPrice);
     print(warehouseCont.selectedWarehouse.value.annuallyPrice);
     print(warehouseCont.selectedWarehouse.value.weeklyPrice);
+    setState(() {});
   }
 
   void _updateNumber() {
@@ -157,14 +165,31 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.network(
-                        'https://media.istockphoto.com/id/1227641291/id/foto/tampilan-sudut-tinggi-gudang-yang-ditumpuk-dengan-kotak-dalam-ukuran-berbeda.jpg?s=1024x1024&w=is&k=20&c=e4JHyQcfhRt0sR-AH1CslMYFBLtkfmyvgmShLDIDqQ4=',
-                        // Image.network(
-                        //   'https://via.placeholder.com/142x160',
-                        fit: BoxFit.fitHeight,
-                        width: 142,
-                        height: 160,
-                      ),
+                      widget.selectedWarehouse.image != null &&
+                              Uri.parse(widget.selectedWarehouse.image?[0])
+                                  .isAbsolute
+                          ? Image.network(
+                              // 'https://media.istockphoto.com/id/1227641291/id/foto/tampilan-sudut-tinggi-gudang-yang-ditumpuk-dengan-kotak-dalam-ukuran-berbeda.jpg?s=1024x1024&w=is&k=20&c=e4JHyQcfhRt0sR-AH1CslMYFBLtkfmyvgmShLDIDqQ4=',
+                              widget.selectedWarehouse.image?[0],
+                              // Image.network(
+                              //   'https://via.placeholder.com/142x160',
+                              fit: BoxFit.fitHeight,
+                              width: 142,
+                              height: 160,
+                              errorBuilder: (context, error, stackTrace) {
+                              return Image.network(
+                                "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                                width: 142,
+                                height: 160,
+                                fit: BoxFit.fitHeight,
+                              );
+                            })
+                          : Image.network(
+                              "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                              width: 142,
+                              height: 160,
+                              fit: BoxFit.fitHeight,
+                            ),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -270,7 +295,9 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         GestureDetector(
-                            onTap: () => _decreaseNumber(),
+                            onTap: durasiCont.text == '0'
+                                ? null
+                                : () => _decreaseNumber(),
                             child: SvgPicture.asset('assets/svg/minus.svg')),
                         SizedBox(
                           width: 36,
@@ -299,7 +326,9 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
                           ),
                         ),
                         GestureDetector(
-                            onTap: () => _increaseNumber(),
+                            onTap: selectedSewaValue == 0
+                                ? null
+                                : () => _increaseNumber(),
                             child: SvgPicture.asset('assets/svg/plus.svg')),
                       ],
                     ),
@@ -317,28 +346,30 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
                 height: 12,
               ),
               GestureDetector(
-                onTap: () async {
-                  final selectDate = await showDatePicker(
-                      context: context,
-                      initialDate: now,
-                      firstDate: DateTime(1890),
-                      lastDate: DateTime(now.year + 100));
+                onTap: selectedSewaValue == null && durasiCont.text == '0'
+                    ? null
+                    : () async {
+                        final selectDate = await showDatePicker(
+                            context: context,
+                            initialDate: now,
+                            firstDate: DateTime(1890),
+                            lastDate: DateTime(now.year + 100));
 
-                  setState(() {
-                    if (selectDate != null) {
-                      selectedDateMasuk = selectDate;
-                      setState(() {
-                        dateMasuk = selectedDateMasuk.day.toString();
-                        monthMasuk = selectedDateMasuk.month.toString();
-                        yearMasuk = selectedDateMasuk.year.toString();
-                      });
-                      print(dateMasuk);
-                      // print(selectedDateMasuk.day);
-                      // print(selectedDateMasuk.month);
-                      // print(selectedDateMasuk.year);
-                    }
-                  });
-                },
+                        setState(() {
+                          if (selectDate != null) {
+                            selectedDateMasuk = selectDate;
+                            setState(() {
+                              dateMasuk = selectedDateMasuk.day.toString();
+                              monthMasuk = selectedDateMasuk.month.toString();
+                              yearMasuk = selectedDateMasuk.year.toString();
+                            });
+                            print(dateMasuk);
+                            // print(selectedDateMasuk.day);
+                            // print(selectedDateMasuk.month);
+                            // print(selectedDateMasuk.year);
+                          }
+                        });
+                      },
                 child: Container(
                   height: 56,
                   decoration: BoxDecoration(
@@ -412,7 +443,7 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Tanggal Masuk',
+                              'Tanggal Keluar',
                               style: textApp.bodySmall.copyWith(
                                   fontSize: 8, fontWeight: FontWeight.w400),
                             ),
@@ -487,34 +518,42 @@ class _PengajuanSewaState extends State<PengajuanSewa> {
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: colorApp.secondaryColor,
+                                disabledBackgroundColor:
+                                    colorApp.secondaryColorLighter,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8))),
-                            onPressed: () {
-                              if (selectedSewaValue == 1) {
-                                total = widget.selectedWarehouse.weeklyPrice *
-                                    durasi;
-                              } else if (selectedSewaValue == 2) {
-                                total = widget.selectedWarehouse.monthlyPrice *
-                                    durasi;
-                              } else if (selectedSewaValue == 3) {
-                                total = widget.selectedWarehouse.annuallyPrice *
-                                    durasi;
-                              }
-                              RentInfo rentWarehouse = RentInfo(
-                                  durasiSewa: durasiCont.text,
-                                  entryDate: DateFormat('dd/MM/yyyy')
-                                      .format(selectedDateMasuk),
-                                  hitunganSewa: selectedSewa!,
-                                  hitunganSewaId: selectedSewaValue!,
-                                  outDate: DateFormat('dd/MM/yyyy')
-                                      .format(selectedDateKeluar),
-                                  totalPrice: total);
+                            onPressed: durasiCont.text == '0'
+                                ? null
+                                : () {
+                                    if (selectedSewaValue == 1) {
+                                      total =
+                                          widget.selectedWarehouse.weeklyPrice *
+                                              durasi;
+                                    } else if (selectedSewaValue == 2) {
+                                      total = widget
+                                              .selectedWarehouse.monthlyPrice *
+                                          durasi;
+                                    } else if (selectedSewaValue == 3) {
+                                      total = widget
+                                              .selectedWarehouse.annuallyPrice *
+                                          durasi;
+                                    }
+                                    RentInfo rentWarehouse = RentInfo(
+                                        durasiSewa: durasiCont.text,
+                                        entryDate: DateFormat('dd/MM/yyyy')
+                                            .format(selectedDateMasuk),
+                                        hitunganSewa: selectedSewa!,
+                                        hitunganSewaId: selectedSewaValue!,
+                                        outDate: DateFormat('dd/MM/yyyy')
+                                            .format(selectedDateKeluar),
+                                        totalPrice: total);
 
-                              Get.to(KonfirmasiSewa(
-                                selectedWarehouse: widget.selectedWarehouse,
-                                rentInformation: rentWarehouse,
-                              ));
-                            },
+                                    Get.to(KonfirmasiSewa(
+                                      selectedWarehouse:
+                                          widget.selectedWarehouse,
+                                      rentInformation: rentWarehouse,
+                                    ));
+                                  },
                             child: Text('Lanjutkan',
                                 style: textApp.bodySmall.copyWith(
                                     color: Colors.white,
