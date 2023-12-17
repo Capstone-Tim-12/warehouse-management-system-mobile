@@ -355,6 +355,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -381,7 +382,8 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                 const Spacer(),
                 SizedBox(
                   height: 40,
-                  width: 250,
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  // width: 250,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: ColorApp().mainColor,
