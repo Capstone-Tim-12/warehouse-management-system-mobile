@@ -2,6 +2,7 @@ import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/auth_bg.dart';
 import 'package:capstone_wms/controllers/chatbot_controller.dart';
+import 'package:capstone_wms/controllers/profile_controller.dart';
 import 'package:capstone_wms/controllers/userlocation_controller.dart';
 import 'package:capstone_wms/models/user_model.dart';
 import 'package:capstone_wms/models/userlocation_model.dart';
@@ -18,6 +19,7 @@ import 'package:capstone_wms/screens/main/dashboard/dashboard.dart';
 import 'package:capstone_wms/screens/main/stack_screen.dart';
 import 'package:capstone_wms/services/firebase_services.dart';
 import 'package:capstone_wms/services/location_service.dart';
+import 'package:capstone_wms/services/profile_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,7 +40,10 @@ class _SplashScreenState extends State<SplashScreen> {
   final UserLocationController userLocationController =
       Get.put(UserLocationController());
 
+  ProfileController proCont = Get.put(ProfileController());
+
   FirebaseServices checkUserLoggedIn = FirebaseServices();
+  ProfileServices profileServ = ProfileServices();
 
   Future<void> initializeUserLoc(BuildContext konteks) async {
     try {
@@ -51,26 +56,46 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  // Future<bool> checkUserExists(int userId) async {
-  //   QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
-  //       .instance
-  //       .collection('users')
-  //       .where('userId', isEqualTo: userId)
-  //       .get();
+  void clearUser(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  //   return snapshot.docs.isNotEmpty;
-  // }
+    prefs.remove('userId');
+    prefs.remove('name');
+    prefs.remove('token');
+    prefs.remove('email');
+    prefs.remove('userDoc');
+
+    // Get.off(() => const SplashScreen());
+  }
+
+  void checkUserToken(BuildContext kontextScreen) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // print(checkUser.statusCode);
+
+    if (prefs.containsKey('token')) {
+      final checkUser =
+          await profileServ.getUserInfo(prefs.getString('token')!);
+      if (checkUser.statusCode == 200) {
+        initializeData(kontextScreen);
+        initializeUserLoc(kontextScreen);
+      } else {
+        clearUser(kontextScreen);
+        initializeData(kontextScreen);
+        initializeUserLoc(kontextScreen);
+      }
+    } else {
+      initializeData(kontextScreen);
+      initializeUserLoc(kontextScreen);
+    }
+  }
 
   void initializeData(BuildContext kontextScreen) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Future.delayed(const Duration(seconds: 3), () async {
       print(DateTime.now());
-      if (prefs.containsKey('userId') ||
-          prefs.containsKey('name') ||
-          prefs.containsKey('token') ||
-          prefs.containsKey('userDoc') ||
-          prefs.containsKey('email')) {
+      if (prefs.containsKey('token')) {
         int userId = prefs.getInt('userId')!;
         bool userExists = await checkUserLoggedIn.checkUserExists(userId);
 
@@ -90,7 +115,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Get.offAll(const MainScreen(), transition: Transition.leftToRight);
         }
       } else {
-        print(context);
+        // print(context);
 
         showModalBottomSheet(
           isDismissible: false,
@@ -198,8 +223,9 @@ class _SplashScreenState extends State<SplashScreen> {
     BuildContext kontextScreen = context;
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     super.initState();
-    initializeData(kontextScreen);
-    initializeUserLoc(kontextScreen);
+    // initializeData(kontextScreen);
+    // initializeUserLoc(kontextScreen);
+    checkUserToken(kontextScreen);
   }
 
   @override
