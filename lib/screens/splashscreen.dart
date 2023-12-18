@@ -1,6 +1,11 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:capstone_wms/components/auth_bg.dart';
+import 'package:capstone_wms/controllers/chatbot_controller.dart';
+import 'package:capstone_wms/controllers/profile_controller.dart';
+import 'package:capstone_wms/controllers/userlocation_controller.dart';
+import 'package:capstone_wms/models/user_model.dart';
+import 'package:capstone_wms/models/userlocation_model.dart';
 import 'package:capstone_wms/screens/auth_screen/components/bs_forgotpw.dart';
 import 'package:capstone_wms/screens/auth_screen/components/bs_inputotp.dart';
 import 'package:capstone_wms/screens/auth_screen/components/bs_login.dart';
@@ -10,7 +15,15 @@ import 'package:capstone_wms/screens/auth_screen/components/bs_registconfirm.dar
 import 'package:capstone_wms/screens/auth_screen/components/bs_resetpwconfirm.dart';
 import 'package:capstone_wms/screens/auth_screen/components/bs_signup.dart';
 import 'package:capstone_wms/screens/auth_screen/signin_screen.dart';
+import 'package:capstone_wms/screens/main/dashboard/dashboard.dart';
+import 'package:capstone_wms/screens/main/stack_screen.dart';
+import 'package:capstone_wms/services/firebase_services.dart';
+import 'package:capstone_wms/services/location_service.dart';
+import 'package:capstone_wms/services/profile_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,147 +35,227 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   ColorApp colorApp = ColorApp();
   TextCollection textApp = TextCollection();
-  // List<Widget> listAuthScreen = [
-  //   const BottomSheetLogin(),
-  //   const BottomSheetForgotPw()
-  // ];
-  // int authIndex = 0;
 
-  // void showBottomSheetLogin(BuildContext context){
+  LocationService _locationService = LocationService();
+  final UserLocationController userLocationController =
+      Get.put(UserLocationController());
 
-  // }
+  ProfileController proCont = Get.put(ProfileController());
 
-  @override
-  void initState() {
-    BuildContext kontextScreen = context;
-    // TODO: implement initState
-    super.initState();
-    Future.delayed(const Duration(seconds: 1), () {
-      // Navigate to the login screen
-      // Navigator.of(context).pushReplacement(MaterialPageRoute(
-      //   builder: (context) => const LoginScreen(),
-      // ));
-      print(context);
+  FirebaseServices checkUserLoggedIn = FirebaseServices();
+  ProfileServices profileServ = ProfileServices();
 
-      showModalBottomSheet(
-        isDismissible: false,
-        enableDrag: false,
-        context: context,
-        isScrollControlled: true,
-        builder: (context) => BottomSheetLogin(
-          //===================
-          //buat daftar
-          //===================
+  Future<void> initializeUserLoc(BuildContext konteks) async {
+    try {
+      await _locationService.getLocationPermission();
+      await _locationService.getCurrentLocation();
+      // LocationService userLocation = await getCurrentLocation();
+      // userLocationController.setUserLocation(userLocation);
+    } catch (e) {
+      print(e);
+    }
+  }
 
-          onSignUpPressed: () {
-            // Navigator.pop(context);
-            showModalBottomSheet(
-              isDismissible: false,
-              enableDrag: false,
-              isScrollControlled: true,
-              context: kontextScreen,
-              builder: (context) => BottomSheetSignUp(
-                onRegisterPressed: () {
-                  // Navigator.popUntil(context, (route) => false);
-                  // Navigator.pop(context);
-                  showModalBottomSheet(
-                    isDismissible: false,
-                    enableDrag: false,
-                    isScrollControlled: true,
-                    context: kontextScreen,
-                    builder: (context) =>
-                        BotomSheetOTPEmail(onEmailOTPPressed: () {
-                      Navigator.pop(context);
-                      showModalBottomSheet(
-                        isDismissible: false,
-                        enableDrag: false,
-                        isScrollControlled: true,
-                        context: kontextScreen,
-                        builder: (context) => const KonfirmasiRegister(),
-                      );
-                    }),
-                  );
-                },
-              ),
-            );
-          },
+  void clearUser(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-          //===================
-          //buat reset pw
-          //===================
-          onForgotPasswordPressed: () {
-            Navigator.pop(context);
-            showModalBottomSheet(
-              isDismissible: false,
-              enableDrag: false,
-              context: context,
-              isScrollControlled: true,
-              builder: (context) => BottomSheetForgotPw(
-                onSendOTPPressed: () {
-                  Navigator.pop(context);
-                  showModalBottomSheet(
-                    isDismissible: false,
-                    enableDrag: false,
-                    isScrollControlled: true,
-                    context: kontextScreen,
-                    builder: (context) => BottomSheetOTP(
-                      onOTPNextPressed: () {
+    prefs.remove('userId');
+    prefs.remove('name');
+    prefs.remove('token');
+    prefs.remove('email');
+    prefs.remove('userDoc');
+
+    // Get.off(() => const SplashScreen());
+  }
+
+  void checkUserToken(BuildContext kontextScreen) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // print(checkUser.statusCode);
+
+    if (prefs.containsKey('token')) {
+      final checkUser =
+          await profileServ.getUserInfo(prefs.getString('token')!);
+      if (checkUser.statusCode == 200) {
+        initializeData(kontextScreen);
+        initializeUserLoc(kontextScreen);
+      } else {
+        clearUser(kontextScreen);
+        initializeData(kontextScreen);
+        initializeUserLoc(kontextScreen);
+      }
+    } else {
+      initializeData(kontextScreen);
+      initializeUserLoc(kontextScreen);
+    }
+  }
+
+  void initializeData(BuildContext kontextScreen) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    Future.delayed(const Duration(seconds: 3), () async {
+      print(DateTime.now());
+      if (prefs.containsKey('token')) {
+        int userId = prefs.getInt('userId')!;
+        bool userExists = await checkUserLoggedIn.checkUserExists(userId);
+
+        if (userExists) {
+          Get.offAll(const MainScreen(), transition: Transition.leftToRight);
+          print('userExists');
+          print(prefs.getString('userDoc'));
+        } else {
+          UserModel oldUser = UserModel(
+              id: '',
+              userId: userId,
+              name: prefs.getString('name')!,
+              picKTP: '',
+              selKTP: '');
+          await checkUserLoggedIn.addUser(oldUser);
+          print('oldUserAdded');
+          Get.offAll(const MainScreen(), transition: Transition.leftToRight);
+        }
+      } else {
+        // print(context);
+
+        showModalBottomSheet(
+          isDismissible: false,
+          enableDrag: false,
+          barrierColor: Colors.transparent,
+          context: context,
+          isScrollControlled: true,
+          builder: (context) => BottomSheetLogin(
+            //===================
+            //buat daftar
+            //===================
+
+            onSignUpPressed: () {
+              // Navigator.pop(context);
+              showModalBottomSheet(
+                isDismissible: false,
+                enableDrag: false,
+                barrierColor: Colors.transparent,
+                isScrollControlled: true,
+                context: kontextScreen,
+                builder: (context) => BottomSheetSignUp(
+                  onRegisterPressed: () {
+                    // Navigator.popUntil(context, (route) => false);
+                    // Navigator.pop(context);
+                    showModalBottomSheet(
+                      isDismissible: false,
+                      enableDrag: false,
+                      isScrollControlled: true,
+                      context: kontextScreen,
+                      builder: (context) =>
+                          BotomSheetOTPEmail(onEmailOTPPressed: () {
                         Navigator.pop(context);
                         showModalBottomSheet(
                           isDismissible: false,
                           enableDrag: false,
                           isScrollControlled: true,
                           context: kontextScreen,
-                          builder: (context) => BottomSheetNewPW(
-                            onPWConfirmedPressed: () {
-                              Navigator.pop(context);
-                              showModalBottomSheet(
-                                  isDismissible: false,
-                                  enableDrag: false,
-                                  isScrollControlled: true,
-                                  context: kontextScreen,
-                                  builder: (context) =>
-                                      const KonfirmasiResetPW());
-                            },
-                          ),
+                          builder: (context) => const KonfirmasiRegister(),
                         );
-                      },
-                    ),
-                  );
-                },
-              ),
-            );
-          },
-        ),
-      );
+                      }),
+                    );
+                  },
+                ),
+              );
+            },
+
+            //===================
+            //buat reset pw
+            //===================
+            onForgotPasswordPressed: () {
+              Navigator.pop(context);
+              showModalBottomSheet(
+                isDismissible: false,
+                enableDrag: false,
+                barrierColor: Colors.transparent,
+                context: context,
+                isScrollControlled: true,
+                builder: (context) => BottomSheetForgotPw(
+                  onSendOTPPressed: () {
+                    Navigator.pop(context);
+                    showModalBottomSheet(
+                      isDismissible: false,
+                      enableDrag: false,
+                      barrierColor: Colors.transparent,
+                      isScrollControlled: true,
+                      context: kontextScreen,
+                      builder: (context) => BottomSheetOTP(
+                        onOTPNextPressed: () {
+                          Navigator.pop(context);
+                          showModalBottomSheet(
+                            isDismissible: false,
+                            enableDrag: false,
+                            barrierColor: Colors.transparent,
+                            isScrollControlled: true,
+                            context: kontextScreen,
+                            builder: (context) => BottomSheetNewPW(
+                              onPWConfirmedPressed: () {
+                                Navigator.pop(context);
+                                showModalBottomSheet(
+                                    isDismissible: false,
+                                    enableDrag: false,
+                                    barrierColor: Colors.transparent,
+                                    isScrollControlled: true,
+                                    context: kontextScreen,
+                                    builder: (context) =>
+                                        const KonfirmasiResetPW());
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        );
+      }
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(children: [
-        const AuthBg(),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // const Icon(
-              //   Icons.warehouse,
-              //   size: 99,
-              //   color: Colors.white,
-              // ),
-              Image.asset('assets/image/logowms.png'),
-              Text('DigiHouse', style: textApp.heading2),
-            ],
-          ),
-        ),
-      ]),
+  void initState() {
+    BuildContext kontextScreen = context;
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    super.initState();
+    // initializeData(kontextScreen);
+    // initializeUserLoc(kontextScreen);
+    checkUserToken(kontextScreen);
+  }
 
-      // bottomSheet: Container(
-      //   child: const BottomSheetLogin(),
-      // ),
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Stack(children: [
+          const AuthBg(),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // const Icon(
+                //   Icons.warehouse,
+                //   size: 99,
+                //   color: Colors.white,
+                // ),
+                Image.asset('assets/image/logowms.png'),
+                Text('DigiHouse', style: textApp.heading2),
+              ],
+            ),
+          ),
+        ]),
+
+        // bottomSheet: Container(
+        //   child: const BottomSheetLogin(),
+        // ),
+      ),
     );
   }
 }

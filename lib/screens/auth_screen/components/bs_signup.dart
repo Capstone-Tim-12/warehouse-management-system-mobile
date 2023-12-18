@@ -1,9 +1,16 @@
+import 'dart:convert';
+
+import 'package:capstone_wms/controllers/signup_controller.dart';
+import 'package:capstone_wms/models/signup_model.dart';
+import 'package:capstone_wms/models/user_model.dart';
+import 'package:capstone_wms/services/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class BottomSheetSignUp extends StatefulWidget {
   const BottomSheetSignUp({super.key, required this.onRegisterPressed});
@@ -21,6 +28,11 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
   TextEditingController rePasswordcCont = TextEditingController();
   bool isPasswordVisible = false;
   bool isRePasswordVisible = false;
+  bool isLoading = false;
+  String errorMessage = '';
+
+  final SignUpController signUpCont = Get.put(SignUpController());
+  AuthService authService = AuthService();
 
   ColorApp colorApp = ColorApp();
   PaddingCollection paddingApp = PaddingCollection();
@@ -43,8 +55,63 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
 
   void showRePw() {
     setState(() {
-      isPasswordVisible = !isPasswordVisible;
+      isRePasswordVisible = !isRePasswordVisible;
     });
+  }
+
+  bool areFieldsFilled() {
+    return nameCont.text.length >= 5 &&
+        emailCont.text.length >= 5 &&
+        passwordcCont.text.length >= 6 &&
+        rePasswordcCont.text.length >= 6;
+  }
+
+  Future<void> daftarUser() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+
+      final response = await authService.registerUser(nameCont.text.toString(),
+          emailCont.text.toString(), passwordcCont.text.toString());
+
+      Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 201) {
+        SignUp newUser = SignUp(
+          username: nameCont.text,
+          email: emailCont.text,
+          password: passwordcCont.text,
+        );
+
+        signUpCont.updateSignUpUser(newUser);
+        widget.onRegisterPressed();
+      } else {
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //   content: Text(responseData["message"]),
+        // ));
+        setState(() {
+          errorMessage = responseData["message"];
+        });
+        // Get.snackbar("Peringatan", responseData["message"]);
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    nameCont.dispose();
+    emailCont.dispose();
+    passwordcCont.dispose();
+    rePasswordcCont.dispose();
   }
 
   @override
@@ -83,13 +150,34 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
                   height: 28,
                 ),
                 TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      nameCont.text = value;
+                    });
+                  },
                   controller: nameCont,
                   decoration: fieldStyle.userNameField,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                TextField(
+                TextFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      emailCont.text = value;
+                      errorMessage = '';
+                    });
+                  },
+                  validator: (value) {
+                    if (errorMessage == 'email already exists') {
+                      return errorMessage;
+                    }
+
+                    if (errorMessage == 'input email has on the email tag') {
+                      return errorMessage;
+                    }
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: emailCont,
                   decoration: fieldStyle.emailField,
                 ),
@@ -97,6 +185,11 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
                   height: 20,
                 ),
                 TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      passwordcCont.text = value;
+                    });
+                  },
                   controller: passwordcCont,
                   obscureText: isPasswordVisible,
                   decoration: InputDecoration(
@@ -121,12 +214,26 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
                 const SizedBox(
                   height: 20,
                 ),
-                TextField(
+                TextFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      rePasswordcCont.text = value;
+                      errorMessage = '';
+                    });
+                  },
+                  validator: (value) {
+                    if (rePasswordcCont.text != passwordcCont.text) {
+                      errorMessage = 'password not match';
+
+                      return errorMessage;
+                    }
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: rePasswordcCont,
                   obscureText: isRePasswordVisible,
                   decoration: InputDecoration(
-                    labelText: 'Password',
-                    hintText: 'Enter Your Password',
+                    labelText: 'Re-Enter Password',
+                    hintText: 'ReEnter Your Password',
                     suffixIcon: IconButton(
                       onPressed: showRePw,
                       icon: Icon(isRePasswordVisible
@@ -146,28 +253,48 @@ class _BottomSheetSignUpState extends State<BottomSheetSignUp> {
                 const SizedBox(
                   height: 28,
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: colorApp.secondaryColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8))),
-                      onPressed: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => const MainScreen()));
-                        widget.onRegisterPressed();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 24),
-                        child: Text(
-                          'Daftar',
-                          style: textApp.bodySmall
-                              .copyWith(color: colorApp.light1),
-                        ),
-                      )),
-                ),
+                if (isLoading == true)
+                  LinearProgressIndicator(color: colorApp.secondaryColor),
+                if (isLoading == false)
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            disabledBackgroundColor:
+                                colorApp.secondaryColorLighter,
+                            backgroundColor: colorApp.secondaryColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8))),
+                        onPressed: areFieldsFilled()
+                            ? () {
+                                // if (nameCont.text.isEmpty ||
+                                //     emailCont.text.isEmpty ||
+                                //     passwordcCont.text.isEmpty ||
+                                //     rePasswordcCont.text.isEmpty) {
+                                //   Get.snackbar(
+                                //       "Peringatan", "Harap Isi Semua Field",
+                                //       backgroundColor: colorApp.light1);
+                                // } else if (passwordcCont.text !=
+                                //     rePasswordcCont.text) {
+                                //   Get.snackbar(
+                                //       "Peringatan", "Password Tidak Sama",
+                                //       backgroundColor: colorApp.light1);
+                                // } else {
+                                //   daftarUser();
+                                // }
+                                daftarUser();
+                              }
+                            : null,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 24),
+                          child: Text(
+                            'Daftar',
+                            style: textApp.bodySmall
+                                .copyWith(color: colorApp.light1),
+                          ),
+                        )),
+                  ),
                 const SizedBox(
                   height: 18,
                 ),

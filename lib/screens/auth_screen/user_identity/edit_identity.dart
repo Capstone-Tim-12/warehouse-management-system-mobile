@@ -6,9 +6,14 @@ import 'package:capstone_wms/classes/constants/job_collection.dart';
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/padding_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/identity_controller.dart';
+import 'package:capstone_wms/controllers/regency_controller.dart';
+import 'package:capstone_wms/models/identity_model.dart';
+import 'package:capstone_wms/models/locationapi_model.dart';
 import 'package:drop_down_list/drop_down_list.dart';
 import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EditIdentity extends StatefulWidget {
   const EditIdentity({super.key});
@@ -23,11 +28,16 @@ class _EditIdentityState extends State<EditIdentity> {
   TextCollection textApp = TextCollection();
   DecorationCollection fieldStyle = DecorationCollection();
   Gender gender = Gender();
+  IdentityController userIdCont = Get.put(IdentityController());
+  List<SelectedListItem> regencyList = [];
+  Cities listKota = Cities();
 
-  String selectedGender = 'Laki-Laki';
-  String selectedCity = 'Jakarta';
-  String selectedJobs = 'Karyawan Swasta';
-  String selectedCitizenship = 'WNI';
+  String selectedGender = '';
+  String selectedGenderId = '';
+  String selectedCity = '';
+  String selectedCityId = '';
+  String selectedJobs = '';
+  String selectedCitizenship = '';
 
   String selectedDay = '11';
   String selectedMonth = '9';
@@ -38,6 +48,36 @@ class _EditIdentityState extends State<EditIdentity> {
   //controller
   TextEditingController nikCont = TextEditingController();
   TextEditingController nameCont = TextEditingController();
+  RegencyController getRegencyList = Get.put(RegencyController());
+  // IdentityController showUserIdentity = Get.put(IdentityController());
+
+  List<SelectedListItem> convertToSelectedList(
+      List<LocationCollectionModel> cities) {
+    return cities.map((city) {
+      return SelectedListItem(name: city.name, value: city.id);
+    }).toList();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // convertToSelectedList(getRegencyList.regencyList);
+    // print(convertToSelectedList(getRegencyList.regencyList));
+    setState(() {
+      regencyList = convertToSelectedList(getRegencyList.regencyList);
+      print(regencyList);
+      nikCont.text = userIdCont.userIdentity.value.nik;
+      nameCont.text = userIdCont.userIdentity.value.fullName;
+      selectedGender = userIdCont.userIdentity.value.gender;
+      selectedGenderId = userIdCont.userIdentity.value.genderId!;
+      selectedCity = userIdCont.userIdentity.value.birthPlace;
+      // selectedCityId = userIdCont.userIdentity.value.birthPlaceId;
+      selectedJobs = userIdCont.userIdentity.value.job;
+      selectedCitizenship = userIdCont.userIdentity.value.citizenship;
+      selectedDate = userIdCont.userIdentity.value.birthDate;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +228,7 @@ class _EditIdentityState extends State<EditIdentity> {
                 SizedBox(
                   height: 44,
                   child: TextField(
-                    controller: nikCont,
+                    controller: nameCont,
                     decoration: fieldStyle.nikField,
                     textAlignVertical: TextAlignVertical.top,
                   ),
@@ -276,6 +316,7 @@ class _EditIdentityState extends State<EditIdentity> {
                         setState(() {
                           if (selectDate != null) {
                             selectedDate = selectDate;
+                            print(selectDate);
                             print(selectedDate.day);
                             print(selectedDate.month);
                             print(selectedDate.year);
@@ -357,6 +398,9 @@ class _EditIdentityState extends State<EditIdentity> {
                         ],
                       )),
                 ),
+                const SizedBox(
+                  height: 200,
+                )
               ],
             ),
           ),
@@ -382,7 +426,24 @@ class _EditIdentityState extends State<EditIdentity> {
                           onPressed: () {
                             // Navigator.of(context).push(MaterialPageRoute(
                             //     builder: (context) => const KtpScanner()));
-                            Navigator.of(context).pop();
+                            if (nikCont.text.length < 16) {
+                              Get.snackbar("Peringatan", "NIK Harus 16 Digit",
+                                  backgroundColor: colorApp.light1);
+                            } else {
+                              IdentityModel usser = IdentityModel(
+                                  nik: nikCont.text,
+                                  fullName: nameCont.text,
+                                  gender: selectedGender,
+                                  genderId: selectedGenderId,
+                                  birthPlace: selectedCity,
+                                  birthDate: selectedDate,
+                                  job: selectedJobs,
+                                  citizenship: selectedCitizenship);
+
+                              userIdCont.updateUserIdentity(usser);
+                              Get.back();
+                            }
+                            // Navigator.of(context).pop();
                           },
                           child: Text('Ubah',
                               style: textApp.largeLabel.copyWith(
@@ -421,6 +482,8 @@ class _EditIdentityState extends State<EditIdentity> {
                 selectedList.first is SelectedListItem) {
               setState(() {
                 selectedGender = (selectedList.first as SelectedListItem).name;
+                selectedGenderId =
+                    (selectedList.first as SelectedListItem).value!;
               });
               print(selectedGender);
             }
@@ -448,14 +511,17 @@ class _EditIdentityState extends State<EditIdentity> {
               fontWeight: FontWeight.bold,
             ),
           ),
+          // data: regencyList,
           data: Cities.cityList,
           selectedItems: (List<dynamic> selectedList) {
             if (selectedList.isNotEmpty &&
                 selectedList.first is SelectedListItem) {
               setState(() {
                 selectedCity = (selectedList.first as SelectedListItem).name;
+                // selectedCityId =
+                //     (selectedList.first as SelectedListItem).value!;
               });
-              print(selectedCity);
+              print(selectedCityId);
             }
           },
           enableMultipleSelection: false,

@@ -1,7 +1,17 @@
 import 'package:capstone_wms/classes/colors_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/controllers/chatbot_controller.dart';
+import 'package:capstone_wms/controllers/lowerprice_controller.dart';
+import 'package:capstone_wms/controllers/recommendation_cont.dart';
+import 'package:capstone_wms/controllers/search_controller.dart';
+import 'package:capstone_wms/screens/main/chatbot/chatscreen.dart';
+import 'package:capstone_wms/screens/main/dashboard/lowprice_screen.dart';
 import 'package:capstone_wms/screens/main/dashboard/recommend_list.dart';
+import 'package:capstone_wms/screens/main/detail_gudang/detail_gudang_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -11,28 +21,65 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  RangeValues _sliderValue = const RangeValues(1, 100);
+  String nameValue = '';
+
+  Future<void> getLoggedInName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      nameValue = prefs.getString('name') ?? 'Jane Doe';
+    });
+  }
+
+  String formatPrice(int price) {
+    NumberFormat numberFormat = NumberFormat.simpleCurrency(
+      locale: 'id_ID',
+      decimalDigits: 0,
+    );
+
+    String formattedPrice =
+        numberFormat.format(price / 1000000); // Convert to million
+    print(formattedPrice);
+    return '${formattedPrice} Jt/bln';
+  }
 
   TextCollection textApp = TextCollection();
+  FindController searchController = Get.put(FindController());
+  RecommendationController recController = Get.put(RecommendationController());
+  LowerPriceController lowPriceCont = Get.put(LowerPriceController());
+  ChatbotController chatbotCont = Get.put(ChatbotController());
+  TextEditingController searchCont = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getLoggedInName();
+    recController.getRecommendation();
+    lowPriceCont.getLowPriceWarehouse();
+    chatbotCont.getUserId();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorApp().mainColorDarker,
-        leading: const Padding(
-          padding: EdgeInsets.only(left: 12.0, top: 10.0, bottom: 10.0),
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(
-              "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww",
-            ),
-          ),
-        ),
+        leading: Padding(
+            padding: const EdgeInsets.only(left: 12.0, top: 10.0, bottom: 10.0),
+            child: Obx(
+              () => CircleAvatar(
+                backgroundImage: NetworkImage(chatbotCont.isLoading.value
+                    ? "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww"
+                    :
+                    // "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww",
+                    chatbotCont.userInfo['photo']),
+              ),
+            )),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Hi, Digia",
+              "Hi, $nameValue",
               style: textApp.heading6.copyWith(
                 color: ColorApp().light4,
               ),
@@ -46,20 +93,27 @@ class _DashboardState extends State<Dashboard> {
           ],
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.notifications_rounded,
-              color: ColorApp().light4,
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: Icon(
+          //     Icons.notifications_rounded,
+          //     color: ColorApp().light4,
+          //   ),
+          // ),
+          Obx(
+            () => IconButton(
+              onPressed: chatbotCont.isLoading.value
+                  ? null
+                  : () {
+                      Get.to(() => const ChatScreen(),
+                          transition: Transition.rightToLeft);
+                    },
+              icon: Icon(
+                Icons.chat_rounded,
+                color: ColorApp().light4,
+              ),
             ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.chat_rounded,
-              color: ColorApp().light4,
-            ),
-          ),
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -82,6 +136,15 @@ class _DashboardState extends State<Dashboard> {
                           height: 40,
                           width: double.infinity,
                           child: TextField(
+                            controller: searchCont,
+                            // onChanged: (value) {
+                            //   searchController.searchString.value = value;
+                            // },
+                            onSubmitted: (value) {
+                              searchController.clearWarehouseData();
+                              searchController
+                                  .onSearchSubmitted(searchCont.text);
+                            },
                             style: textApp.bodySmall.copyWith(
                               color: ColorApp().light4,
                             ),
@@ -134,16 +197,29 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
                 ),
-
-                const Padding(
-                  padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 130.0),
-                  child: SizedBox(
-                    height: 155,
-                    child: BannerWidget(),
-                  ),
+                Column(
+                  children: [
+                    const SizedBox(
+                      height: 120,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: SizedBox(
+                        height: 155,
+                        child: BannerWidget(),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
+            // Padding(
+            //   padding: const EdgeInsets.all(5),
+            //   child: SizedBox(
+            //     height: 155,
+            //     child: BannerWidget(),
+            //   ),
+            // ),
             // const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -151,13 +227,12 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   Text(
                     "Rekomendasi Untukmu",
-                    style: TextCollection.bodySmall,
+                    style: textApp.bodySmall,
                   ),
                   const Spacer(),
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const RecommendList()));
+                      Get.to(() => const RecommendList());
                     },
                     icon: const Icon(Icons.more_horiz),
                   ),
@@ -169,7 +244,142 @@ class _DashboardState extends State<Dashboard> {
               child: SizedBox(
                 height: 240,
                 width: double.infinity,
-                child: RecommendedCardWidget(),
+                // child: RecommendedCardWidget(),
+                child: Obx(() => FutureBuilder(
+                    future: recController.recommededData.isNotEmpty
+                        ? Future.value(recController.recommededData)
+                        : null,
+                    builder: (context, snapshot) {
+                      if (recController.isRecommendationLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: ColorApp().mainColor,
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.data == null ||
+                          recController.recommededData.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'Gudang Tidak Ditemukan',
+                            style: TextCollection()
+                                .bodySmall
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        );
+                      } else {
+                        return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: recController.recommededData.length,
+                            itemBuilder: (context, index) {
+                              var warehouse =
+                                  recController.recommededData[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.to(() => DetailGudangScreen(
+                                      warehouseId: warehouse['id']));
+                                },
+                                child: SizedBox(
+                                  width: 180,
+                                  child: Container(
+                                    margin: const EdgeInsets.all(3.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: ColorApp().dark4,
+                                          offset: const Offset(1, 1),
+                                          spreadRadius: 1,
+                                          blurRadius: 1.0,
+                                        )
+                                      ],
+                                    ),
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 130,
+                                          child: warehouse['image'] != null &&
+                                                  Uri.parse(warehouse['image'])
+                                                      .isAbsolute
+                                              ? Image.network(
+                                                  warehouse['image'],
+                                                  // width: 142,
+                                                  // height: 227,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return Image.network(
+                                                      "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                      // width: 142,
+                                                      // height: 227,
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
+                                                )
+                                              : Image.network(
+                                                  "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                                                  // width: 142,
+                                                  // height: 227,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                warehouse['name'].toString(),
+                                                // "Warehouse Abadi",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: textApp.bodyNormal
+                                                    .copyWith(
+                                                        color: ColorApp().dark1,
+                                                        fontSize: 16),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Text(
+                                                warehouse['regencyName']
+                                                    .toString(),
+                                                // "Jakarta Barat",
+                                                style:
+                                                    textApp.bodySmall.copyWith(
+                                                  color: ColorApp().dark1,
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 12,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              const SizedBox(height: 15),
+                                              Text(
+                                                formatPrice(warehouse[
+                                                        'monthlyPrice'])
+                                                    .toString(),
+                                                style: textApp.bodyNormal
+                                                    .copyWith(
+                                                        color: ColorApp()
+                                                            .secondaryColor,
+                                                        // fontSize: 12,
+                                                        overflow: TextOverflow
+                                                            .ellipsis),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      }
+                    })),
               ),
             ),
             Padding(
@@ -178,11 +388,13 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   Text(
                     "Gudang Termurah",
-                    style: TextCollection.bodySmall,
+                    style: textApp.bodySmall,
                   ),
                   const Spacer(),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => const LowPriceList());
+                    },
                     icon: const Icon(Icons.more_horiz),
                   ),
                 ],
@@ -193,412 +405,148 @@ class _DashboardState extends State<Dashboard> {
               child: SizedBox(
                 height: 244,
                 width: double.infinity,
-                child: RecommendedCardWidget(),
+                // child: RecommendedCardWidget(),
+                child: Obx(() => FutureBuilder(
+                    future: lowPriceCont.lowPriceData.isNotEmpty
+                        ? Future.value(lowPriceCont.lowPriceData)
+                        : null,
+                    builder: (context, snapshot) {
+                      if (lowPriceCont.isLowPriceLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: ColorApp().mainColor,
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.data == null ||
+                          lowPriceCont.lowPriceData.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'Gudang Tidak Ditemukan',
+                            style: TextCollection()
+                                .bodySmall
+                                .copyWith(fontWeight: FontWeight.w400),
+                          ),
+                        );
+                      } else {
+                        return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: lowPriceCont.lowPriceData.length,
+                            itemBuilder: (context, index) {
+                              var warehouse = lowPriceCont.lowPriceData[index];
+
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.to(DetailGudangScreen(
+                                      warehouseId: warehouse['id']));
+                                },
+                                child: SizedBox(
+                                  width: 180,
+                                  child: Container(
+                                    margin: const EdgeInsets.all(3.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: ColorApp().dark4,
+                                          offset: const Offset(1, 1),
+                                          spreadRadius: 1,
+                                          blurRadius: 1.0,
+                                        )
+                                      ],
+                                    ),
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 130,
+                                          child: warehouse['image'] != null &&
+                                                  Uri.parse(warehouse['image'])
+                                                      .isAbsolute
+                                              ? Image.network(
+                                                  warehouse['image'],
+                                                  // width: 142,
+                                                  // height: 227,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return Image.network(
+                                                      "https://images.unsplash.com/photo-1565610222536-ef125c59da2e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                                                      // width: 142,
+                                                      // height: 227,
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
+                                                )
+                                              : Image.network(
+                                                  "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8d2FyZWhvdXNlfGVufDB8fDB8fHww",
+                                                  // width: 142,
+                                                  // height: 227,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                warehouse['name'].toString(),
+                                                // "Warehouse Abadi",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: textApp.bodyNormal
+                                                    .copyWith(
+                                                        color: ColorApp().dark1,
+                                                        fontSize: 16),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Text(
+                                                warehouse['regencyName']
+                                                    .toString(),
+                                                // "Jakarta Barat",
+                                                style:
+                                                    textApp.bodySmall.copyWith(
+                                                  color: ColorApp().dark1,
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 12,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              const SizedBox(height: 15),
+                                              Text(
+                                                formatPrice(warehouse[
+                                                        'monthlyPrice'])
+                                                    .toString(),
+                                                style: textApp.bodyNormal
+                                                    .copyWith(
+                                                        color: ColorApp()
+                                                            .secondaryColor,
+                                                        // fontSize: 12,
+                                                        overflow: TextOverflow
+                                                            .ellipsis),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      }
+                    })),
               ),
             ),
             const SizedBox(height: 30),
           ],
         ),
       ),
-    );
-  }
-
-  Future<dynamic> FilterBottomSheet(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: ColorApp().light4,
-      builder: (builder) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Container(
-              height: MediaQuery.of(context).size.height * 0.9,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(20),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: SizedBox(
-                      height: 50,
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.filter_list_rounded,
-                            color: ColorApp().dark1,
-                          ),
-                          const SizedBox(width: 20),
-                          Text("Filter", style: textApp.bodySmall)
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text("Urutkan", style: textApp.bodySmall),
-                  ),
-                  // const SizedBox(height: 10),
-                  SizedBox(
-                    height: 30,
-                    child: Row(
-                      children: [
-                        Checkbox(value: false, onChanged: (value) {}),
-                        const SizedBox(width: 5),
-                        Text(
-                          "Paling Rekomendasi",
-                          style: textApp.smallLabel.copyWith(
-                            color: ColorApp().dark1,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                    child: Row(
-                      children: [
-                        Checkbox(value: false, onChanged: (value) {}),
-                        const SizedBox(width: 5),
-                        Text(
-                          "Harga Terendah",
-                          style: textApp.smallLabel.copyWith(
-                            color: ColorApp().dark1,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                    child: Row(
-                      children: [
-                        Checkbox(value: false, onChanged: (value) {}),
-                        const SizedBox(width: 5),
-                        Text(
-                          "Harga Tertinggi",
-                          style: textApp.smallLabel.copyWith(
-                            color: ColorApp().dark1,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Divider(),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text("Price Range", style: textApp.bodySmall),
-                  ),
-                  RangeSlider(
-                    min: 0,
-                    max: 100,
-                    activeColor: ColorApp().mainColor,
-                    inactiveColor: ColorApp().mainColor.withOpacity(0.5),
-                    values: _sliderValue,
-                    labels: RangeLabels(
-                      _sliderValue.start.toString(),
-                      _sliderValue.end.toString(),
-                    ),
-                    onChanged: (newValues) {
-                      setState(() {
-                        _sliderValue = newValues;
-                      });
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Min. price",
-                              style: textApp.extraSmallLabel.copyWith(
-                                color: ColorApp().dark1,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30,
-                              width: 80,
-                              child: TextField(
-                                cursorColor: ColorApp().mainColor,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      borderSide: BorderSide(
-                                        color: ColorApp().mainColor,
-                                      )),
-                                  contentPadding: const EdgeInsets.only(
-                                    bottom: 5.0,
-                                    left: 5.0,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(
-                                      color: ColorApp().mainColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Max. price",
-                              style: textApp.extraSmallLabel.copyWith(
-                                color: ColorApp().dark1,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30,
-                              width: 80,
-                              child: TextField(
-                                cursorColor: ColorApp().mainColor,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      borderSide: BorderSide(
-                                        color: ColorApp().mainColor,
-                                      )),
-                                  contentPadding: const EdgeInsets.only(
-                                    bottom: 5.0,
-                                    left: 5.0,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(
-                                      color: ColorApp().mainColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Divider(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      "Payment Time",
-                      style: textApp.bodySmall,
-                    ),
-                  ),
-                  // const SizedBox(height: 10),
-                  SizedBox(
-                    height: 30,
-                    child: Row(
-                      children: [
-                        Checkbox(value: false, onChanged: (value) {}),
-                        const SizedBox(width: 5),
-                        Text(
-                          "Mingguan",
-                          style: textApp.smallLabel.copyWith(
-                            color: ColorApp().dark1,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                    child: Row(
-                      children: [
-                        Checkbox(value: false, onChanged: (value) {}),
-                        const SizedBox(width: 5),
-                        Text(
-                          "Bulanan",
-                          style: textApp.smallLabel.copyWith(
-                            color: ColorApp().dark1,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                    child: Row(
-                      children: [
-                        Checkbox(value: false, onChanged: (value) {}),
-                        const SizedBox(width: 5),
-                        Text(
-                          "Tahunan",
-                          style: textApp.smallLabel.copyWith(
-                            color: ColorApp().dark1,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Divider(),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text("Ukuran", style: textApp.bodySmall),
-                  ),
-                  RangeSlider(
-                    min: 0,
-                    max: 100,
-                    activeColor: ColorApp().mainColor,
-                    inactiveColor: ColorApp().mainColor.withOpacity(0.5),
-                    values: _sliderValue,
-                    labels: RangeLabels(
-                      _sliderValue.start.toString(),
-                      _sliderValue.end.toString(),
-                    ),
-                    onChanged: (newValues) {
-                      setState(() {
-                        _sliderValue = newValues;
-                      });
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Min. size",
-                              style: textApp.extraSmallLabel.copyWith(
-                                color: ColorApp().dark1,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30,
-                              width: 80,
-                              child: TextField(
-                                cursorColor: ColorApp().mainColor,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      borderSide: BorderSide(
-                                        color: ColorApp().mainColor,
-                                      )),
-                                  contentPadding: const EdgeInsets.only(
-                                    bottom: 5.0,
-                                    left: 5.0,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(
-                                      color: ColorApp().mainColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Max. size",
-                              style: textApp.extraSmallLabel.copyWith(
-                                color: ColorApp().dark1,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30,
-                              width: 80,
-                              child: TextField(
-                                cursorColor: ColorApp().mainColor,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      borderSide: BorderSide(
-                                        color: ColorApp().mainColor,
-                                      )),
-                                  contentPadding: const EdgeInsets.only(
-                                    bottom: 5.0,
-                                    left: 5.0,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: BorderSide(
-                                      color: ColorApp().mainColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorApp().stateError,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            "Delete",
-                            style: textApp.bodySmall.copyWith(
-                              color: ColorApp().light4,
-                            ),
-                          ),
-                        ),
-                        const Spacer(),
-                        SizedBox(
-                          height: 40,
-                          width: 250,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: ColorApp().mainColor,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            onPressed: () {},
-                            child: Text(
-                              "Search",
-                              style: textApp.bodySmall.copyWith(
-                                color: ColorApp().light4,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            );
-          },
-        );
-      },
     );
   }
 }
@@ -650,13 +598,13 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-                        style: TextCollection.bodyNormal
+                        style: textApp.bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection.bodySmall.copyWith(
+                        style: textApp.bodySmall.copyWith(
                           color: ColorApp().dark1,
                           fontWeight: FontWeight.normal,
                           fontSize: 12,
@@ -665,7 +613,7 @@ class RecommendedCardWidget extends StatelessWidget {
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
-                        style: TextCollection.bodyNormal.copyWith(
+                        style: textApp.bodyNormal.copyWith(
                           color: ColorApp().secondaryColor,
                         ),
                       ),
@@ -711,13 +659,13 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-                        style: TextCollection.bodyNormal
+                        style: textApp.bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection.bodySmall.copyWith(
+                        style: textApp.bodySmall.copyWith(
                           color: ColorApp().dark1,
                           fontWeight: FontWeight.normal,
                           fontSize: 12,
@@ -726,7 +674,7 @@ class RecommendedCardWidget extends StatelessWidget {
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
-                        style: TextCollection.bodyNormal.copyWith(
+                        style: textApp.bodyNormal.copyWith(
                           color: ColorApp().secondaryColor,
                         ),
                       ),
@@ -772,13 +720,13 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-                        style: TextCollection.bodyNormal
+                        style: textApp.bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection.bodySmall.copyWith(
+                        style: textApp.bodySmall.copyWith(
                           color: ColorApp().dark1,
                           fontWeight: FontWeight.normal,
                           fontSize: 12,
@@ -787,7 +735,7 @@ class RecommendedCardWidget extends StatelessWidget {
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
-                        style: TextCollection.bodyNormal.copyWith(
+                        style: textApp.bodyNormal.copyWith(
                           color: ColorApp().secondaryColor,
                         ),
                       ),
@@ -833,13 +781,13 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-                        style: TextCollection.bodyNormal
+                        style: textApp.bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection.bodySmall.copyWith(
+                        style: textApp.bodySmall.copyWith(
                           color: ColorApp().dark1,
                           fontWeight: FontWeight.normal,
                           fontSize: 12,
@@ -848,7 +796,7 @@ class RecommendedCardWidget extends StatelessWidget {
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
-                        style: TextCollection.bodyNormal.copyWith(
+                        style: textApp.bodyNormal.copyWith(
                           color: ColorApp().secondaryColor,
                         ),
                       ),
@@ -894,13 +842,13 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-                        style: TextCollection.bodyNormal
+                        style: textApp.bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection.bodySmall.copyWith(
+                        style: textApp.bodySmall.copyWith(
                           color: ColorApp().dark1,
                           fontWeight: FontWeight.normal,
                           fontSize: 12,
@@ -909,7 +857,7 @@ class RecommendedCardWidget extends StatelessWidget {
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
-                        style: TextCollection.bodyNormal.copyWith(
+                        style: textApp.bodyNormal.copyWith(
                           color: ColorApp().secondaryColor,
                         ),
                       ),
@@ -955,13 +903,13 @@ class RecommendedCardWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Warehouse Abadi",
-                        style: TextCollection.bodyNormal
+                        style: textApp.bodyNormal
                             .copyWith(color: ColorApp().dark1, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         "Jakarta Barat",
-                        style: TextCollection.bodySmall.copyWith(
+                        style: textApp.bodySmall.copyWith(
                           color: ColorApp().dark1,
                           fontWeight: FontWeight.normal,
                           fontSize: 12,
@@ -970,10 +918,10 @@ class RecommendedCardWidget extends StatelessWidget {
                       const SizedBox(height: 15),
                       Text(
                         "RP.10 Jt/bln",
-                        style: TextCollection.bodyNormal.copyWith(
+                        style: textApp.bodyNormal.copyWith(
                           color: ColorApp().secondaryColor,
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -988,7 +936,6 @@ class RecommendedCardWidget extends StatelessWidget {
 }
 
 class BannerWidget extends StatelessWidget {
-  //ini nanti bisa dipindah ke folder widget/component biar ga panjang" main file nya
   BannerWidget({
     super.key,
   });

@@ -1,9 +1,32 @@
 import 'package:capstone_wms/classes/inputstyle_collection.dart';
 import 'package:capstone_wms/classes/text_collection.dart';
+import 'package:capstone_wms/components/showdialogotp.dart';
+import 'package:capstone_wms/controllers/profile_controller.dart';
+import 'package:capstone_wms/services/authentication.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class EmailVerifikasi extends StatelessWidget {
-  const EmailVerifikasi({super.key});
+class EmailVerifikasi extends StatefulWidget {
+  EmailVerifikasi({super.key, required this.email});
+
+  String email;
+
+  @override
+  State<EmailVerifikasi> createState() => _EmailVerifikasiState();
+}
+
+class _EmailVerifikasiState extends State<EmailVerifikasi> {
+  AuthService auth = AuthService();
+
+  ProfileController profileCont = Get.put(ProfileController());
+
+  TextEditingController newEmailCont = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +67,7 @@ class EmailVerifikasi extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        "Yuniar12@example.com",
+                        widget.email,
                         style: TextCollection().bodyNormal,
                       ),
                       const SizedBox(height: 2),
@@ -54,86 +77,133 @@ class EmailVerifikasi extends StatelessWidget {
                         onTap: () {
                           showModalBottomSheet(
                             backgroundColor: colorApp.mainColor,
+                            isScrollControlled: true,
                             context: context,
                             builder: (context) {
-                              return SizedBox(
-                                width: double.infinity,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 40,
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            IconButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              icon: Icon(
-                                                Icons.arrow_back,
-                                                color: colorApp.secondaryColor,
-                                              ),
-                                            ),
-                                            Text(
-                                              "Email",
-                                              style: TextCollection()
-                                                  .heading6White,
-                                            ),
-                                            const SizedBox(
-                                              width: 120,
-                                            ),
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    colorApp.secondaryColor,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.0),
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.265,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 40,
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                icon: Icon(
+                                                  Icons.arrow_back,
+                                                  color:
+                                                      colorApp.secondaryColor,
                                                 ),
                                               ),
-                                              onPressed: () {},
-                                              child: Text(
-                                                "Kirim Kode",
+                                              Text(
+                                                "Email",
                                                 style: TextCollection()
                                                     .heading6White,
-                                                selectionColor: colorApp.light1,
                                               ),
-                                            )
-                                          ],
+                                              // const SizedBox(
+                                              //   width: 120,
+                                              // ),
+
+                                              // Obx(() => )
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: colorApp.light4),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: TextField(
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              labelText: "Email",
-                                              labelStyle: TextStyle(
-                                                color: colorApp.light4,
-                                              ),
-                                              icon: Icon(
-                                                Icons.person,
-                                                color: colorApp.light4,
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: colorApp.light4),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: TextField(
+                                              style: TextCollection()
+                                                  .bodySmall
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.white),
+                                              controller: newEmailCont,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                labelText: "Email",
+                                                labelStyle: TextStyle(
+                                                  color: colorApp.light4,
+                                                ),
+                                                icon: Icon(
+                                                  Icons.person,
+                                                  color: colorApp.light4,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: Obx(() => ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      colorApp.secondaryColor,
+                                                  disabledBackgroundColor:
+                                                      colorApp
+                                                          .secondaryColorLighter,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                  ),
+                                                ),
+                                                onPressed: profileCont
+                                                        .isUpdateLoading.value
+                                                    ? null
+                                                    : () async {
+                                                        BuildContext ctx =
+                                                            context;
+                                                        await profileCont
+                                                            .updateUserEmail(
+                                                                newEmailCont
+                                                                    .text,
+                                                                ctx);
+                                                        // auth.resendOTP();
+                                                        //  await AuthService.resendOTP(email);
+                                                        // showDialogOtp(context);
+                                                      },
+                                                // onPressed: () {
+                                                //   showDialogOtp(context,
+                                                //       newEmailCont.text);
+                                                // },
+                                                child: Text(
+                                                  "Kirim Kode",
+                                                  style: TextCollection()
+                                                      .heading6White,
+                                                  selectionColor:
+                                                      colorApp.light1,
+                                                ),
+                                              )),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );
@@ -153,7 +223,7 @@ class EmailVerifikasi extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              "Ubah Alamat Email",
+                              "Verifikasi Alamat Email",
                               style: TextStyle(color: colorApp.light1),
                             ),
                           ),
