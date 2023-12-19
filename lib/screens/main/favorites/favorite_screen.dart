@@ -171,12 +171,15 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                             Icon(Icons.location_on_outlined,
                                                 color: colorApp.mainColor),
                                             const SizedBox(width: 8),
-                                            Text(
-                                              item['regencyName'],
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: colorApp.mainColor),
+                                            Expanded(
+                                              child: Text(
+                                                item['regencyName'],
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: colorApp.mainColor),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
                                           ],
                                         ),

@@ -19,7 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DetailGudangScreen extends StatefulWidget {
   DetailGudangScreen({super.key, required this.warehouseId});
 
-  int warehouseId;
+  dynamic warehouseId;
 
   @override
   State<DetailGudangScreen> createState() => _DetailGudangScreenState();
@@ -408,9 +408,14 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                             onTap: () {
                               Get.to(
                                 WarehouseMapScreen(
-                                  lat: warehouseData!['latitude'],
-                                  long: warehouseData!['longitude'],
+                                  lat: double.parse(
+                                      warehouseData!['latitude'].toString()),
+                                  long: double.parse(
+                                      warehouseData!['longitude'].toString()),
                                   name: warehouseData!['name'],
+                                  // lat: warehouseData!['latitude'],
+                                  // long: warehouseData!['longitude'],
+                                  // name: warehouseData!['name'],
                                 ),
                               );
                             },
@@ -442,8 +447,10 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                               },
                               initialCameraPosition: CameraPosition(
                                 target: LatLng(
-                                  warehouseData!["latitude"],
-                                  warehouseData!["longitude"],
+                                  double.parse(
+                                      warehouseData!['latitude'].toString()),
+                                  double.parse(
+                                      warehouseData!['longitude'].toString()),
                                 ),
                                 zoom: 10.0,
                               ),
@@ -451,8 +458,10 @@ class _DetailGudangScreenState extends State<DetailGudangScreen> {
                                 Marker(
                                   markerId: const MarkerId("warehouse_marker"),
                                   position: LatLng(
-                                    warehouseData!["latitude"],
-                                    warehouseData!["longitude"],
+                                    double.parse(
+                                        warehouseData!['latitude'].toString()),
+                                    double.parse(
+                                        warehouseData!['longitude'].toString()),
                                   ),
                                 )
                               },

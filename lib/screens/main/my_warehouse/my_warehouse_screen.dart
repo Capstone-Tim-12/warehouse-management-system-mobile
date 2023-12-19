@@ -203,14 +203,18 @@ class _MyWarehouseState extends State<MyWarehouse> {
                                                       MainAxisAlignment
                                                           .spaceEvenly,
                                                   children: [
-                                                    Text(
-                                                      acceptedWarehouse[
-                                                          'warehouseRegency'],
-                                                      style: textApp.bodySmall
-                                                          .copyWith(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400),
+                                                    Expanded(
+                                                      child: Text(
+                                                        acceptedWarehouse[
+                                                            'warehouseRegency'],
+                                                        style: textApp.bodySmall
+                                                            .copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
                                                     ),
                                                     const SizedBox(
                                                       width: 60,
@@ -371,14 +375,18 @@ class _MyWarehouseState extends State<MyWarehouse> {
                                                       MainAxisAlignment
                                                           .spaceEvenly,
                                                   children: [
-                                                    Text(
-                                                      submittedWarehouse[
-                                                          'warehouseRegency'],
-                                                      style: textApp.bodySmall
-                                                          .copyWith(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400),
+                                                    Expanded(
+                                                      child: Text(
+                                                        submittedWarehouse[
+                                                            'warehouseRegency'],
+                                                        style: textApp.bodySmall
+                                                            .copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400),
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
                                                     ),
                                                     const SizedBox(
                                                       width: 60,

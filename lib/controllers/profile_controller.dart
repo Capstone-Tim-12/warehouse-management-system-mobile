@@ -114,7 +114,8 @@ class ProfileController extends GetxController {
         showDialogOtp(ctx, newUserEmail);
       } else {
         //nanti tampilin show dialog email gagal
-        Get.snackbar("Peringatan", responseData['message']);
+        Get.snackbar("Peringatan", responseData['message'],
+            backgroundColor: Colors.white);
       }
     } catch (e) {
       print(e);

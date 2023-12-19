@@ -223,8 +223,10 @@ class _EmailVerifikasiState extends State<EmailVerifikasi> {
                           ),
                           child: Center(
                             child: Text(
-                              "Verifikasi Alamat Email",
-                              style: TextStyle(color: colorApp.light1),
+                              "Ubah Alamat Email",
+                              style: TextCollection().bodySmall.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  color: colorApp.light1),
                             ),
                           ),
                         ),
@@ -254,8 +256,36 @@ class _EmailVerifikasiState extends State<EmailVerifikasi> {
                           style: TextCollection().bodySmall,
                         ),
                         trailing: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.arrow_right_rounded),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  contentPadding: const EdgeInsets.all(20),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  title: Text(
+                                    'Q: Bagaimana Cara Mengubah Alamat Email?',
+                                    style: TextCollection().bodyNormal,
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        'A: Untuk mengubah alamat email anda dapat menuju setting, kemudian pada halaman setting akan ada sebuah tombol yang bertuliskan email, kemudian jika anda menekan tombol itu maka anda akan diarahkan ke halaman untuk mengubah alamat email. Kemudian pada halaman itu akan terdapat sebuah tombol dengan tulisan ubah alamat email setelah itu anda dapat menekan tombol tersebut dan ikuti petunjuknya sampai dengan selesai',
+                                        style: TextCollection()
+                                            .bodySmall
+                                            .copyWith(
+                                                fontWeight: FontWeight.w400),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          icon: const Icon(Icons.arrow_right_rounded),
                           color: colorApp.mainColorDarker,
                         ),
                       ),
@@ -265,7 +295,35 @@ class _EmailVerifikasiState extends State<EmailVerifikasi> {
                           style: TextCollection().bodySmall,
                         ),
                         trailing: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  contentPadding: const EdgeInsets.all(20),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  title: Text(
+                                    'Q: Bagaimana cara agar alamat email dapat terverifikasi?',
+                                    style: TextCollection().bodyNormal,
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        'A: Email anda akan terverifikasi secara otomatis pada saat anda daftar melalui aplikasi, namun ketika menggati alamat email baru anda dapat memasukan OTP yang didapatkan dari pesan pada email anda ketika melakukan submit email baru anda',
+                                        style: TextCollection()
+                                            .bodySmall
+                                            .copyWith(
+                                                fontWeight: FontWeight.w400),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
                           icon: Icon(Icons.arrow_right_rounded),
                           color: colorApp.mainColorDarker,
                         ),

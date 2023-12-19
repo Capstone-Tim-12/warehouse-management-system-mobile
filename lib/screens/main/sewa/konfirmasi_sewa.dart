@@ -77,7 +77,7 @@ class _KonfirmasiSewaState extends State<KonfirmasiSewa> {
 
     RentApplicationModel newRentApp = RentApplicationModel(
         token: prefs.getString('token')!,
-        warehouseId: widget.selectedWarehouse.warehouseId,
+        warehouseId: int.parse(widget.selectedWarehouse.warehouseId.toString()),
         paymentSchemeId: widget.rentInformation.hitunganSewaId,
         duration: int.tryParse(widget.rentInformation.durasiSewa)!,
         dateEntry: "$yearEntry-$monthEntry-${dateEntry}T00:00:00.000+07:00");

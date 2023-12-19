@@ -2,9 +2,9 @@ class WarehouseModel {
   int warehouseId;
   String name;
   String regencyName;
-  int weeklyPrice;
-  int monthlyPrice;
-  int annuallyPrice;
+  var weeklyPrice;
+  var monthlyPrice;
+  var annuallyPrice;
   List? image;
 
   WarehouseModel({

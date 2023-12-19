@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:capstone_wms/classes/colors_collection.dart';
+import 'package:capstone_wms/controllers/chatbot_controller.dart';
 import 'package:capstone_wms/controllers/detailmywarehouse_cont.dart';
 import 'package:capstone_wms/screens/payment/payment_screen_main.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,9 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
   TextCollection textApp = TextCollection();
   DetailMyWarehouseController detailMyWarehouseCont =
       Get.put(DetailMyWarehouseController());
+  ChatbotController chatbotCont = Get.put(ChatbotController());
+  String entrydate = '';
+  String outdate = '';
 
   @override
   void initState() {
@@ -41,12 +45,25 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
         widget.warehouseId.toString(), widget.transactionId.toString());
     detailMyWarehouseCont.getTransactionInfo(widget.transactionId.toString());
     detailMyWarehouseCont.getInstalmentList(widget.transactionId.toString());
+    String entry =
+        detailMyWarehouseCont.transactionInfo['dateEntry'].toString();
+    String out = detailMyWarehouseCont.transactionInfo['dateOut'].toString();
+
+    List splitEntry = entry.split('T');
+    List splitOut = out.split('T');
+
+    setState(() {
+      entrydate = splitEntry[0];
+      outdate = splitOut[0];
+    });
   }
 
   final formatter = NumberFormat("#,###");
 
   @override
   Widget build(BuildContext context) {
+    // String entry = detailMyWarehouseCont.transactionInfo['dateEntry'].toString().split('T');
+
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -146,7 +163,8 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                                           ),
                                           Text(
                                             detailMyWarehouseCont
-                                                .warehouseInfo['regencyName'],
+                                                .warehouseInfo['regencyName']
+                                                .toString(),
                                             style: textApp.bodySmall.copyWith(
                                                 fontWeight: FontWeight.w400),
                                           ),
@@ -188,9 +206,11 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                                             fontWeight: FontWeight.w400),
                                       ),
                                       Text(
+                                        // detailMyWarehouseCont
+                                        //     .transactionInfo['dateEntry']
+                                        //     .toString(),
                                         detailMyWarehouseCont
-                                            .transactionInfo['dateEntry']
-                                            .toString(),
+                                            .transactionInfo['dateEntry'],
                                         style: textApp.bodySmall.copyWith(
                                             fontWeight: FontWeight.w400),
                                         overflow: TextOverflow.ellipsis,
@@ -209,7 +229,8 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                                               fontWeight: FontWeight.w400)),
                                       Text(
                                           detailMyWarehouseCont
-                                              .transactionInfo['paymentScheme'],
+                                              .transactionInfo['paymentScheme']
+                                              .toString(),
                                           style: textApp.bodySmall.copyWith(
                                               fontWeight: FontWeight.w400)),
                                     ],
@@ -258,8 +279,12 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                                           style: textApp.bodySmall.copyWith(
                                               fontWeight: FontWeight.w400)),
                                       Text(
+                                          // detailMyWarehouseCont
+                                          //     .transactionInfo['dateOut']
+                                          //     .toString(),
                                           detailMyWarehouseCont
-                                              .transactionInfo['dateOut'],
+                                              .transactionInfo['dateOut']
+                                              .toString(),
                                           style: textApp.bodySmall.copyWith(
                                               fontWeight: FontWeight.w400)),
                                     ],
@@ -301,7 +326,10 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                                                                       FontWeight
                                                                           .w400),
                                                         ),
-                                                        Text('1 Agustus 2023',
+                                                        Text(
+                                                            detailMyWarehouseCont
+                                                                    .transactionInfo[
+                                                                'dateEntry'],
                                                             style: textApp
                                                                 .bodySmall
                                                                 .copyWith(
@@ -323,7 +351,11 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w400)),
-                                                        Text('Mingguan',
+                                                        Text(
+                                                            detailMyWarehouseCont
+                                                                .transactionInfo[
+                                                                    'paymentScheme']
+                                                                .toString(),
                                                             style: textApp
                                                                 .bodySmall
                                                                 .copyWith(
@@ -345,13 +377,42 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w400)),
-                                                        Text('3 Minggu',
-                                                            style: textApp
-                                                                .bodySmall
-                                                                .copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400))
+                                                        if (detailMyWarehouseCont
+                                                                    .transactionInfo[
+                                                                'paymentScheme'] ==
+                                                            'mingguan')
+                                                          Text(
+                                                              "${detailMyWarehouseCont.transactionInfo['duration']} minggu",
+                                                              style: textApp
+                                                                  .bodySmall
+                                                                  .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400)),
+                                                        if (detailMyWarehouseCont
+                                                                    .transactionInfo[
+                                                                'paymentScheme'] ==
+                                                            'tahunan')
+                                                          Text(
+                                                              "${detailMyWarehouseCont.transactionInfo['duration']} tahun",
+                                                              style: textApp
+                                                                  .bodySmall
+                                                                  .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400)),
+                                                        if (detailMyWarehouseCont
+                                                                    .transactionInfo[
+                                                                'paymentScheme'] ==
+                                                            'bulanan')
+                                                          Text(
+                                                              "${detailMyWarehouseCont.transactionInfo['duration']} bulan",
+                                                              style: textApp
+                                                                  .bodySmall
+                                                                  .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400)),
                                                       ],
                                                     ),
                                                     const SizedBox(height: 12),
@@ -367,7 +428,12 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w400)),
-                                                        Text('21 Agustus 2023',
+                                                        Text(
+                                                            detailMyWarehouseCont
+                                                                .transactionInfo[
+                                                                    'dateEntry']
+                                                                .toString(),
+                                                            // outdate,
                                                             style: textApp
                                                                 .bodySmall
                                                                 .copyWith(
@@ -394,7 +460,10 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w400)),
-                                                        Text('Budiawan',
+                                                        Text(
+                                                            chatbotCont
+                                                                    .userInfo[
+                                                                'fullName'],
                                                             style: textApp
                                                                 .bodySmall
                                                                 .copyWith(
@@ -416,7 +485,10 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w400)),
-                                                        Text('budi@gmail.com',
+                                                        Text(
+                                                            chatbotCont
+                                                                    .userInfo[
+                                                                'email'],
                                                             style: textApp
                                                                 .bodySmall
                                                                 .copyWith(
@@ -426,27 +498,27 @@ class _DetailMyWarehouseScreenState extends State<DetailMyWarehouseScreen> {
                                                       ],
                                                     ),
                                                     const SizedBox(height: 12),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text('No. Telp',
-                                                            style: textApp
-                                                                .bodySmall
-                                                                .copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400)),
-                                                        Text('008656',
-                                                            style: textApp
-                                                                .bodySmall
-                                                                .copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400)),
-                                                      ],
-                                                    ),
+                                                    // Row(
+                                                    //   mainAxisAlignment:
+                                                    //       MainAxisAlignment
+                                                    //           .spaceBetween,
+                                                    //   children: [
+                                                    //     Text('No. Telp',
+                                                    //         style: textApp
+                                                    //             .bodySmall
+                                                    //             .copyWith(
+                                                    //                 fontWeight:
+                                                    //                     FontWeight
+                                                    //                         .w400)),
+                                                    //     Text('008656',
+                                                    //         style: textApp
+                                                    //             .bodySmall
+                                                    //             .copyWith(
+                                                    //                 fontWeight:
+                                                    //                     FontWeight
+                                                    //                         .w400)),
+                                                    //   ],
+                                                    // ),
                                                     const SizedBox(height: 24),
                                                     Text(
                                                       'Aturan Denda',

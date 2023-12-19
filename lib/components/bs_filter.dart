@@ -71,60 +71,69 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
             height: 200,
             child: Column(
               children: [
-                RadioListTile(
-                  // activeColor:
-                  //     cont.recommended.value ? ColorApp().secondaryColor : null,
-                  activeColor: ColorApp().secondaryColor,
-                  title: Text(
-                    "Paling Rekomendasi",
-                    style: textapp.bodySmall.copyWith(
-                      fontWeight: FontWeight.normal,
+                Obx(
+                  () => RadioListTile(
+                    // activeColor:
+                    //     cont.recommended.value ? ColorApp().secondaryColor : null,
+                    activeColor: ColorApp().secondaryColor,
+                    title: Text(
+                      "Paling Rekomendasi",
+                      style: textapp.bodySmall.copyWith(
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
+                    value: !cont.recommended.value ? true : false,
+                    // value: cont.recommended.value,
+                    // groupValue: !cont.recommended.value ? false : true,
+                    groupValue: false,
+                    onChanged: (value) {
+                      cont.onRecommendedChange(value!);
+                      print(cont.recommended.value);
+                    },
                   ),
-                  value: !cont.recommended.value ? true : false,
-                  // value: cont.recommended.value,
-                  groupValue: null,
-                  onChanged: (value) {
-                    cont.onRecommendedChange(value!);
-                    print(cont.recommended.value);
-                  },
                 ),
-                RadioListTile(
-                  // activeColor:
-                  //     cont.lowerPrice.value ? ColorApp().secondaryColor : null,
-                  activeColor: ColorApp().secondaryColor,
-                  title: Text(
-                    "Harga Terendah",
-                    style: textapp.bodySmall.copyWith(
-                      fontWeight: FontWeight.normal,
+                Obx(
+                  () => RadioListTile(
+                    // activeColor:
+                    //     cont.lowerPrice.value ? ColorApp().secondaryColor : null,
+                    activeColor: ColorApp().secondaryColor,
+                    title: Text(
+                      "Harga Terendah",
+                      style: textapp.bodySmall.copyWith(
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
+                    value: !cont.lowerPrice.value ? true : false,
+                    // value: cont.lowerPrice.value,
+                    // groupValue: !cont.lowerPrice.value ? false : true,
+                    groupValue: false,
+                    onChanged: (value) {
+                      cont.onLowerPriceChange(value!);
+                      print(cont.lowerPrice.value);
+                    },
                   ),
-                  value: !cont.lowerPrice.value ? true : false,
-                  // value: cont.lowerPrice.value,
-                  groupValue: null,
-                  onChanged: (value) {
-                    cont.onLowerPriceChange(value!);
-                    print(cont.lowerPrice.value);
-                  },
                 ),
-                RadioListTile(
-                  // activeColor:
-                  //     cont.higherPrice.value ? ColorApp().secondaryColor : null,
-                  activeColor: ColorApp().secondaryColor,
-                  title: Text(
-                    "Harga Tertinggi",
-                    style: textapp.bodySmall.copyWith(
-                      fontWeight: FontWeight.normal,
+                Obx(
+                  () => RadioListTile(
+                    // activeColor:
+                    //     cont.higherPrice.value ? ColorApp().secondaryColor : null,
+                    activeColor: ColorApp().secondaryColor,
+                    title: Text(
+                      "Harga Tertinggi",
+                      style: textapp.bodySmall.copyWith(
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
+                    value: !cont.higherPrice.value ? true : false,
+                    // value: cont.higherPrice.value,
+                    // groupValue: !cont.higherPrice.value ? false : true,
+                    groupValue: false,
+                    onChanged: (value) {
+                      cont.onHigherPriceChange(value!);
+                      print(cont.higherPrice.value);
+                    },
                   ),
-                  value: !cont.higherPrice.value ? true : false,
-                  // value: cont.higherPrice.value,
-                  groupValue: null,
-                  onChanged: (value) {
-                    cont.onHigherPriceChange(value!);
-                    print(cont.higherPrice.value);
-                  },
-                ),
+                )
               ],
             ),
           ),
